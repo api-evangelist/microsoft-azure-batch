@@ -1,16 +1,14 @@
 aid: microsoft-azure-batch
-url: 
-  https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml
 apis:
   - aid: microsoft-azure-batch:rest-api
     name: Azure Batch REST API
     tags:
       - Batch Computing
       - HPC
-      - Parallel Processing
       - Job Scheduling
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Parallel Processing
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://batch.core.windows.net/
     humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
     properties:
