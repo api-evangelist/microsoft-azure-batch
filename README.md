@@ -5,12 +5,12 @@ Azure Batch REST API provides management of large-scale parallel and high-perfor
 
 ## Tags:
 
- - Batch Computing, HPC, Parallel Processing, Job Scheduling
+ - Batch Computing, HPC, Job Scheduling, Parallel Processing
 
 ## Timestamps
 
 - **Created:** 2026-03-13
-- **Modified:** 2026-03-13
+- **Modified:** 2026-04-28
 
 ## APIs
 
@@ -18,6 +18,12 @@ Azure Batch REST API provides management of large-scale parallel and high-perfor
 Azure Batch REST API provides management of large-scale parallel and high-performance computing workloads. It supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing task dependencies for batch processing scenarios.
 
 **Human URL:** [https://learn.microsoft.com/en-us/rest/api/batchservice/](https://learn.microsoft.com/en-us/rest/api/batchservice/)
+
+**Base URL:** https://batch.core.windows.net/
+
+#### Tags:
+
+ - Batch Computing, HPC, Job Scheduling, Parallel Processing
 
 #### Properties
 
