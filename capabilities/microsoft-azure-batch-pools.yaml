@@ -1,0 +1,177 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Batch Service REST API — Pools
+  description: 'Azure Batch Service REST API — Pools. 4 operations. Lead operation: Batch List pools. Self-contained Naftiko
+    capability covering one Microsoft Azure Batch business surface.'
+  tags:
+  - Microsoft Azure Batch
+  - Pools
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_BATCH_API_KEY: MICROSOFT_AZURE_BATCH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-azure-batch-pools
+    baseUri: https://{account}.{region}.batch.azure.com
+    description: Azure Batch Service REST API — Pools business capability. Self-contained, no shared references.
+    resources:
+    - name: pools
+      path: /pools
+      operations:
+      - name: listpools
+        method: GET
+        description: Batch List pools
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api-version
+          in: query
+          type: string
+          required: true
+      - name: addpool
+        method: POST
+        description: Batch Add pool
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api-version
+          in: query
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: pools-poolId
+      path: /pools/{poolId}
+      operations:
+      - name: getpool
+        method: GET
+        description: Batch Get pool
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletepool
+        method: DELETE
+        description: Batch Delete pool
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_BATCH_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: microsoft-azure-batch-pools-rest
+    port: 8080
+    description: REST adapter for Azure Batch Service REST API — Pools. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/pools
+      name: pools
+      description: REST surface for pools.
+      operations:
+      - method: GET
+        name: listpools
+        description: Batch List pools
+        call: microsoft-azure-batch-pools.listpools
+        with:
+          api-version: rest.api-version
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addpool
+        description: Batch Add pool
+        call: microsoft-azure-batch-pools.addpool
+        with:
+          api-version: rest.api-version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/pools/{poolid}
+      name: pools-poolid
+      description: REST surface for pools-poolId.
+      operations:
+      - method: GET
+        name: getpool
+        description: Batch Get pool
+        call: microsoft-azure-batch-pools.getpool
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletepool
+        description: Batch Delete pool
+        call: microsoft-azure-batch-pools.deletepool
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: microsoft-azure-batch-pools-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure Batch Service REST API — Pools. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: batch-list-pools
+      description: Batch List pools
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-batch-pools.listpools
+      with:
+        api-version: tools.api-version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: batch-add-pool
+      description: Batch Add pool
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-batch-pools.addpool
+      with:
+        api-version: tools.api-version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: batch-get-pool
+      description: Batch Get pool
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-batch-pools.getpool
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: batch-delete-pool
+      description: Batch Delete pool
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: microsoft-azure-batch-pools.deletepool
+      outputParameters:
+      - type: object
+        mapping: $.

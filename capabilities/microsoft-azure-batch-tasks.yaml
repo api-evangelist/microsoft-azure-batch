@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Batch Service REST API — Tasks
+  description: 'Azure Batch Service REST API — Tasks. 2 operations. Lead operation: Batch List tasks. Self-contained Naftiko
+    capability covering one Microsoft Azure Batch business surface.'
+  tags:
+  - Microsoft Azure Batch
+  - Tasks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_BATCH_API_KEY: MICROSOFT_AZURE_BATCH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-azure-batch-tasks
+    baseUri: https://{account}.{region}.batch.azure.com
+    description: Azure Batch Service REST API — Tasks business capability. Self-contained, no shared references.
+    resources:
+    - name: jobs-jobId-tasks
+      path: /jobs/{jobId}/tasks
+      operations:
+      - name: listtasks
+        method: GET
+        description: Batch List tasks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addtask
+        method: POST
+        description: Batch Add task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_BATCH_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: microsoft-azure-batch-tasks-rest
+    port: 8080
+    description: REST adapter for Azure Batch Service REST API — Tasks. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/jobs/{jobid}/tasks
+      name: jobs-jobid-tasks
+      description: REST surface for jobs-jobId-tasks.
+      operations:
+      - method: GET
+        name: listtasks
+        description: Batch List tasks
+        call: microsoft-azure-batch-tasks.listtasks
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addtask
+        description: Batch Add task
+        call: microsoft-azure-batch-tasks.addtask
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: microsoft-azure-batch-tasks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure Batch Service REST API — Tasks. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: batch-list-tasks
+      description: Batch List tasks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-azure-batch-tasks.listtasks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: batch-add-task
+      description: Batch Add task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-azure-batch-tasks.addtask
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
