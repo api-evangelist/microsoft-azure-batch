@@ -8,7 +8,7 @@ apis:
       - HPC
       - Job Scheduling
       - Parallel Processing
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://batch.core.windows.net/
     humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
     properties:
