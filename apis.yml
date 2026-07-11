@@ -21,6 +21,8 @@ apis:
       supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing
       task dependencies for batch processing scenarios.
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-azure-batch-scopes.yml
   - type: GitHubOrganization
     url: https://github.com/Azure
   - type: Portal
@@ -33,6 +35,8 @@ common:
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Support
     url: https://support.microsoft.com/
+  - url: https://azure.microsoft.com/en-us/blog/feed/
+    type: Blog
 created: '2026-03-13'
 modified: '2026-05-19'
 maintainers:
