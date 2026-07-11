@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/microsoft-azure-batch-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - implicit
+schemes:
+- name: azure_auth
+  type: oauth2
+  flows:
+  - flow: implicit
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+    scopes: 1
+  sources:
+  - openapi/microsoft-azure-batch-openapi.yml

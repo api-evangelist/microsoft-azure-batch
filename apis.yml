@@ -21,6 +21,10 @@ apis:
       supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing
       task dependencies for batch processing scenarios.
 common:
+  - type: DomainSecurity
+    url: security/microsoft-azure-batch-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-azure-batch-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-azure-batch-scopes.yml
   - type: GitHubOrganization
