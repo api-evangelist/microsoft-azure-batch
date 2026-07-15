@@ -21,6 +21,8 @@ apis:
       supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing
       task dependencies for batch processing scenarios.
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-azure-batch-agentic-access.yml
   - type: DomainSecurity
     url: security/microsoft-azure-batch-domain-security.yml
   - type: Authentication
