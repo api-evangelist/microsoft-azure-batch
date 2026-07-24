@@ -1,13 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Azure Batch Service REST API
-  description: Azure Batch is a managed service for running large-scale parallel and high-performance
-    computing batch jobs. The data plane REST API manages pools, jobs, tasks, certificates, and compute
-    nodes.
+  title: Azure Batch Service REST Jobs Pools API
+  description: Azure Batch is a managed service for running large-scale parallel and high-performance computing batch jobs. The data plane REST API manages pools, jobs, tasks, certificates, and compute nodes.
   version: 2024-07-01.20.0
-externalDocs:
-  description: Azure Batch REST API Documentation
-  url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 servers:
 - url: https://{account}.{region}.batch.azure.com
   variables:
@@ -15,15 +10,11 @@ servers:
       default: myaccount
     region:
       default: eastus
-tags:
-- name: Pools
-- name: Jobs
-- name: Tasks
-- name: Compute Nodes
-- name: Certificates
 security:
 - azure_auth:
   - user_impersonation
+tags:
+- name: Pools
 paths:
   /pools:
     get:
@@ -100,87 +91,6 @@ paths:
       responses:
         '202':
           description: Deletion accepted
-  /jobs:
-    get:
-      operationId: listJobs
-      summary: Batch List jobs
-      description: Lists all jobs.
-      tags:
-      - Jobs
-      parameters:
-      - name: api-version
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: List of jobs
-          content:
-            application/json:
-              schema:
-                type: object
-    post:
-      operationId: addJob
-      summary: Batch Add job
-      description: Adds a job.
-      tags:
-      - Jobs
-      parameters:
-      - name: api-version
-        in: query
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-      responses:
-        '201':
-          description: Job created
-  /jobs/{jobId}/tasks:
-    parameters:
-    - name: jobId
-      in: path
-      required: true
-      schema:
-        type: string
-    - name: api-version
-      in: query
-      required: true
-      schema:
-        type: string
-    get:
-      operationId: listTasks
-      summary: Batch List tasks
-      description: Lists tasks for a job.
-      tags:
-      - Tasks
-      responses:
-        '200':
-          description: List of tasks
-          content:
-            application/json:
-              schema:
-                type: object
-    post:
-      operationId: addTask
-      summary: Batch Add task
-      description: Adds a task to a job.
-      tags:
-      - Tasks
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-      responses:
-        '201':
-          description: Task created
 components:
   securitySchemes:
     azure_auth:
@@ -190,5 +100,8 @@ components:
           authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
           scopes:
             user_impersonation: Impersonate user
+externalDocs:
+  description: Azure Batch REST API Documentation
+  url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 x-generated-from: https://learn.microsoft.com/en-us/rest/api/batchservice/
 x-generated-by: claude-crawl-2026-05-08

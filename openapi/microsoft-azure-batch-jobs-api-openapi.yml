@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Azure Batch Service REST Jobs API
+  description: Azure Batch is a managed service for running large-scale parallel and high-performance computing batch jobs. The data plane REST API manages pools, jobs, tasks, certificates, and compute nodes.
+  version: 2024-07-01.20.0
+servers:
+- url: https://{account}.{region}.batch.azure.com
+  variables:
+    account:
+      default: myaccount
+    region:
+      default: eastus
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Jobs
+paths:
+  /jobs:
+    get:
+      operationId: listJobs
+      summary: Batch List jobs
+      description: Lists all jobs.
+      tags:
+      - Jobs
+      parameters:
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of jobs
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      operationId: addJob
+      summary: Batch Add job
+      description: Adds a job.
+      tags:
+      - Jobs
+      parameters:
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Job created
+components:
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+          scopes:
+            user_impersonation: Impersonate user
+externalDocs:
+  description: Azure Batch REST API Documentation
+  url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+x-generated-from: https://learn.microsoft.com/en-us/rest/api/batchservice/
+x-generated-by: claude-crawl-2026-05-08
