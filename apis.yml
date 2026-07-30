@@ -1,25 +1,56 @@
 aid: microsoft-azure-batch
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml
 apis:
-  - aid: microsoft-azure-batch:rest-api
-    name: Azure Batch REST API
-    tags:
-      - Batch Computing
-      - HPC
-      - Job Scheduling
-      - Parallel Processing
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://batch.core.windows.net/
-    humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
-    properties:
-      - url: openapi/microsoft-azure-batch-openapi.yml
-        type: OpenAPI
-      - url: https://learn.microsoft.com/en-us/rest/api/batchservice/
-        type: Documentation
-    description: >-
-      Azure Batch REST API provides management of large-scale parallel and high-performance computing workloads. It
-      supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing
-      task dependencies for batch processing scenarios.
+- aid: microsoft-azure-batch:microsoft-azure-batch-jobs-api
+  name: microsoft-azure-batch Jobs API
+  description: The Jobs API from microsoft-azure-batch — 1 operation(s) for jobs.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://batch.core.windows.net/
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+- aid: microsoft-azure-batch:microsoft-azure-batch-pools-api
+  name: microsoft-azure-batch Pools API
+  description: The Pools API from microsoft-azure-batch — 2 operation(s) for pools.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://batch.core.windows.net/
+  tags:
+  - Pools
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-pools-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+- aid: microsoft-azure-batch:microsoft-azure-batch-tasks-api
+  name: microsoft-azure-batch Tasks API
+  description: The Tasks API from microsoft-azure-batch — 1 operation(s) for tasks.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://batch.core.windows.net/
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 common:
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-batch-agentic-access.yml
