@@ -1,0 +1,18 @@
+{
+  "provider": "microsoft-azure-batch",
+  "sources": [
+    "microsoft-azure-batch-jobs-api-openapi.yml",
+    "microsoft-azure-batch-pools-api-openapi.yml",
+    "microsoft-azure-batch-tasks-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-azure-batch-jobs-api-openapi.yml",
+    "microsoft-azure-batch-pools-api-openapi.yml",
+    "microsoft-azure-batch-tasks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
