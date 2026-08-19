@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Batch Service REST Jobs Tasks API",
+    "version": "2024-07-01.20.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "implicit",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "credentials": {
+        "clientId": "{{clientId}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch List tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{account}.{region}.batch.azure.com/jobs/:jobId/tasks",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists tasks for a job."
+        },
+        {
+          "info": {
+            "name": "Batch Add task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{account}.{region}.batch.azure.com/jobs/:jobId/tasks",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a task to a job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

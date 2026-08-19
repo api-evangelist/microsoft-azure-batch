@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Batch Service REST Jobs Pools API",
+    "version": "2024-07-01.20.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "implicit",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "credentials": {
+        "clientId": "{{clientId}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch List pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{account}.{region}.batch.azure.com/pools",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists all pools in the account."
+        },
+        {
+          "info": {
+            "name": "Batch Add pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{account}.{region}.batch.azure.com/pools",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a pool to the account."
+        },
+        {
+          "info": {
+            "name": "Batch Get pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{account}.{region}.batch.azure.com/pools/:poolId",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets a pool."
+        },
+        {
+          "info": {
+            "name": "Batch Delete pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{account}.{region}.batch.azure.com/pools/:poolId",
+            "params": [
+              {
+                "name": "poolId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a pool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
