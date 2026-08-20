@@ -22,6 +22,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
   baseURL: https://batch.core.windows.net/
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -46,6 +48,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
   baseURL: https://batch.core.windows.net/
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
