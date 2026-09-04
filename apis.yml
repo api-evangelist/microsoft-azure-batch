@@ -1,3 +1,4 @@
+name: Microsoft Azure Batch
 aid: microsoft-azure-batch
 deliveryModel:
   model: saas
