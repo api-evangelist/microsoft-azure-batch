@@ -70,6 +70,8 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-batch-agentic-access.yml
   - type: DomainSecurity
@@ -98,3 +100,5 @@ maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 description: Learn how to use the Azure Batch API to schedule and run large scale computational workloads.
+x-parent: microsoft-azure
+x-relationship: product
