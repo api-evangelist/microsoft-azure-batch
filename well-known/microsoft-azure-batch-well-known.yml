@@ -1,0 +1,127 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTPS probes of every host this record knows, 2026-09-17
+note: >-
+  Probed the registrable domain (microsoft.com + www), the product marketing host
+  (azure.microsoft.com), the documentation host (learn.microsoft.com), the console
+  (portal.azure.com), the management-plane API host (management.azure.com), the
+  data-plane audience host (batch.core.windows.net), and the authorization server
+  named by the contract's securityDefinitions (login.microsoftonline.com). Two real
+  documents were served: an RFC 9116 security.txt on microsoft.com, and the Microsoft
+  Entra ID OpenID Provider metadata that this API's OAuth2 flow points at. Every
+  other path 404d. batch.core.windows.net does not resolve as a browsable host — it
+  is the OAuth audience/resource URI for the data plane, not a callable endpoint;
+  the callable endpoint is the per-account https://{account}.{region}.batch.azure.com.
+hosts:
+- host: www.microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: microsoft-azure-batch-security.txt
+    content_type: text/plain
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: microsoft-azure-batch-security.txt
+    note: Same document as www.microsoft.com; its Canonical field names the www URI.
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: azure.microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: learn.microsoft.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: portal.azure.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: management.azure.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+    note: >-
+      The ARM front door answers every unrouted path with 400 InvalidApiVersionParameter.
+      Not a served document, and not a soft 200 either.
+  - path: /.well-known/openid-configuration
+    status: 400
+  - path: /.well-known/api-catalog
+    status: 400
+  - path: /.well-known/agent-card.json
+    status: 400
+- host: batch.core.windows.net
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+    note: >-
+      DNS/connection failure. This host is the OAuth resource identifier for the
+      Batch data plane (scope https://batch.core.windows.net//.default), not a
+      callable API host.
+- host: login.microsoftonline.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: Root path is unrouted; Entra ID serves provider metadata per tenant.
+  - path: /common/v2.0/.well-known/openid-configuration
+    status: 200
+    file: microsoft-azure-batch-openid-configuration.json
+    content_type: application/json
+    note: >-
+      The authorization server this API's securityDefinitions points at
+      (authorizationUrl https://login.microsoftonline.com/common/oauth2/v2.0/authorize).
+      Carries issuer, jwks_uri, token_endpoint and the supported response/grant types.
+  - path: /common/v2.0/.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404

@@ -1,0 +1,16 @@
+generated: '2026-09-17'
+method: generated
+source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+note: Packaged Agent Skills for Azure Batch. Microsoft publishes no AGENTS.md or agent skills for Batch
+  (searched the Azure docs, the azure-rest-api-specs repository and the microsoft/mcp repository on 2026-09-17),
+  so these are GENERATED. Every operationId referenced in them was grepped out of the provider’s own 2025-06-01
+  contract before being written down.
+skills:
+- name: microsoft-azure-batch-run-a-batch-workload
+  file: skills/microsoft-azure-batch-run-a-batch-workload.md
+  summary: Pool -> job -> tasks -> poll -> collect output -> tear down.
+  operations: 12
+- name: microsoft-azure-batch-scale-and-schedule
+  file: skills/microsoft-azure-batch-scale-and-schedule.md
+  summary: Rehearse and apply autoscale, resize safely, and run recurring work with job schedules.
+  operations: 13

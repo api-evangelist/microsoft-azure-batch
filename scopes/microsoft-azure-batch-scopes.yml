@@ -1,16 +1,55 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/microsoft-azure-batch-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+docs: https://learn.microsoft.com/en-us/azure/batch/batch-aad-auth
+note: >-
+  Azure Batch does NOT publish a granular OAuth scope surface. Both planes declare a
+  single coarse scope and then delegate real authorization to Azure RBAC role
+  assignments on the Batch account resource. An agent asking "which scope do I need for
+  Jobs_DeleteJob" has no scope-level answer here — the answer is a role assignment.
+  Recorded honestly rather than fabricating a per-operation scope map.
+scheme_count: 2
 schemes:
-- name: azure_auth
-  source: openapi/microsoft-azure-batch-openapi.yml
-  flows:
-  - flow: implicit
-    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+  - name: OAuth2Auth
+    plane: data
+    source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+    flows:
+      - flow: implicit
+        authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+  - name: azure_auth
+    plane: management
+    source: openapi/_original/microsoft-azure-batch-management-openapi.json
+    flows:
+      - flow: implicit
+        authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+scope_count: 2
 scopes:
-- scope: user_impersonation
-  description: Impersonate user
-  flows:
-  - implicit
-  sources:
-  - openapi/microsoft-azure-batch-openapi.yml
+  - scope: https://batch.core.windows.net//.default
+    plane: data
+    description: >-
+      Resource-wide .default scope for the Batch data plane. Grants whatever the calling
+      identity's Azure RBAC role assignments on the Batch account already allow — it does
+      not itself narrow access. Applied to all 72 data-plane operations.
+    flows:
+      - implicit
+      - client_credentials
+    applies_to: all data-plane operations
+    sources:
+      - openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+  - scope: user_impersonation
+    plane: management
+    description: >-
+      "impersonate your user account" — the standard ARM delegated scope, applied to all
+      42 management-plane operations against management.azure.com.
+    flows:
+      - implicit
+    applies_to: all management-plane operations
+    sources:
+      - openapi/_original/microsoft-azure-batch-management-openapi.json
+authorization_model:
+  mechanism: Azure RBAC
+  description: >-
+    Effective permission is decided by role assignment scope (subscription / resource
+    group / Batch account), not by token scope. Microsoft publishes Batch built-in roles
+    and the full Microsoft.Batch/* action list through the Azure role definitions surface.
+  docs: https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles

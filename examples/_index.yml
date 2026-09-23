@@ -1,0 +1,619 @@
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/data-plane/Batch/stable/2025-06-01/examples
+note: First-party request/response examples that Microsoft ships alongside the Batch data-plane contract
+  and references from it with x-ms-examples. Saved verbatim on 2026-09-17 — nothing here was authored
+  or edited by API Evangelist. Each file is a complete {parameters, responses} pair for one named scenario.
+spec: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+summary:
+  examples: 101
+  operations_covered: 72
+  operations_total: 72
+  files_saved: 101
+examples:
+- operationId: Applications_GetApplication
+  title: Get applications
+  method: GET
+  path: /applications/{applicationId}
+  file: examples/batch-service/Applications_GetApplication.json
+  exists: true
+- operationId: Applications_ListApplications
+  title: List applications
+  method: GET
+  path: /applications
+  file: examples/batch-service/Applications_ListApplications.json
+  exists: true
+- operationId: JobSchedules_CreateJobSchedule
+  title: Creates a basic JobSchedule
+  method: POST
+  path: /jobschedules
+  file: examples/batch-service/JobSchedules_CreateJobSchedule_Basic.json
+  exists: true
+- operationId: JobSchedules_CreateJobSchedule
+  title: Creates a complex JobScheduleAdd
+  method: POST
+  path: /jobschedules
+  file: examples/batch-service/JobSchedules_CreateJobSchedule_Complex.json
+  exists: true
+- operationId: JobSchedules_DeleteJobSchedule
+  title: JobSchedule delete
+  method: DELETE
+  path: /jobschedules/{jobScheduleId}
+  file: examples/batch-service/JobSchedules_DeleteJobSchedule.json
+  exists: true
+- operationId: JobSchedules_DisableJobSchedule
+  title: JobSchedule disable
+  method: POST
+  path: /jobschedules/{jobScheduleId}/disable
+  file: examples/batch-service/JobSchedules_DisableJobSchedule.json
+  exists: true
+- operationId: JobSchedules_EnableJobSchedule
+  title: JobSchedule enable
+  method: POST
+  path: /jobschedules/{jobScheduleId}/enable
+  file: examples/batch-service/JobSchedules_EnableJobSchedule.json
+  exists: true
+- operationId: JobSchedules_GetJobSchedule
+  title: JobSchedule get
+  method: GET
+  path: /jobschedules/{jobScheduleId}
+  file: examples/batch-service/JobSchedules_GetJobSchedule.json
+  exists: true
+- operationId: JobSchedules_JobScheduleExists
+  title: Check Job Schedule Exists
+  method: HEAD
+  path: /jobschedules/{jobScheduleId}
+  file: examples/batch-service/JobSchedules_JobScheduleExists.json
+  exists: true
+- operationId: JobSchedules_ListJobSchedules
+  title: JobSchedule list
+  method: GET
+  path: /jobschedules
+  file: examples/batch-service/JobSchedules_ListJobSchedules.json
+  exists: true
+- operationId: JobSchedules_ReplaceJobSchedule
+  title: JobSchedule patch
+  method: PUT
+  path: /jobschedules/{jobScheduleId}
+  file: examples/batch-service/JobSchedules_ReplaceJobSchedule.json
+  exists: true
+- operationId: JobSchedules_TerminateJobSchedule
+  title: JobSchedule terminate
+  method: POST
+  path: /jobschedules/{jobScheduleId}/terminate
+  file: examples/batch-service/JobSchedules_TerminateJobSchedule.json
+  exists: true
+- operationId: JobSchedules_UpdateJobSchedule
+  title: JobSchedule update
+  method: PATCH
+  path: /jobschedules/{jobScheduleId}
+  file: examples/batch-service/JobSchedules_UpdateJobSchedule.json
+  exists: true
+- operationId: Jobs_CreateJob
+  title: Creates a basic job
+  method: POST
+  path: /jobs
+  file: examples/batch-service/Jobs_CreateJob_Basic.json
+  exists: true
+- operationId: Jobs_CreateJob
+  title: Creates a complex job
+  method: POST
+  path: /jobs
+  file: examples/batch-service/Jobs_CreateJob_Complex.json
+  exists: true
+- operationId: Jobs_DeleteJob
+  title: Delete Job
+  method: DELETE
+  path: /jobs/{jobId}
+  file: examples/batch-service/Jobs_DeleteJob.json
+  exists: true
+- operationId: Jobs_DisableJob
+  title: Job disable
+  method: POST
+  path: /jobs/{jobId}/disable
+  file: examples/batch-service/Jobs_DisableJob.json
+  exists: true
+- operationId: Jobs_EnableJob
+  title: Job enable
+  method: POST
+  path: /jobs/{jobId}/enable
+  file: examples/batch-service/Jobs_EnableJob.json
+  exists: true
+- operationId: Jobs_GetJob
+  title: Job get
+  method: GET
+  path: /jobs/{jobId}
+  file: examples/batch-service/Jobs_GetJob.json
+  exists: true
+- operationId: Jobs_GetJobTaskCounts
+  title: Job get task counts
+  method: GET
+  path: /jobs/{jobId}/taskcounts
+  file: examples/batch-service/Jobs_GetJobTaskCounts.json
+  exists: true
+- operationId: Jobs_ListJobPreparationAndReleaseTaskStatus
+  title: Job list preparation and release task status
+  method: GET
+  path: /jobs/{jobId}/jobpreparationandreleasetaskstatus
+  file: examples/batch-service/Jobs_ListJobPreparationAndReleaseTaskStatus.json
+  exists: true
+- operationId: Jobs_ListJobs
+  title: Job list
+  method: GET
+  path: /jobs
+  file: examples/batch-service/Jobs_ListJobs.json
+  exists: true
+- operationId: Jobs_ListJobsFromSchedule
+  title: List Job Under Job Schedule
+  method: GET
+  path: /jobschedules/{jobScheduleId}/jobs
+  file: examples/batch-service/Jobs_ListJobsFromSchedule.json
+  exists: true
+- operationId: Jobs_ReplaceJob
+  title: Job patch
+  method: PUT
+  path: /jobs/{jobId}
+  file: examples/batch-service/Jobs_ReplaceJob.json
+  exists: true
+- operationId: Jobs_TerminateJob
+  title: Job terminate
+  method: POST
+  path: /jobs/{jobId}/terminate
+  file: examples/batch-service/Jobs_TerminateJob.json
+  exists: true
+- operationId: Jobs_UpdateJob
+  title: Job update
+  method: PATCH
+  path: /jobs/{jobId}
+  file: examples/batch-service/Jobs_UpdateJob.json
+  exists: true
+- operationId: Nodes_CreateNodeUser
+  title: Node create user
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/users
+  file: examples/batch-service/Nodes_CreateNodeUser.json
+  exists: true
+- operationId: Nodes_DeallocateNode
+  title: Node Deallocate
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/deallocate
+  file: examples/batch-service/Node_DeallocateNode.json
+  exists: true
+- operationId: Nodes_DeleteNodeFile
+  title: File delete from node
+  method: DELETE
+  path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  file: examples/batch-service/Nodes_DeleteNodeFile.json
+  exists: true
+- operationId: Nodes_DeleteNodeUser
+  title: Node delete user
+  method: DELETE
+  path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+  file: examples/batch-service/Nodes_DeleteNodeUser.json
+  exists: true
+- operationId: Nodes_DisableNodeScheduling
+  title: Node disable scheduling
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/disablescheduling
+  file: examples/batch-service/Nodes_DisableNodeScheduling.json
+  exists: true
+- operationId: Nodes_EnableNodeScheduling
+  title: Node enable scheduling
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/enablescheduling
+  file: examples/batch-service/Nodes_EnableNodeScheduling.json
+  exists: true
+- operationId: Nodes_GetNode
+  title: Node enable scheduling
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}
+  file: examples/batch-service/Nodes_Get_DualStackNetworking.json
+  exists: true
+- operationId: Nodes_GetNode
+  title: Node get
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}
+  file: examples/batch-service/Nodes_GetNode.json
+  exists: true
+- operationId: Nodes_GetNodeExtension
+  title: Get batch node extension
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/extensions/{extensionName}
+  file: examples/batch-service/Nodes_GetNodeExtension.json
+  exists: true
+- operationId: Nodes_GetNodeFile
+  title: Get File From Compute Node
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  file: examples/batch-service/Nodes_GetNodeFile.json
+  exists: true
+- operationId: Nodes_GetNodeFileProperties
+  title: File get properties from node
+  method: HEAD
+  path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  file: examples/batch-service/Nodes_GetNodeFileProperties.json
+  exists: true
+- operationId: Nodes_GetNodeRemoteLoginSettings
+  title: Get batch node Dual Stack Networking Remote
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/remoteloginsettings
+  file: examples/batch-service/Nodes_GetNodeRemoteLoginSettings_DualStackNetworking.json
+  exists: true
+- operationId: Nodes_GetNodeRemoteLoginSettings
+  title: Node get remote login settings
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/remoteloginsettings
+  file: examples/batch-service/Nodes_GetNodeRemoteLoginSettings.json
+  exists: true
+- operationId: Nodes_ListNodeExtensions
+  title: List compute node extensions
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/extensions
+  file: examples/batch-service/Nodes_ListNodeExtensions.json
+  exists: true
+- operationId: Nodes_ListNodeFiles
+  title: File list from node
+  method: GET
+  path: /pools/{poolId}/nodes/{nodeId}/files
+  file: examples/batch-service/Nodes_ListNodeFiles.json
+  exists: true
+- operationId: Nodes_ListNodes
+  title: Node list
+  method: GET
+  path: /pools/{poolId}/nodes
+  file: examples/batch-service/Nodes_ListNodes.json
+  exists: true
+- operationId: Nodes_RebootNode
+  title: Node reboot
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/reboot
+  file: examples/batch-service/Nodes_RebootNode.json
+  exists: true
+- operationId: Nodes_ReimageNode
+  title: Node reimage
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/reimage
+  file: examples/batch-service/Nodes_NodeReimage.json
+  exists: true
+- operationId: Nodes_ReplaceNodeUser
+  title: Node update user
+  method: PUT
+  path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+  file: examples/batch-service/Nodes_ReplaceNodeUser.json
+  exists: true
+- operationId: Nodes_StartNode
+  title: Node start
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/start
+  file: examples/batch-service/Node_StartNode.json
+  exists: true
+- operationId: Nodes_UploadNodeLogs
+  title: Upload BatchService Logs
+  method: POST
+  path: /pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs
+  file: examples/batch-service/Nodes_UploadNodeLogs.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a VirtualMachineConfiguration pool
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_VirtualMachineConfiguration.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a VirtualMachineConfiguration pool with OS disk
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_OSDisk.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a VirtualMachineConfiguration pool with ServiceArtifactReference
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_VirtualMachineConfigurationWithServiceArtifactReference.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a VirtualMachineConfiguration pool with containers
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_VirtualMachineConfigurationWithContainers.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a VirtualMachineConfiguration pool with extensions
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_VirtualMachineConfigurationWithExtensions.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with SecurityProfile
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_SecurityProfile.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with accelerated networking
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_AcceleratedNetworking.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with confidential disk encryption set for user subscription accounts
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_ConfidentialDiskEncryptionSet_ForUserSubscriptionAccounts.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with disk encryption set for user subscription accounts
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_DiskEncryptionSet_ForUserSubscriptionAccounts.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with dual stack networking
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_DualStackNetworking.json
+  exists: true
+- operationId: Pools_CreatePool
+  title: Creates a pool with mount drive specified
+  method: POST
+  path: /pools
+  file: examples/batch-service/Pools_CreatePool_MountConfiguration.json
+  exists: true
+- operationId: Pools_DeletePool
+  title: Pool delete
+  method: DELETE
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_DeletePool.json
+  exists: true
+- operationId: Pools_DisablePoolAutoScale
+  title: Disable pool autoscale
+  method: POST
+  path: /pools/{poolId}/disableautoscale
+  file: examples/batch-service/Pools_DisablePoolAutoScale.json
+  exists: true
+- operationId: Pools_EnablePoolAutoScale
+  title: Pool enable autoscale
+  method: POST
+  path: /pools/{poolId}/enableautoscale
+  file: examples/batch-service/Pools_EnablePoolAutoscale.json
+  exists: true
+- operationId: Pools_EvaluatePoolAutoScale
+  title: Pool evaluate autoscale
+  method: POST
+  path: /pools/{poolId}/evaluateautoscale
+  file: examples/batch-service/Pools_EvaluatePoolAutoscale.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Add a VirtualMachineConfiguration pool with OS disk
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_VirtualMachineConfigurationWithOSDisk.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Get a VirtualMachineConfiguration pool with SecurityProfile
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_SecurityProfile.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Get a VirtualMachineConfiguration pool with ServiceArtifactReference
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_VirtualMachineConfigurationWithServiceArtifactReference.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Get a VirtualMachineConfiguration pool with extensions
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_VirtualMachineConfigurationWithExtensions.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Get a pool with AcceleratedNetworking
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_AcceleratedNetworking.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Pool get
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_Basic.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Pool get with confidential disk encryption set for user subscription accounts
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_ConfidentialDiskEncryptionSet.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Pool get with customer managed key
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_CustomerManagedKey.json
+  exists: true
+- operationId: Pools_GetPool
+  title: Pool get with disk encryption set for user subscription accounts
+  method: GET
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_GetPool_DiskEncryptionSet.json
+  exists: true
+- operationId: Pools_ListPoolNodeCounts
+  title: NodeCountsPayload
+  method: GET
+  path: /nodecounts
+  file: examples/batch-service/Pools_ListPoolNodeCounts.json
+  exists: true
+- operationId: Pools_ListPoolUsageMetrics
+  title: Pool list usage metrics
+  method: GET
+  path: /poolusagemetrics
+  file: examples/batch-service/Pools_ListPoolUsageMetrics.json
+  exists: true
+- operationId: Pools_ListPools
+  title: Pool list
+  method: GET
+  path: /pools
+  file: examples/batch-service/Pools_ListPools_Basic.json
+  exists: true
+- operationId: Pools_ListSupportedImages
+  title: Account list node agent skus
+  method: GET
+  path: /supportedimages
+  file: examples/batch-service/Pools_ListSupportedImages.json
+  exists: true
+- operationId: Pools_PoolExists
+  title: Check Pool Exists
+  method: HEAD
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_PoolExists.json
+  exists: true
+- operationId: Pools_RemoveNodes
+  title: Pool remove nodes
+  method: POST
+  path: /pools/{poolId}/removenodes
+  file: examples/batch-service/Pools_RemoveNodes.json
+  exists: true
+- operationId: Pools_ReplacePoolProperties
+  title: Pool update
+  method: POST
+  path: /pools/{poolId}/updateproperties
+  file: examples/batch-service/Pools_ReplacePoolProperties.json
+  exists: true
+- operationId: Pools_ResizePool
+  title: Pool resize
+  method: POST
+  path: /pools/{poolId}/resize
+  file: examples/batch-service/Pools_ResizePool.json
+  exists: true
+- operationId: Pools_StopPoolResize
+  title: Pool stop resize
+  method: POST
+  path: /pools/{poolId}/stopresize
+  file: examples/batch-service/Pools_StopPoolResize.json
+  exists: true
+- operationId: Pools_UpdatePool
+  title: Patch the Pool
+  method: PATCH
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_UpdatePool.json
+  exists: true
+- operationId: Pools_UpdatePool
+  title: Patch the customer managed key for a pool
+  method: PATCH
+  path: /pools/{poolId}
+  file: examples/batch-service/Pools_Update_CustomerManagedKey_ForBatchManagedAccounts.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a basic task
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_Basic.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a task with container settings
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_ContainerSettings.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a task with container settings with data isolation
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_ContainerSettingsWithDataIsolation.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a task with container settings with duplicate source
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_ContainerSettingsWithDataIsolation_DuplicateSources.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a task with exit conditions
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_ExitConditions.json
+  exists: true
+- operationId: Tasks_CreateTask
+  title: Creates a task with extra slot requirement
+  method: POST
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_CreateTask_RequiredSlots.json
+  exists: true
+- operationId: Tasks_CreateTaskCollection
+  title: Creates a basic collection of tasks
+  method: POST
+  path: /jobs/{jobId}/addtaskcollection
+  file: examples/batch-service/Tasks_CreateTaskCollection_Basic.json
+  exists: true
+- operationId: Tasks_CreateTaskCollection
+  title: Creates a complex collection of tasks
+  method: POST
+  path: /jobs/{jobId}/addtaskcollection
+  file: examples/batch-service/Tasks_CreateTaskCollection_Complex.json
+  exists: true
+- operationId: Tasks_DeleteTask
+  title: Task delete
+  method: DELETE
+  path: /jobs/{jobId}/tasks/{taskId}
+  file: examples/batch-service/Tasks_DeleteTask.json
+  exists: true
+- operationId: Tasks_DeleteTaskFile
+  title: File delete from task
+  method: DELETE
+  path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  file: examples/batch-service/Tasks_DeleteTaskFile.json
+  exists: true
+- operationId: Tasks_GetTask
+  title: Task get
+  method: GET
+  path: /jobs/{jobId}/tasks/{taskId}
+  file: examples/batch-service/Tasks_GetTask.json
+  exists: true
+- operationId: Tasks_GetTaskFile
+  title: Get File From Task
+  method: GET
+  path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  file: examples/batch-service/Tasks_GetTaskFile.json
+  exists: true
+- operationId: Tasks_GetTaskFileProperties
+  title: File get properties from task
+  method: HEAD
+  path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  file: examples/batch-service/Tasks_GetTaskFileProperties.json
+  exists: true
+- operationId: Tasks_ListSubTasks
+  title: Task list subtasks
+  method: GET
+  path: /jobs/{jobId}/tasks/{taskId}/subtasksinfo
+  file: examples/batch-service/Tasks_ListSubTasks.json
+  exists: true
+- operationId: Tasks_ListTaskFiles
+  title: File list from task
+  method: GET
+  path: /jobs/{jobId}/tasks/{taskId}/files
+  file: examples/batch-service/Tasks_ListTaskFiles.json
+  exists: true
+- operationId: Tasks_ListTasks
+  title: Task list
+  method: GET
+  path: /jobs/{jobId}/tasks
+  file: examples/batch-service/Tasks_ListTasks.json
+  exists: true
+- operationId: Tasks_ReactivateTask
+  title: Task reactivate
+  method: POST
+  path: /jobs/{jobId}/tasks/{taskId}/reactivate
+  file: examples/batch-service/Tasks_ReactivateTask.json
+  exists: true
+- operationId: Tasks_ReplaceTask
+  title: Task update
+  method: PUT
+  path: /jobs/{jobId}/tasks/{taskId}
+  file: examples/batch-service/Tasks_ReplaceTask.json
+  exists: true
+- operationId: Tasks_TerminateTask
+  title: Task terminate
+  method: POST
+  path: /jobs/{jobId}/tasks/{taskId}/terminate
+  file: examples/batch-service/Tasks_TerminateTask.json
+  exists: true

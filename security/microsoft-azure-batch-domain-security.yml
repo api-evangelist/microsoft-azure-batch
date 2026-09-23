@@ -1,11 +1,16 @@
-generated: '2026-07-11'
+generated: '2026-09-17'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
+- host: www.microsoft.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 17 19:55:21 2027 GMT
+  hsts: false
 - host: portal.azure.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Jan  5 19:53:18 2027 GMT
+  cert_expires: Feb 25 12:39:07 2027 GMT
   hsts: true
   hsts_max_age: 31536000
 - host: learn.microsoft.com
@@ -14,16 +19,7 @@ hosts:
   cert_expires: Dec 11 02:26:09 2026 GMT
   hsts: true
   hsts_max_age: 31536000
-- host: batch.core.windows.net
-  https: false
 domains:
-- domain: azure.com
-  dnssec: false
-  caa:
-  - 0 contactemail "caarecordaware@microsoft.com"
-  spf: true
-  dmarc: true
-  dmarc_policy: none
 - domain: microsoft.com
   dnssec: false
   caa:
@@ -31,3 +27,10 @@ domains:
   spf: true
   dmarc: true
   dmarc_policy: reject
+- domain: azure.com
+  dnssec: false
+  caa:
+  - 0 contactemail "caarecordaware@microsoft.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: none

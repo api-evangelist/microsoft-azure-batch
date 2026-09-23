@@ -1,0 +1,120 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
+derived_from:
+  - openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+  - openapi/_original/microsoft-azure-batch-management-openapi.json
+note: >-
+  Two kinds of claim are recorded separately below. `conformance[]` is what the CONTRACT
+  demonstrates about itself. `compliance[]` is the certification and attestation programme
+  Microsoft publishes for Azure; Azure Batch inherits it as an Azure service rather than
+  holding a Batch-specific certificate, and each entry says so.
+conformance:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      securityDefinitions.OAuth2Auth (data plane) and securityDefinitions.azure_auth
+      (management plane) in openapi/_original/, both OAuth 2.0 against Microsoft Entra ID.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration returned
+      HTTP 200 on 2026-09-17 with issuer, jwks_uri, token_endpoint and
+      id_token_signing_alg_values_supported. Saved to
+      well-known/microsoft-azure-batch-openid-configuration.json.
+  - id: odata
+    conforms: false
+    partial: true
+    evidence: >-
+      The data plane implements a SUBSET of OData query options — $filter, $select, $expand
+      and odata.nextLink continuation — documented at
+      https://learn.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch. It does
+      NOT expose an OData $metadata service document, an OData-Version header, or the OData
+      entity model, so it is not an OData service. Recorded as partial rather than claimed.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Server-driven continuation via odata.nextLink plus a maxresults page-size hint, declared
+      with x-ms-pageable on 15 list operations in the provider contract.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header exists anywhere in the contract. Conditional-request
+      concurrency (If-Match / If-None-Match) covers 28 of 72 operations. See
+      conventions/microsoft-azure-batch-conventions.yml.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors use the Microsoft Azure envelope {code, message:{lang,value}, values[]} with
+      application/json, not application/problem+json. 125 codes published at
+      https://learn.microsoft.com/en-us/rest/api/batchservice/batch-status-and-error-codes.
+  - id: rfc8594
+    conforms: false
+    evidence: No Sunset or Deprecation response headers are documented or present in the contract.
+  - id: rfc9116
+    conforms: true
+    evidence: >-
+      https://www.microsoft.com/.well-known/security.txt returned HTTP 200 on 2026-09-17 with
+      Contact, Policy, Acknowledgments, Encryption, Expires, Canonical, CSAF and
+      Preferred-Languages fields. Saved to well-known/microsoft-azure-batch-security.txt.
+  - id: conditional-requests
+    conforms: true
+    evidence: >-
+      RFC 9110 conditional requests — If-Match, If-None-Match, If-Modified-Since,
+      If-Unmodified-Since — declared on 28 data-plane operations, with ConditionNotMet
+      (304 read / 412 write) as the published failure code.
+domain_standard:
+  applicable: false
+  note: >-
+    Batch scheduling / HPC job submission has no adopted cross-vendor wire standard that
+    this contract could declare — there is no DRMAA, no OGC-style profile, and no
+    industry message set in play here. The reward-only domain-standard check is therefore
+    left unclaimed rather than filled with a near-miss. The nearest real standards the
+    contract does touch (OAuth 2.0, OpenID Connect, OData query options, RFC 9110
+    conditional requests) are recorded under conformance[] above.
+compliance:
+  scope_note: >-
+    Every entry below is a MICROSOFT AZURE platform attestation whose published in-scope
+    list names "Azure" (and in most cases Azure Government) as a whole. Azure Batch is an
+    Azure service inside that boundary; Microsoft does not publish a Batch-specific
+    certificate. Service-level detail for a given audit period is in the audit reports on
+    the Service Trust Portal, which requires sign-in.
+  programs:
+    - id: iso-27001
+      name: ISO/IEC 27001
+      in_scope: Azure, Azure Government, and Azure Germany
+      evidence: https://learn.microsoft.com/en-us/compliance/regulatory/offering-iso-27001
+      probed: '2026-09-17'
+      http_status: 200
+    - id: soc-2
+      name: SOC 2 Type 2
+      in_scope: Azure
+      evidence: https://learn.microsoft.com/en-us/compliance/regulatory/offering-soc-2
+      probed: '2026-09-17'
+      http_status: 200
+    - id: fedramp
+      name: FedRAMP
+      in_scope: Azure and Azure Government
+      evidence: https://learn.microsoft.com/en-us/compliance/regulatory/offering-fedramp
+      probed: '2026-09-17'
+      http_status: 200
+    - id: pci-dss
+      name: PCI DSS
+      in_scope: Azure and Azure Government
+      evidence: https://learn.microsoft.com/en-us/compliance/regulatory/offering-pci-dss
+      probed: '2026-09-17'
+      http_status: 200
+    - id: hipaa-hitech
+      name: HIPAA / HITECH
+      in_scope: Azure and Azure Government
+      evidence: https://learn.microsoft.com/en-us/compliance/regulatory/offering-hipaa-hitech
+      probed: '2026-09-17'
+      http_status: 200
+    - id: gdpr
+      name: GDPR
+      in_scope: Microsoft cloud services
+      evidence: https://www.microsoft.com/en-us/trust-center
+      probed: '2026-09-17'
+      http_status: 200
+  portal: https://servicetrust.microsoft.com/
+  offerings_index: https://learn.microsoft.com/en-us/azure/compliance/offerings/

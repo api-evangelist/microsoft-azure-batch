@@ -1,17 +1,113 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/microsoft-azure-batch-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/rest/api/batchservice/authenticate-requests-to-the-azure-batch-service
+docs: https://learn.microsoft.com/en-us/azure/batch/batch-aad-auth
+upgraded_from:
+  method: derived
+  reason: >-
+    The derived profile read only the three AE-authored tag-split specs in openapi/ and
+    reported a single implicit-flow scheme with the legacy v1.0 authorize endpoint. The
+    provider's own 2025-06-01 contract (openapi/_original/) and the Entra ID provider
+    metadata probed at login.microsoftonline.com give the real picture, below.
 summary:
   types:
-  - oauth2
+    - oauth2
+    - shared-key
   oauth2_flows:
-  - implicit
+    - implicit
+    - authorization_code
+    - client_credentials
+  recommended: Microsoft Entra ID (OAuth 2.0) with a managed identity or service principal
+  planes: 2
 schemes:
-- name: azure_auth
-  type: oauth2
-  flows:
-  - flow: implicit
-    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
-    scopes: 1
-  sources:
-  - openapi/microsoft-azure-batch-openapi.yml
+  - name: OAuth2Auth
+    type: oauth2
+    plane: data
+    authority: Microsoft Entra ID
+    flows:
+      - flow: implicit
+        authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+        scopes:
+          https://batch.core.windows.net//.default: ''
+    resource: https://batch.core.windows.net/
+    note: >-
+      Declared verbatim in the provider contract. The double slash in the scope
+      (batch.core.windows.net//.default) is Microsoft's own spelling, not a typo on our
+      side — the resource URI ends in a slash and ".default" is appended to it.
+    source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+  - name: azure_auth
+    type: oauth2
+    plane: management
+    authority: Microsoft Entra ID
+    flows:
+      - flow: implicit
+        authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+        scopes:
+          user_impersonation: impersonate your user account
+    resource: https://management.azure.com/
+    source: openapi/_original/microsoft-azure-batch-management-openapi.json
+  - name: Shared Key
+    type: apiKey
+    in: header
+    header: Authorization
+    plane: data
+    scheme: SharedKey
+    description: >-
+      Legacy HMAC-SHA256 shared-key authentication using a Batch account access key.
+      Authorization: SharedKey <account-name>:<base64 signature>. Microsoft documents it
+      but recommends Entra ID instead; shared-key auth cannot be scoped, rotated per
+      caller, or audited per identity, and is unavailable in user subscription pool
+      allocation mode for some operations.
+    docs: https://learn.microsoft.com/en-us/rest/api/batchservice/authenticate-requests-to-the-azure-batch-service
+identity_options:
+  - name: Managed identity
+    description: >-
+      System-assigned or user-assigned managed identity on the calling Azure resource, and
+      separately on the Batch pool itself for access to Key Vault, ACR and Storage.
+    docs: https://learn.microsoft.com/en-us/azure/batch/managed-identity-pools
+  - name: Service principal
+    description: App registration in Entra ID with a client secret or certificate; the
+      client-credentials path for unattended Batch clients.
+    docs: https://learn.microsoft.com/en-us/azure/batch/batch-aad-auth
+  - name: User (interactive)
+    description: Interactive sign-in for az batch account login and portal access.
+authorization_server:
+  issuer_metadata: https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+  probed: '2026-09-17'
+  http_status: 200
+  artifact: well-known/microsoft-azure-batch-openid-configuration.json
+  jwks_uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
+  token_endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/token
+  token_endpoint_auth_methods_supported:
+    - client_secret_post
+    - private_key_jwt
+    - client_secret_basic
+    - self_signed_tls_client_auth
+request_signing:
+  headers:
+    - name: Authorization
+      required: true
+    - name: ocp-date
+      required: false
+      description: >-
+        Present on all 72 data-plane operations. Carries the request time used in the
+        shared-key signature; also accepted alongside Entra tokens.
+    - name: client-request-id
+      required: false
+      description: Caller-supplied correlation id, present on all 72 operations.
+    - name: return-client-request-id
+      required: false
+      description: When true, the service echoes client-request-id back in the response.
+rbac:
+  model: Azure RBAC
+  note: >-
+    Data-plane authorization is Azure RBAC on the Batch account resource. Microsoft
+    publishes Batch-specific built-in roles (for example Azure Batch Data Contributor /
+    Data Reader) rather than OAuth scopes; the only OAuth scope the contract declares is
+    the resource-wide .default. See scopes/microsoft-azure-batch-scopes.yml.
+  docs: https://learn.microsoft.com/en-us/azure/batch/batch-account-create-portal
+sources:
+  - openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+  - openapi/_original/microsoft-azure-batch-management-openapi.json
+  - https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+  - https://learn.microsoft.com/en-us/azure/batch/batch-aad-auth

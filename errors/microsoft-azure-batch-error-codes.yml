@@ -1,0 +1,668 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/rest/api/batchservice/batch-status-and-error-codes
+format: azure-batch-error-envelope
+note: 'Azure Batch does NOT use RFC 9457 application/problem+json. It returns a Microsoft Azure error
+  envelope: a string `code`, a localized `message` object {lang, value}, and an optional `values[]` array
+  of {key, value} pairs naming the offending parameter and the reason. The published registry below is
+  the provider''s own, transcribed verbatim from the Batch Status and Error Codes reference on 2026-09-17.'
+envelope:
+  media_type: application/json
+  fields:
+  - field: code
+    type: string
+    description: Machine-readable error code; the values enumerated below.
+  - field: message
+    type: object
+    description: 'Localized human message: {lang, value}.'
+  - field: values
+    type: array
+    description: Optional {key, value} pairs — e.g. QueryParameterName, QueryParameterValue, Reason.
+  example:
+    code: InvalidQueryParameterValue
+    message:
+      lang: en-us
+      value: Value for one of the query parameters specified in the request URI is invalid
+    values:
+    - key: QueryParameterName
+      value: state
+    - key: QueryParameterValue
+      value: deleted
+    - key: Reason
+      value: invalid state
+  source: https://learn.microsoft.com/en-us/rest/api/batchservice/batch-status-and-error-codes
+categories:
+- id: common-rest
+  title: Common REST API Error Codes
+  count: 34
+- id: batch-service
+  title: Batch Service Error Codes
+  count: 70
+- id: job-task-scheduling
+  title: Job/Task Scheduling Error Codes (auto-pool / job preparation)
+  count: 7
+- id: task-execution
+  title: Job/Task Scheduling Error Codes (task execution / resource files)
+  count: 14
+problem_types:
+- code: ConditionNotMet
+  category: common-rest
+  title: The condition specified in the conditional header(s) was not met for a read operation.
+  http_status: 304
+  http_status_text: Not Modified
+- code: MissingRequiredHeader
+  category: common-rest
+  title: A required HTTP header was not specified.
+  http_status: 400
+  http_status_text: Bad Request
+- code: MissingRequiredProperty
+  category: common-rest
+  title: A required property was not specified in the request body.
+  http_status: 400
+  http_status_text: Bad Request
+- code: UnsupportedHeader
+  category: common-rest
+  title: One of the HTTP headers specified in the request is not supported.
+  http_status: 400
+  http_status_text: Bad Request
+- code: UnsupportedProperty
+  category: common-rest
+  title: One of the properties specified in the request body is not supported.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidHeaderValue
+  category: common-rest
+  title: The value provided for one of the HTTP headers was not in the correct format.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidPropertyValue
+  category: common-rest
+  title: The value provided for one of the property in the request body is invalid.
+  http_status: 400
+  http_status_text: Bad Request
+- code: MissingRequiredQueryParameter
+  category: common-rest
+  title: A required query parameter was not specified for this request.
+  http_status: 400
+  http_status_text: Bad Request
+- code: UnsupportedQueryParameter
+  category: common-rest
+  title: One of the query parameters specified in the request URI is not supported.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidQueryParameterValue
+  category: common-rest
+  title: An invalid value was specified for one of the query parameters in the request URI.
+  http_status: 400
+  http_status_text: Bad Request
+- code: OutOfRangeQueryParameterValue
+  category: common-rest
+  title: A query parameter specified in the request URI is outside the permissible range.
+  http_status: 400
+  http_status_text: Bad Request
+- code: RequestUrlFailedToParse
+  category: common-rest
+  title: The url in the request could not be parsed.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidUri
+  category: common-rest
+  title: The requested URI does not represent any resource on the server.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidHttpVerb
+  category: common-rest
+  title: The HTTP verb specified was not recognized by the server.
+  http_status: 400
+  http_status_text: Bad Request
+- code: EmptyMetadataKey
+  category: common-rest
+  title: The key for one of the metadata key-value pairs is empty.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidRequestBody
+  category: common-rest
+  title: The specified Request Body is not syntactically valid.
+  http_status: 400
+  http_status_text: Bad Request
+- code: OutOfRangeInput
+  category: common-rest
+  title: One of the request inputs is out of range.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidAuthenticationInfo
+  category: common-rest
+  title: The authentication information was not provided in the correct format. Verify the value of Authorization
+    header.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidInput
+  category: common-rest
+  title: One of the request inputs is not valid.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidMetadata
+  category: common-rest
+  title: The specified metadata is invalid. It includes characters that are not permitted.
+  http_status: 400
+  http_status_text: Bad Request
+- code: MetadataTooLarge
+  category: common-rest
+  title: The size of the specified metadata exceeds the maximum size permitted.
+  http_status: 400
+  http_status_text: Bad Request
+- code: MultipleConditionHeadersNotSupported
+  category: common-rest
+  title: Multiple condition headers are not supported.
+  http_status: 400
+  http_status_text: Bad Request
+- code: AuthenticationFailed
+  category: common-rest
+  title: The server failed to authenticate the request. Verify that the value of Authorization header
+    is formed correctly and includes the signature.
+  http_status: 403
+  http_status_text: Forbidden
+- code: InsufficientAccountPermissions
+  category: common-rest
+  title: The account being accessed does not have sufficient permissions to execute this operation.
+  http_status: 403
+  http_status_text: Forbidden
+- code: AccountIsDisabled
+  category: common-rest
+  title: The specified account is disabled.
+  http_status: 403
+  http_status_text: Forbidden
+- code: ResourceNotFound
+  category: common-rest
+  title: The specified resource does not exist.
+  http_status: 404
+  http_status_text: Not Found
+- code: UnsupportedHttpVerb
+  category: common-rest
+  title: The resource doesn't support the specified HTTP verb.
+  http_status: 405
+  http_status_text: Method Not Allowed
+- code: MissingContentLengthHeader
+  category: common-rest
+  title: The Content-Length header was not specified.
+  http_status: 411
+  http_status_text: Length Required
+- code: ConditionNotMet
+  category: common-rest
+  title: The condition specified in the conditional header(s) was not met for a write operation.
+  http_status: 412
+  http_status_text: Precondition Failed
+- code: RequestBodyTooLarge
+  category: common-rest
+  title: The size of the request body exceeds the maximum size permitted.
+  http_status: 413
+  http_status_text: Request Entity Too Large
+- code: InvalidRange
+  category: common-rest
+  title: The range specified is invalid for the current size of the resource.
+  http_status: 416
+  http_status_text: Requested Range Not Satisfiable
+- code: InternalError
+  category: common-rest
+  title: The server encountered an internal error. Please retry the request.
+  http_status: 500
+  http_status_text: Internal Server Error
+- code: OperationTimedOut
+  category: common-rest
+  title: The operation could not be completed within the permitted time.
+  http_status: 500
+  http_status_text: Internal Server Error
+- code: ServerBusy
+  category: common-rest
+  title: The server is currently unable to receive requests. Please retry your request.
+  http_status: 503
+  http_status_text: Service Unavailable
+- code: UnsupportedRequestVersion
+  category: batch-service
+  title: The specified request version is not supported.
+  http_status: 400
+  http_status_text: BadRequest
+- code: InvalidAutoScalingSettings
+  category: batch-service
+  title: The specified auto-scaling settings are not valid.
+  http_status: 400
+  http_status_text: BadRequest
+- code: AutoScalingFormulaSyntaxError
+  category: batch-service
+  title: The specified auto-scaling formula has a syntax error.
+  http_status: 400
+  http_status_text: BadRequest
+- code: AutoScalingFormulaTooLong
+  category: batch-service
+  title: The specified auto-scaling formula exceeds lengths limit.
+  http_status: 400
+  http_status_text: BadRequest
+- code: OSVersionNotFound
+  category: batch-service
+  title: The specified OS Version does not exists.
+  http_status: 400
+  http_status_text: BadRequest
+- code: OSVersionDisabled
+  category: batch-service
+  title: The specified OS Version is disabled.
+  http_status: 400
+  http_status_text: BadRequest
+- code: OSVersionExpired
+  category: batch-service
+  title: The specified OS Version is expired.
+  http_status: 400
+  http_status_text: BadRequest
+- code: PoolVersionEqualsUpgradeVersion
+  category: batch-service
+  title: The pool is already with the given version.
+  http_status: 400
+  http_status_text: BadRequest
+- code: PoolNotEligibleForOSVersionUpgrade
+  category: batch-service
+  title: The specified pool is not eligible for OS Version upgrade.
+  http_status: 400
+  http_status_text: BadRequest
+- code: PoolNotFound
+  category: batch-service
+  title: The specified pool does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: NodeNotFound
+  category: batch-service
+  title: The specified node does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: JobScheduleNotFound
+  category: batch-service
+  title: The specified job schedule does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: JobNotFound
+  category: batch-service
+  title: The specified job does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: TaskNotFound
+  category: batch-service
+  title: The specified task does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: FileNotFound
+  category: batch-service
+  title: The specified file does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: NodeUserNotFound
+  category: batch-service
+  title: The specified node user does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: CertificateNotFound
+  category: batch-service
+  title: The specified certificate does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: JobPreparationTaskNotRunOnNode
+  category: batch-service
+  title: The job preparation task did not run on the specified node.
+  http_status: 404
+  http_status_text: NotFound
+- code: JobReleaseTaskNotRunOnNode
+  category: batch-service
+  title: The job release task did not run on the specified node.
+  http_status: 404
+  http_status_text: NotFound
+- code: NodeAgentSKUNotFound
+  category: batch-service
+  title: The specified Node Agent SKU does not exist.
+  http_status: 404
+  http_status_text: NotFound
+- code: OperationInvalidForCurrentState
+  category: batch-service
+  title: The specified operation is not valid for the current state of the resource.
+  http_status: 409
+  http_status_text: Conflict
+- code: PoolBeingDeleted
+  category: batch-service
+  title: The specified pool has been marked for deletion and is being reclaimed.
+  http_status: 409
+  http_status_text: Conflict
+- code: PoolBeingResized
+  category: batch-service
+  title: The specified pool is being resized
+  http_status: 409
+  http_status_text: Conflict
+- code: PoolBeingCreated
+  category: batch-service
+  title: The specified pool is being created.
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeBeingCreated
+  category: batch-service
+  title: The specified node is being created
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeBeingStarted
+  category: batch-service
+  title: The specified node is being started
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeBeingReimaged
+  category: batch-service
+  title: The specified node is being reimaged
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeBeingRebooted
+  category: batch-service
+  title: The specified node is being rebooted
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeStateUnusable
+  category: batch-service
+  title: The state of the specified node is unusable
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleBeingTerminated
+  category: batch-service
+  title: The specified job schedule is being terminated.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleBeingDeleted
+  category: batch-service
+  title: The specified job schedule has been marked for deletion and is being reclaimed.
+  http_status: 409
+  http_status_text: Conflict
+- code: CertificateBeingDeleted
+  category: batch-service
+  title: The specified certificate has been marked for deletion and is being deleted.
+  http_status: 409
+  http_status_text: Conflict
+- code: PoolExists
+  category: batch-service
+  title: The specified pool already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleExists
+  category: batch-service
+  title: The specified job schedule already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeUserExists
+  category: batch-service
+  title: The specified node user already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobExists
+  category: batch-service
+  title: The specified job already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeUserExists
+  category: batch-service
+  title: The specified node user already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: CertificateExists
+  category: batch-service
+  title: The specified certificate already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleDisabled
+  category: batch-service
+  title: The specified job schedule is disabled.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleCompleted
+  category: batch-service
+  title: The specified job schedule is already in completed state.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobBeingTerminated
+  category: batch-service
+  title: The specified job is being terminated.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobBeingDeleted
+  category: batch-service
+  title: The specified job has been marked for deletion and is being garbage collected.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobDisabled
+  category: batch-service
+  title: The specified job is disabled.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobCompleted
+  category: batch-service
+  title: The specified job is already in a completed state.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobNotActive
+  category: batch-service
+  title: The specified job is not in active state.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskExists
+  category: batch-service
+  title: The specified task already exists.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskCompleted
+  category: batch-service
+  title: The specified task is already in a completed state.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskNotCompleted
+  category: batch-service
+  title: The specified task is not in a completed state, and the requested operation can be performed
+    only on completed tasks.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskSucceeded
+  category: batch-service
+  title: The specified task has already completed successfully, and the requested operation cannot be
+    performed on successful tasks.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskFilesUnavailable
+  category: batch-service
+  title: The files of the specified task are unavailable.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskFilesCleanedup
+  category: batch-service
+  title: The files of the specified task are cleanedup.
+  http_status: 409
+  http_status_text: Conflict
+- code: ActiveJobAndScheduleQuotaReached
+  category: batch-service
+  title: Active job and schedule quota for the account has been reached.
+  http_status: 409
+  http_status_text: Conflict
+- code: PoolQuotaReached
+  category: batch-service
+  title: Pool quota for the account has been reached.
+  http_status: 409
+  http_status_text: Conflict
+- code: UpgradePoolVersionConflict
+  category: batch-service
+  title: The pool is already upgrading to a different version.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobPreparationTaskNotSpecified
+  category: batch-service
+  title: The specified job does not have job preparation task.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobReleaseTaskNotSpecified
+  category: batch-service
+  title: The specified job does not have job release task.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskIdSameAsJobPreparationTask
+  category: batch-service
+  title: The specified task id is same as the job preparation task.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskIdSameAsJobReleaseTask
+  category: batch-service
+  title: The specified task id is same as the job release task.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobWithSameIdExists
+  category: batch-service
+  title: A job with the specified job schedule id exists. Job and job schedule cannot have the same id.
+  http_status: 409
+  http_status_text: Conflict
+- code: JobScheduleWithSameIdExists
+  category: batch-service
+  title: A job schedule with the specified job id exists. Job and job schedule cannot have the same id.
+  http_status: 409
+  http_status_text: Conflict
+- code: NodeAlreadyInTargetSchedulingState
+  category: batch-service
+  title: The specified node is already in the target scheduling state.
+  http_status: 409
+  http_status_text: Conflict
+- code: OperationNotValidOnNode
+  category: batch-service
+  title: The specified operation is not valid on the node.
+  http_status: 409
+  http_status_text: Conflict
+- code: OperationNotValidOnPool
+  category: batch-service
+  title: The specified operation is not valid on the pool.
+  http_status: 409
+  http_status_text: Conflict
+- code: IOError
+  category: batch-service
+  title: An I/O error occurred when accessing the specified resource.
+  http_status: 403
+  http_status_text: Forbidden
+- code: TooManyEnableAutoScaleRequests
+  category: batch-service
+  title: Too many Enable Pool AutoScale requests are issued on the pool.
+  http_status: 503
+  http_status_text: ServiceUnavailable
+- code: ApplicationNotFound
+  category: batch-service
+  title: The specified application does not exist.
+  http_status: 404
+  http_status_text: Not Found
+- code: InvalidApplicationPackageReferences
+  category: batch-service
+  title: One or more application package references could not be satisfied. This occurs if the application
+    id or version does not exist or is not active, or if the reference did not specify a version and there
+    is no default version configured.
+  http_status: 409
+  http_status_text: Conflict
+- code: TaskDependenciesNotSpecifiedOnJob
+  category: batch-service
+  title: A task was specified as depending on other tasks, but the job did not specify that it would use
+    task dependencies.
+  http_status: 400
+  http_status_text: Bad Request
+- code: TaskDependencyListTooLong
+  category: batch-service
+  title: A task was specified as depending on other tasks, but the list of dependencies was too long to
+    be stored. The total stored length is limited to 64000 characters; the total length of task ids must
+    be slightly less than this to allow for internal storage overhead. If you encounter this error, consider
+    using task range dependencies instead.
+  http_status: 400
+  http_status_text: Bad Request
+- code: TaskDependencyRangesTooLong
+  category: batch-service
+  title: A task was specified as depending on multiple ranges of task ids, and the list of ranges was
+    too long to be stored. Note that the issue is not with the size of ranges, but with the number of
+    ranges.
+  http_status: 400
+  http_status_text: Bad Request
+- code: InvalidCertificatesInAutoPool
+  category: job-task-scheduling
+  title: The specified certificate references in the auto pool specification are not valid.
+  error_class: UserError
+- code: AutoPoolCreationFailedWithQuotaReached
+  category: job-task-scheduling
+  title: The pool quota for the account is reached.
+  error_class: UserError
+- code: InvalidApplicationPackageReferencesInAutoPool
+  category: job-task-scheduling
+  title: One or more application packages specified for the pool are invalid.
+  error_class: UserError
+- code: InvalidAutoScaleFormulaInAutoPool
+  category: job-task-scheduling
+  title: The specified auto-scaling settings are not valid.
+  error_class: UserError
+- code: InvalidAutoPoolSettings
+  category: job-task-scheduling
+  title: The specified autopool settings are not valid.
+  error_class: UserError
+- code: JobBeingTerminated
+  category: job-task-scheduling
+  title: Task cannot be started because the associated job is being terminated.
+  error_class: UserError
+- code: Unknown
+  category: job-task-scheduling
+  title: An unknown scheduling error has occurred.
+  error_class: ServerError
+- code: BlobNotFound
+  category: task-execution
+  title: One of the specified Azure Blob(s) is not found.
+  error_class: UserError
+- code: BlobAccessDenied
+  category: task-execution
+  title: Access for one of the specified Azure Blob(s) is denied.
+  error_class: UserError
+- code: BlobDownloadTimedOut
+  category: task-execution
+  title: Timeout encountered while downloading one of the specified Azure Blob(s).
+  error_class: ServerError
+- code: BlobDownloadMiscError
+  category: task-execution
+  title: Miscellaneous error encountered while downloading one of the specified Azure Blob(s).
+  error_class: ServerError
+- code: ResourceDirectoryCreateFailed
+  category: task-execution
+  title: Failure encountered creating resource directory for the task.
+  error_class: ServerError
+- code: ResourceFileCreateFailed
+  category: task-execution
+  title: Failure encountered creating resource file.
+  error_class: ServerError
+- code: ResourceFileWriteFailed
+  category: task-execution
+  title: Failure encountered writing resource file.
+  error_class: ServerError
+- code: CommandProgramNotFound
+  category: task-execution
+  title: The specified command program is not found.
+  error_class: UserError
+- code: CommandLaunchFailed
+  category: task-execution
+  title: Failed to launch the specified command line.
+  error_class: UserError
+- code: TaskEnded
+  category: task-execution
+  title: Task was ended by user request.
+  error_class: UserError
+- code: MaxInternalRetryCountReached
+  category: task-execution
+  title: The specified task has reached maximum internal retry count.
+  error_class: UserError
+- code: TaskSchedulingConstraintFailed
+  category: task-execution
+  title: Task cannot be scheduled on the pool associated with the job
+  error_class: UserError
+- code: DiskFull
+  category: task-execution
+  title: There is not enough disk space on the node that was selected to run the task.
+  error_class: ServerError
+- code: Unknown
+  category: task-execution
+  title: An unknown scheduling error has occurred.
+  error_class: ServerError
+summary:
+  total: 125
+  categories: 4
+  http_coded: 104
+  scheduling_coded: 21

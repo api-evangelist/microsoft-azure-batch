@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Azure Batch Service REST Jobs Tasks API
+  title: Azure Batch Service REST Tasks API
   description: Azure Batch is a managed service for running large-scale parallel and high-performance computing batch jobs. The data plane REST API manages pools, jobs, tasks, certificates, and compute nodes.
   version: 2024-07-01.20.0
 servers:

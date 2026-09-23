@@ -1,0 +1,37 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Azure Batch management plane (2025-06-01)
+  version: 1.0.0
+extends: openapi/_original/microsoft-azure-batch-management-openapi.json
+x-generated: '2026-09-17'
+x-method: generated
+x-source: openapi/_original/microsoft-azure-batch-management-openapi.json
+x-note: Captures API Evangelist annotations on top of the provider contract WITHOUT mutating it. Every
+  fact asserted here is sourced from an artifact in this repository or from a Microsoft-published page
+  named in the action description.
+actions:
+- target: $.info
+  description: Record provenance and the artifacts derived from this contract.
+  update:
+    x-apievangelist:
+      profile: https://apis.io/microsoft-azure-batch
+      harvested: '2026-09-17'
+      harvested_from: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch
+      artifacts:
+        errors: errors/microsoft-azure-batch-error-codes.yml
+        conventions: conventions/microsoft-azure-batch-conventions.yml
+        authentication: authentication/microsoft-azure-batch-authentication.yml
+        scopes: scopes/microsoft-azure-batch-scopes.yml
+        lifecycle: lifecycle/microsoft-azure-batch-lifecycle.yml
+        rate_limits: rate-limits/microsoft-azure-batch-rate-limits.yml
+        data_model: data-model/microsoft-azure-batch-data-model.yml
+- target: $.info
+  description: State the error envelope, which the contract models only as a default response.
+  update:
+    x-error-envelope:
+      format: azure-batch-error-envelope
+      rfc9457: false
+      media_type: application/json
+      shape: '{ code, message: { lang, value }, values: [ { key, value } ] }'
+      published_codes: 125
+      reference: https://learn.microsoft.com/en-us/rest/api/batchservice/batch-status-and-error-codes

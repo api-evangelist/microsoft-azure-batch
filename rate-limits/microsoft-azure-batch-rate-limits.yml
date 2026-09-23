@@ -4,84 +4,153 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: microsoft-azure-batch
 providerId: microsoft-azure-batch
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-17'
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
 tags:
-  - Rate Limiting
   - Quotas
+  - Service Limits
   - Throttling
-description: Machine-readable rate limit definitions for the microsoft-azure-batch API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+description: >-
+  Published Azure Batch service quotas and limits, transcribed from Microsoft's own
+  "Batch service quotas and limits" reference and the azure-batch-limits include it
+  renders (ms.date 2026-01-05 / 2026-06-16). REPLACES a 2026-05-04 scaffold that
+  carried invented free/professional/enterprise request-per-minute tiers; Azure Batch
+  publishes no such tiers. Batch meters RESOURCES (accounts, cores, jobs, pools),
+  not requests per minute, so there is no published per-key request rate limit and
+  no documented X-RateLimit-* response header set for the data plane.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  note: >-
+    Microsoft does not document RateLimit-* or X-RateLimit-* response headers for the
+    Batch data plane. Throttled/overloaded requests surface through the error envelope
+    instead — code ServerBusy (503 Service Unavailable, "The server is currently unable
+    to receive requests. Please retry your request.") and OperationTimedOut (500). The
+    Azure SDKs retry these with exponential backoff. Every Batch operation accepts a
+    client-request-id header and echoes it with return-client-request-id, which is the
+    correlation signal Microsoft does publish.
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
+  throttled: 503
+  throttledCode: ServerBusy
+  quotaExceeded: 400
+  quotaExceededCodes:
+    - AutoPoolCreationFailedWithQuotaReached
+    - PoolQuotaReached
   serviceUnavailable: 503
+limit_count: 11
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Azure Batch REST API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Azure Batch REST API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+  - name: Batch accounts per region per subscription
+    scope: subscription
+    metric: batch_accounts
+    limit: 3
+    default_range: 1-3
+    maximum: 50
+    adjustable: true
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Dedicated cores per Batch account
+    scope: account
+    metric: dedicated_cores
+    limit: 900
+    default_range: 0-900
+    maximum: contact-support
+    adjustable: true
+    note: >-
+      Default quotas for new accounts in some regions and subscription types have been
+      reduced, in some cases to zero. Applies to Batch service pool allocation mode only.
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Low-priority (Spot) cores per Batch account
+    scope: account
+    metric: low_priority_cores
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Azure Batch REST API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Azure Batch REST API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Azure Batch REST API
+    default_range: 0-100
+    maximum: contact-support
+    adjustable: true
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Active jobs and job schedules per Batch account
+    scope: account
+    metric: active_jobs_and_job_schedules
+    limit: 300
+    default_range: 100-300
+    maximum: 1000
+    adjustable: true
+    note: Completed jobs have no limit.
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Pools per Batch account
+    scope: account
+    metric: pools
+    limit: 100
+    default_range: 0-100
+    maximum: 500
+    adjustable: true
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Private endpoint connections per Batch account
+    scope: account
+    metric: private_endpoint_connections
+    limit: 100
+    maximum: 100
+    adjustable: false
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Compute nodes in an inter-node communication enabled pool
+    scope: pool
+    metric: compute_nodes
+    limit: 100
+    adjustable: false
+    note: 100 in Batch service pool allocation mode; 80 in user subscription mode.
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Concurrent tasks per compute node
+    scope: node
+    metric: concurrent_tasks
+    limit_formula: 4 x number of node cores
+    adjustable: false
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Applications per Batch account
+    scope: account
+    metric: applications
+    limit: 200
+    adjustable: false
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Application packages per application
+    scope: application
+    metric: application_packages
+    limit: 40
+    adjustable: false
+    note: 10 application packages per pool.
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+  - name: Maximum task lifetime
+    scope: task
+    metric: task_lifetime_days
+    limit: 180
+    timeFrame: day
+    adjustable: false
+    note: >-
+      Measured from when the task is added to the job to when it completes. Completed
+      task data is retained for seven days by default if the node it ran on still
+      exists; retention is configurable per task.
+    source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Quota increase
+    description: >-
+      Quota increases are requested at no charge through an Azure support request
+      (Issue type "Service and subscription limits (quotas)", Quota type "Batch") or
+      through the Azure Quota REST API. Requests complete within a few minutes to two
+      business days.
+    url: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit#increase-a-quota
+  - name: User subscription pool allocation mode
+    description: >-
+      Batch accounts created with pool allocation mode "user subscription" do not use
+      Batch core quotas at all. VMs are created directly in the subscription and the
+      subscription's own regional and per-series compute core quotas apply instead.
+    url: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit#core-quotas-in-user-subscription-mode
+  - name: Quotas are limits, not capacity guarantees
+    description: >-
+      Microsoft states explicitly that a quota is a limit and not a capacity guarantee,
+      and that quota values can change from either side.
+    url: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit#resource-quotas
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

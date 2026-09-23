@@ -1,0 +1,259 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/rest/api/batchservice/
+derived_from:
+  - openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+  - openapi/_original/microsoft-azure-batch-management-openapi.json
+description: >-
+  Cross-cutting runtime semantics of the Azure Batch data plane (API version 2025-06-01,
+  72 operations over 51 paths) and management plane (2025-06-01, 42 operations). Read from
+  the provider's own contract and the Batch REST reference, not inferred.
+auth:
+  style: OAuth 2.0 bearer (Microsoft Entra ID), or legacy HMAC shared key
+  header: Authorization
+  detail: authentication/microsoft-azure-batch-authentication.yml
+versioning:
+  style: mandatory date-stamped query parameter
+  parameter: api-version
+  location: query
+  required: true
+  current: '2025-06-01'
+  previous: 2024-07-01.20.0
+  note: >-
+    Every one of the 72 data-plane operations requires api-version. Older versions carry a
+    second, service-internal version component (2024-07-01.20.0); from 2025-06-01 Microsoft
+    dropped it. An unsupported value returns UnsupportedRequestVersion (400).
+  detail: lifecycle/microsoft-azure-batch-lifecycle.yml
+pagination:
+  style: server-driven continuation token
+  request_params:
+    - name: maxresults
+      in: query
+      description: Page size hint; the service may return fewer.
+    - name: $filter
+      in: query
+    - name: $select
+      in: query
+    - name: $expand
+      in: query
+  response_fields:
+    - name: odata.nextLink
+      description: Absolute URL of the next page; absent on the last page.
+    - name: value
+      description: The page of items.
+  pageable_operations: 15
+  note: >-
+    Declared in the contract with Microsoft's x-ms-pageable extension on 15 list
+    operations. A client follows odata.nextLink rather than computing an offset.
+  docs: https://learn.microsoft.com/en-us/azure/batch/batch-efficient-list-queries
+field_selection:
+  supported: true
+  params:
+    - $select
+    - $expand
+  note: >-
+    $select trims returned properties and $expand pulls in statistics. Microsoft
+    documents these as the primary way to keep large list queries cheap.
+  docs: https://learn.microsoft.com/en-us/azure/batch/batch-efficient-list-queries
+filtering:
+  supported: true
+  param: $filter
+  syntax: OData $filter subset
+  docs: https://learn.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch
+metadata:
+  supported: true
+  note: >-
+    Jobs, job schedules, pools and tasks all carry a user-supplied metadata[] of
+    {name, value} pairs. EmptyMetadataKey, InvalidMetadata and MetadataTooLarge are
+    published error codes, so the constraints are enforced server-side.
+request_tracing:
+  headers:
+    - name: client-request-id
+      direction: request
+      coverage: all 72 data-plane operations
+      description: Caller-supplied correlation GUID.
+    - name: return-client-request-id
+      direction: request
+      coverage: all 72 data-plane operations
+      description: When true, the service echoes client-request-id in the response.
+    - name: request-id
+      direction: response
+      description: Service-generated request identifier, returned on Batch responses.
+    - name: ocp-date
+      direction: request
+      coverage: all 72 data-plane operations
+      description: Request timestamp; part of the shared-key signature.
+idempotency:
+  mechanism: conditional requests (HTTP ETag / If-Match), not an idempotency key
+  header: If-Match
+  key_header: null
+  coverage: partial
+  scope:
+    - Jobs_ReplaceJob
+    - Jobs_UpdateJob
+    - Jobs_DeleteJob
+    - Jobs_DisableJob
+    - Jobs_EnableJob
+    - Jobs_TerminateJob
+    - Tasks_ReplaceTask
+    - Tasks_DeleteTask
+    - Tasks_ReactivateTask
+    - Tasks_TerminateTask
+    - JobSchedules_ReplaceJobSchedule
+    - JobSchedules_UpdateJobSchedule
+    - JobSchedules_DeleteJobSchedule
+    - JobSchedules_DisableJobSchedule
+    - JobSchedules_EnableJobSchedule
+    - JobSchedules_TerminateJobSchedule
+    - Pools_UpdatePool
+    - Pools_DeletePool
+    - Pools_EnablePoolAutoScale
+    - Pools_RemoveNodes
+    - Pools_ResizePool
+    - Pools_StopPoolResize
+  detail: >-
+    There is NO Idempotency-Key header anywhere in the Azure Batch contract. What the
+    service provides is optimistic concurrency: 28 of the 72 data-plane operations accept
+    If-Match / If-None-Match / If-Modified-Since / If-Unmodified-Since, and a mismatch
+    returns ConditionNotMet (412 on writes, 304 on reads). That protects an agent from
+    clobbering a change it did not see; it does NOT deduplicate a retried create. The
+    creating operations — Jobs_CreateJob, Tasks_CreateTask, Pools_CreatePool,
+    JobSchedules_CreateJobSchedule, Tasks_CreateTaskCollection — take no conditional
+    header and no idempotency key. Their safety net is instead that Batch ids are
+    CALLER-SUPPLIED and unique: re-POSTing a job with an id that already exists returns
+    JobExists (409) rather than creating a duplicate. That is real replay protection for
+    creates, but it is a property of the resource model, not a documented idempotency
+    mechanism, and it does not cover the non-id-bearing POST actions (resize, terminate,
+    enable, disable, removenodes), which are re-runnable but not deduplicated.
+  coverage_basis: >-
+    partial — the mechanism is scoped to the 28 named operations above out of 50 mutating
+    operations, and it is conditional-request concurrency rather than key-based replay
+    protection.
+  source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+reversibility:
+  applicable: true
+  grade: verified
+  summary: >-
+    Batch is unusually strong here: the resource model is built around reversible
+    lifecycle transitions (enable/disable, terminate/reactivate, resize/stop-resize) and
+    Microsoft publishes explicit retention and lifetime windows. Deletion is the one
+    irreversible class, and it is documented as such.
+  write_surfaces:
+    - operation: Jobs_DisableJob
+      reversal: Jobs_EnableJob
+      window: >-
+        Until the job is terminated or deleted. A disabled job stays disabled indefinitely
+        and re-enables in place.
+      reversible: true
+      docs: https://learn.microsoft.com/en-us/rest/api/batchservice/
+    - operation: JobSchedules_DisableJobSchedule
+      reversal: JobSchedules_EnableJobSchedule
+      window: Until the schedule is terminated or deleted.
+      reversible: true
+    - operation: Nodes_DisableNodeScheduling
+      reversal: Nodes_EnableNodeScheduling
+      window: Until the node is removed from the pool.
+      reversible: true
+    - operation: Pools_EnablePoolAutoScale
+      reversal: Pools_DisablePoolAutoScale
+      window: Until the pool is deleted.
+      reversible: true
+    - operation: Pools_ResizePool
+      reversal: Pools_StopPoolResize
+      window: >-
+        Only while the pool state is `resizing`. Once the resize completes the reversal is
+        a second Pools_ResizePool in the opposite direction, which for a shrink has already
+        destroyed the nodes.
+      reversible: partial
+    - operation: Tasks_TerminateTask
+      reversal: Tasks_ReactivateTask
+      window: >-
+        While the task is still within its retention period AND its maximum lifetime of
+        180 days from being added to the job. Microsoft states completed-task data is kept
+        seven days by default if the compute node it ran on still exists, and that
+        retention is configurable per task.
+      reversible: true
+      docs: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit#other-limits
+    - operation: Jobs_TerminateJob
+      reversal: null
+      window: null
+      reversible: false
+      note: >-
+        A terminated job cannot be returned to active. Individual completed tasks can be
+        reactivated, but the job itself is terminal.
+    - operation: Jobs_DeleteJob
+      reversal: null
+      window: null
+      reversible: false
+      note: >-
+        Delete is permanent and cascades to the job's tasks and their output on the nodes.
+        The DELETE is long-running (202 Accepted) and the job shows state `deleting` while
+        it drains; there is no documented cancel for an in-flight delete.
+    - operation: Pools_DeletePool
+      reversal: null
+      window: null
+      reversible: false
+      note: Permanent; destroys every compute node in the pool and any data on them.
+    - operation: Pools_RemoveNodes
+      reversal: null
+      window: null
+      reversible: false
+      note: >-
+        Nodes are deallocated and any task state on them is lost. A subsequent resize adds
+        NEW nodes; it does not restore the removed ones.
+    - operation: Tasks_DeleteTask
+      reversal: null
+      window: null
+      reversible: false
+  never_asserted: >-
+    No reversal window above is invented. Where Microsoft does not publish a window, the
+    entry says so rather than estimating one.
+  source: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit
+dry_run_mode:
+  supported: partial
+  detail: >-
+    Pools_EvaluatePoolAutoScale evaluates an autoscale formula against a pool and returns the
+    result WITHOUT applying it — a genuine rehearsal for the single most dangerous
+    parameter in Batch. There is no general dry-run/validate-only mode for create or
+    delete operations.
+  operations:
+    - Pools_EvaluatePoolAutoScale
+long_running_operations:
+  style: 202 Accepted + resource state polling
+  count: 14
+  detail: >-
+    14 data-plane operations return 202 Accepted. Batch does not return an Azure-AsyncOperation
+    /operation-location poll URL on the data plane; the caller polls the resource itself and
+    reads its `state` field (for example pool `resizing` -> `steady`, job `deleting`). The
+    management plane (management.azure.com) uses the standard ARM async pattern instead.
+error_envelope:
+  format: azure-batch-error-envelope
+  rfc9457: false
+  media_type: application/json
+  shape: '{ code: string, message: { lang, value }, values: [{ key, value }] }'
+  published_codes: 125
+  detail: errors/microsoft-azure-batch-error-codes.yml
+rate_limit_signaling:
+  headers_documented: false
+  detail: >-
+    No RateLimit-* or Retry-After headers are documented for the Batch data plane.
+    Overload surfaces as ServerBusy (503) and OperationTimedOut (500); quota exhaustion
+    surfaces as a named error code, not a 429. See
+    rate-limits/microsoft-azure-batch-rate-limits.yml.
+events:
+  webhooks: false
+  asyncapi: false
+  detail: >-
+    Azure Batch publishes no webhook or push-event surface and is not a Microsoft.Batch
+    source in Azure Event Grid system topics (checked 2026-09-17). Job, task and pool state
+    changes are observed by polling the resource, or by routing Batch service logs and
+    metrics to Log Analytics / Event Hubs / Storage through an Azure Monitor diagnostic
+    setting. That is a telemetry pipeline, not an API event contract, so no AsyncAPI
+    document is asserted here.
+cross_links:
+  errors: errors/microsoft-azure-batch-error-codes.yml
+  lifecycle: lifecycle/microsoft-azure-batch-lifecycle.yml
+  authentication: authentication/microsoft-azure-batch-authentication.yml
+  scopes: scopes/microsoft-azure-batch-scopes.yml
+  rate_limits: rate-limits/microsoft-azure-batch-rate-limits.yml
+  data_model: data-model/microsoft-azure-batch-data-model.yml

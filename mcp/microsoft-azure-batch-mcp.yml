@@ -1,0 +1,671 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+status: candidate
+name: Azure Batch (candidate MCP tool surface)
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+finding: Microsoft ships a first-party MCP server for Azure — the Azure MCP Server, github.com/microsoft/mcp,
+  distributed as @azure/mcp on npm (3.0.0-beta.44, published 2026-09-15), plus NuGet and PyPI builds,
+  all declared transport stdio in its server.json. It has NO Azure Batch tool area. Its tools/ directory
+  carries 60+ Azure.Mcp.Tools.* projects (Aks, AppService, Cosmos, Storage, KeyVault, Kusto, Monitor,
+  Postgres, ServiceBus, Sql, …) and none of them is Batch, checked 2026-09-17. So there is no MCP server
+  — hosted or local — through which an agent can create a Batch pool, submit a job, or list tasks. No
+  MCPServer pointer is claimed for this provider; the tool list below is a DERIVED candidate showing what
+  such a server would expose if Microsoft built one.
+related_microsoft_mcp_servers:
+- name: Azure MCP Server
+  repo: https://github.com/microsoft/mcp
+  package: https://www.npmjs.com/package/@azure/mcp
+  version: 3.0.0-beta.44
+  published: '2026-09-15'
+  mode: local-stdio
+  covers_batch: false
+  note: Generic Azure coverage. A Batch operator could reach Batch only through its az-CLI passthrough
+    tool, not through typed Batch tools.
+auth_note: 'A real Batch MCP server would carry the same auth as the REST contract: Microsoft Entra ID
+  OAuth 2.0, scope https://batch.core.windows.net//.default, with effective permission decided by Azure
+  RBAC role assignment on the Batch account.'
+summary:
+  candidate_tools: 72
+  categories:
+    Applications: 2
+    Jobs: 12
+    Tasks: 13
+    Job Schedules: 10
+    Pools: 16
+    Nodes: 19
+tools:
+- name: batch.Applications_ListApplications
+  category: Applications
+  description: Lists all of the applications available in the specified Account.
+  rest:
+    method: GET
+    path: /applications
+    operationId: Applications_ListApplications
+  input_schema_source: inherits the parameters and requestBody of Applications_ListApplications in the
+    provider contract
+- name: batch.Applications_GetApplication
+  category: Applications
+  description: Gets information about the specified Application.
+  rest:
+    method: GET
+    path: /applications/{applicationId}
+    operationId: Applications_GetApplication
+  input_schema_source: inherits the parameters and requestBody of Applications_GetApplication in the provider
+    contract
+- name: batch.Jobs_ListJobs
+  category: Jobs
+  description: Lists all of the Jobs in the specified Account.
+  rest:
+    method: GET
+    path: /jobs
+    operationId: Jobs_ListJobs
+  input_schema_source: inherits the parameters and requestBody of Jobs_ListJobs in the provider contract
+- name: batch.Jobs_CreateJob
+  category: Jobs
+  description: Creates a Job to the specified Account.
+  rest:
+    method: POST
+    path: /jobs
+    operationId: Jobs_CreateJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_CreateJob in the provider contract
+- name: batch.Jobs_GetJob
+  category: Jobs
+  description: Gets information about the specified Job.
+  rest:
+    method: GET
+    path: /jobs/{jobId}
+    operationId: Jobs_GetJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_GetJob in the provider contract
+- name: batch.Jobs_ReplaceJob
+  category: Jobs
+  description: Updates the properties of the specified Job.
+  rest:
+    method: PUT
+    path: /jobs/{jobId}
+    operationId: Jobs_ReplaceJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_ReplaceJob in the provider contract
+- name: batch.Jobs_UpdateJob
+  category: Jobs
+  description: Updates the properties of the specified Job.
+  rest:
+    method: PATCH
+    path: /jobs/{jobId}
+    operationId: Jobs_UpdateJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_UpdateJob in the provider contract
+- name: batch.Jobs_DeleteJob
+  category: Jobs
+  description: Deletes a Job.
+  rest:
+    method: DELETE
+    path: /jobs/{jobId}
+    operationId: Jobs_DeleteJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_DeleteJob in the provider contract
+- name: batch.Tasks_CreateTaskCollection
+  category: Tasks
+  description: Adds a collection of Tasks to the specified Job.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/addtaskcollection
+    operationId: Tasks_CreateTaskCollection
+  input_schema_source: inherits the parameters and requestBody of Tasks_CreateTaskCollection in the provider
+    contract
+- name: batch.Jobs_DisableJob
+  category: Jobs
+  description: Disables the specified Job, preventing new Tasks from running.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/disable
+    operationId: Jobs_DisableJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_DisableJob in the provider contract
+- name: batch.Jobs_EnableJob
+  category: Jobs
+  description: Enables the specified Job, allowing new Tasks to run.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/enable
+    operationId: Jobs_EnableJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_EnableJob in the provider contract
+- name: batch.Jobs_ListJobPreparationAndReleaseTaskStatus
+  category: Jobs
+  description: 'Lists the execution status of the Job Preparation and Job Release Task for the
+
+    specified Job across the Compute Nodes where the Job has run.'
+  rest:
+    method: GET
+    path: /jobs/{jobId}/jobpreparationandreleasetaskstatus
+    operationId: Jobs_ListJobPreparationAndReleaseTaskStatus
+  input_schema_source: inherits the parameters and requestBody of Jobs_ListJobPreparationAndReleaseTaskStatus
+    in the provider contract
+- name: batch.Jobs_GetJobTaskCounts
+  category: Jobs
+  description: Gets the Task counts for the specified Job.
+  rest:
+    method: GET
+    path: /jobs/{jobId}/taskcounts
+    operationId: Jobs_GetJobTaskCounts
+  input_schema_source: inherits the parameters and requestBody of Jobs_GetJobTaskCounts in the provider
+    contract
+- name: batch.Tasks_ListTasks
+  category: Tasks
+  description: Lists all of the Tasks that are associated with the specified Job.
+  rest:
+    method: GET
+    path: /jobs/{jobId}/tasks
+    operationId: Tasks_ListTasks
+  input_schema_source: inherits the parameters and requestBody of Tasks_ListTasks in the provider contract
+- name: batch.Tasks_CreateTask
+  category: Tasks
+  description: Creates a Task to the specified Job.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/tasks
+    operationId: Tasks_CreateTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_CreateTask in the provider contract
+- name: batch.Tasks_GetTask
+  category: Tasks
+  description: Gets information about the specified Task.
+  rest:
+    method: GET
+    path: /jobs/{jobId}/tasks/{taskId}
+    operationId: Tasks_GetTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_GetTask in the provider contract
+- name: batch.Tasks_ReplaceTask
+  category: Tasks
+  description: null
+  rest:
+    method: PUT
+    path: /jobs/{jobId}/tasks/{taskId}
+    operationId: Tasks_ReplaceTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_ReplaceTask in the provider contract
+- name: batch.Tasks_DeleteTask
+  category: Tasks
+  description: Deletes a Task from the specified Job.
+  rest:
+    method: DELETE
+    path: /jobs/{jobId}/tasks/{taskId}
+    operationId: Tasks_DeleteTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_DeleteTask in the provider contract
+- name: batch.Tasks_ListTaskFiles
+  category: Tasks
+  description: Lists the files in a Task's directory on its Compute Node.
+  rest:
+    method: GET
+    path: /jobs/{jobId}/tasks/{taskId}/files
+    operationId: Tasks_ListTaskFiles
+  input_schema_source: inherits the parameters and requestBody of Tasks_ListTaskFiles in the provider
+    contract
+- name: batch.Tasks_GetTaskFile
+  category: Tasks
+  description: null
+  rest:
+    method: GET
+    path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+    operationId: Tasks_GetTaskFile
+  input_schema_source: inherits the parameters and requestBody of Tasks_GetTaskFile in the provider contract
+- name: batch.Tasks_DeleteTaskFile
+  category: Tasks
+  description: Deletes the specified Task file from the Compute Node where the Task ran.
+  rest:
+    method: DELETE
+    path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+    operationId: Tasks_DeleteTaskFile
+  input_schema_source: inherits the parameters and requestBody of Tasks_DeleteTaskFile in the provider
+    contract
+- name: batch.Tasks_GetTaskFileProperties
+  category: Tasks
+  description: null
+  rest:
+    method: HEAD
+    path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+    operationId: Tasks_GetTaskFileProperties
+  input_schema_source: inherits the parameters and requestBody of Tasks_GetTaskFileProperties in the provider
+    contract
+- name: batch.Tasks_ReactivateTask
+  category: Tasks
+  description: 'Reactivates a Task, allowing it to run again even if its retry count has been
+
+    exhausted.'
+  rest:
+    method: POST
+    path: /jobs/{jobId}/tasks/{taskId}/reactivate
+    operationId: Tasks_ReactivateTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_ReactivateTask in the provider
+    contract
+- name: batch.Tasks_ListSubTasks
+  category: Tasks
+  description: 'Lists all of the subtasks that are associated with the specified multi-instance
+
+    Task.'
+  rest:
+    method: GET
+    path: /jobs/{jobId}/tasks/{taskId}/subtasksinfo
+    operationId: Tasks_ListSubTasks
+  input_schema_source: inherits the parameters and requestBody of Tasks_ListSubTasks in the provider contract
+- name: batch.Tasks_TerminateTask
+  category: Tasks
+  description: Terminates the specified Task.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/tasks/{taskId}/terminate
+    operationId: Tasks_TerminateTask
+  input_schema_source: inherits the parameters and requestBody of Tasks_TerminateTask in the provider
+    contract
+- name: batch.Jobs_TerminateJob
+  category: Jobs
+  description: Terminates the specified Job, marking it as completed.
+  rest:
+    method: POST
+    path: /jobs/{jobId}/terminate
+    operationId: Jobs_TerminateJob
+  input_schema_source: inherits the parameters and requestBody of Jobs_TerminateJob in the provider contract
+- name: batch.JobSchedules_ListJobSchedules
+  category: Job Schedules
+  description: Lists all of the Job Schedules in the specified Account.
+  rest:
+    method: GET
+    path: /jobschedules
+    operationId: JobSchedules_ListJobSchedules
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_ListJobSchedules in the
+    provider contract
+- name: batch.JobSchedules_CreateJobSchedule
+  category: Job Schedules
+  description: Creates a Job Schedule to the specified Account.
+  rest:
+    method: POST
+    path: /jobschedules
+    operationId: JobSchedules_CreateJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_CreateJobSchedule in the
+    provider contract
+- name: batch.JobSchedules_GetJobSchedule
+  category: Job Schedules
+  description: null
+  rest:
+    method: GET
+    path: /jobschedules/{jobScheduleId}
+    operationId: JobSchedules_GetJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_GetJobSchedule in the provider
+    contract
+- name: batch.JobSchedules_ReplaceJobSchedule
+  category: Job Schedules
+  description: Updates the properties of the specified Job Schedule.
+  rest:
+    method: PUT
+    path: /jobschedules/{jobScheduleId}
+    operationId: JobSchedules_ReplaceJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_ReplaceJobSchedule in the
+    provider contract
+- name: batch.JobSchedules_UpdateJobSchedule
+  category: Job Schedules
+  description: Updates the properties of the specified Job Schedule.
+  rest:
+    method: PATCH
+    path: /jobschedules/{jobScheduleId}
+    operationId: JobSchedules_UpdateJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_UpdateJobSchedule in the
+    provider contract
+- name: batch.JobSchedules_DeleteJobSchedule
+  category: Job Schedules
+  description: Deletes a Job Schedule from the specified Account.
+  rest:
+    method: DELETE
+    path: /jobschedules/{jobScheduleId}
+    operationId: JobSchedules_DeleteJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_DeleteJobSchedule in the
+    provider contract
+- name: batch.JobSchedules_JobScheduleExists
+  category: Job Schedules
+  description: Checks the specified Job Schedule exists.
+  rest:
+    method: HEAD
+    path: /jobschedules/{jobScheduleId}
+    operationId: JobSchedules_JobScheduleExists
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_JobScheduleExists in the
+    provider contract
+- name: batch.JobSchedules_DisableJobSchedule
+  category: Job Schedules
+  description: Disables a Job Schedule.
+  rest:
+    method: POST
+    path: /jobschedules/{jobScheduleId}/disable
+    operationId: JobSchedules_DisableJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_DisableJobSchedule in the
+    provider contract
+- name: batch.JobSchedules_EnableJobSchedule
+  category: Job Schedules
+  description: Enables a Job Schedule.
+  rest:
+    method: POST
+    path: /jobschedules/{jobScheduleId}/enable
+    operationId: JobSchedules_EnableJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_EnableJobSchedule in the
+    provider contract
+- name: batch.Jobs_ListJobsFromSchedule
+  category: Jobs
+  description: Lists the Jobs that have been created under the specified Job Schedule.
+  rest:
+    method: GET
+    path: /jobschedules/{jobScheduleId}/jobs
+    operationId: Jobs_ListJobsFromSchedule
+  input_schema_source: inherits the parameters and requestBody of Jobs_ListJobsFromSchedule in the provider
+    contract
+- name: batch.JobSchedules_TerminateJobSchedule
+  category: Job Schedules
+  description: Terminates a Job Schedule.
+  rest:
+    method: POST
+    path: /jobschedules/{jobScheduleId}/terminate
+    operationId: JobSchedules_TerminateJobSchedule
+  input_schema_source: inherits the parameters and requestBody of JobSchedules_TerminateJobSchedule in
+    the provider contract
+- name: batch.Pools_ListPoolNodeCounts
+  category: Pools
+  description: null
+  rest:
+    method: GET
+    path: /nodecounts
+    operationId: Pools_ListPoolNodeCounts
+  input_schema_source: inherits the parameters and requestBody of Pools_ListPoolNodeCounts in the provider
+    contract
+- name: batch.Pools_ListPools
+  category: Pools
+  description: Lists all of the Pools in the specified Account.
+  rest:
+    method: GET
+    path: /pools
+    operationId: Pools_ListPools
+  input_schema_source: inherits the parameters and requestBody of Pools_ListPools in the provider contract
+- name: batch.Pools_CreatePool
+  category: Pools
+  description: Creates a Pool to the specified Account.
+  rest:
+    method: POST
+    path: /pools
+    operationId: Pools_CreatePool
+  input_schema_source: inherits the parameters and requestBody of Pools_CreatePool in the provider contract
+- name: batch.Pools_GetPool
+  category: Pools
+  description: null
+  rest:
+    method: GET
+    path: /pools/{poolId}
+    operationId: Pools_GetPool
+  input_schema_source: inherits the parameters and requestBody of Pools_GetPool in the provider contract
+- name: batch.Pools_UpdatePool
+  category: Pools
+  description: Updates the properties of the specified Pool.
+  rest:
+    method: PATCH
+    path: /pools/{poolId}
+    operationId: Pools_UpdatePool
+  input_schema_source: inherits the parameters and requestBody of Pools_UpdatePool in the provider contract
+- name: batch.Pools_DeletePool
+  category: Pools
+  description: Deletes a Pool from the specified Account.
+  rest:
+    method: DELETE
+    path: /pools/{poolId}
+    operationId: Pools_DeletePool
+  input_schema_source: inherits the parameters and requestBody of Pools_DeletePool in the provider contract
+- name: batch.Pools_PoolExists
+  category: Pools
+  description: null
+  rest:
+    method: HEAD
+    path: /pools/{poolId}
+    operationId: Pools_PoolExists
+  input_schema_source: inherits the parameters and requestBody of Pools_PoolExists in the provider contract
+- name: batch.Pools_DisablePoolAutoScale
+  category: Pools
+  description: Disables automatic scaling for a Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/disableautoscale
+    operationId: Pools_DisablePoolAutoScale
+  input_schema_source: inherits the parameters and requestBody of Pools_DisablePoolAutoScale in the provider
+    contract
+- name: batch.Pools_EnablePoolAutoScale
+  category: Pools
+  description: Enables automatic scaling for a Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/enableautoscale
+    operationId: Pools_EnablePoolAutoScale
+  input_schema_source: inherits the parameters and requestBody of Pools_EnablePoolAutoScale in the provider
+    contract
+- name: batch.Pools_EvaluatePoolAutoScale
+  category: Pools
+  description: Gets the result of evaluating an automatic scaling formula on the Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/evaluateautoscale
+    operationId: Pools_EvaluatePoolAutoScale
+  input_schema_source: inherits the parameters and requestBody of Pools_EvaluatePoolAutoScale in the provider
+    contract
+- name: batch.Nodes_ListNodes
+  category: Nodes
+  description: Lists the Compute Nodes in the specified Pool.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes
+    operationId: Nodes_ListNodes
+  input_schema_source: inherits the parameters and requestBody of Nodes_ListNodes in the provider contract
+- name: batch.Nodes_GetNode
+  category: Nodes
+  description: Gets information about the specified Compute Node.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}
+    operationId: Nodes_GetNode
+  input_schema_source: inherits the parameters and requestBody of Nodes_GetNode in the provider contract
+- name: batch.Nodes_DeallocateNode
+  category: Nodes
+  description: Deallocates the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/deallocate
+    operationId: Nodes_DeallocateNode
+  input_schema_source: inherits the parameters and requestBody of Nodes_DeallocateNode in the provider
+    contract
+- name: batch.Nodes_DisableNodeScheduling
+  category: Nodes
+  description: Disables Task scheduling on the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/disablescheduling
+    operationId: Nodes_DisableNodeScheduling
+  input_schema_source: inherits the parameters and requestBody of Nodes_DisableNodeScheduling in the provider
+    contract
+- name: batch.Nodes_EnableNodeScheduling
+  category: Nodes
+  description: Enables Task scheduling on the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/enablescheduling
+    operationId: Nodes_EnableNodeScheduling
+  input_schema_source: inherits the parameters and requestBody of Nodes_EnableNodeScheduling in the provider
+    contract
+- name: batch.Nodes_ListNodeExtensions
+  category: Nodes
+  description: Lists the Compute Nodes Extensions in the specified Pool.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}/extensions
+    operationId: Nodes_ListNodeExtensions
+  input_schema_source: inherits the parameters and requestBody of Nodes_ListNodeExtensions in the provider
+    contract
+- name: batch.Nodes_GetNodeExtension
+  category: Nodes
+  description: Gets information about the specified Compute Node Extension.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}/extensions/{extensionName}
+    operationId: Nodes_GetNodeExtension
+  input_schema_source: inherits the parameters and requestBody of Nodes_GetNodeExtension in the provider
+    contract
+- name: batch.Nodes_ListNodeFiles
+  category: Nodes
+  description: Lists all of the files in Task directories on the specified Compute Node.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}/files
+    operationId: Nodes_ListNodeFiles
+  input_schema_source: inherits the parameters and requestBody of Nodes_ListNodeFiles in the provider
+    contract
+- name: batch.Nodes_GetNodeFile
+  category: Nodes
+  description: null
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+    operationId: Nodes_GetNodeFile
+  input_schema_source: inherits the parameters and requestBody of Nodes_GetNodeFile in the provider contract
+- name: batch.Nodes_DeleteNodeFile
+  category: Nodes
+  description: Deletes the specified file from the Compute Node.
+  rest:
+    method: DELETE
+    path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+    operationId: Nodes_DeleteNodeFile
+  input_schema_source: inherits the parameters and requestBody of Nodes_DeleteNodeFile in the provider
+    contract
+- name: batch.Nodes_GetNodeFileProperties
+  category: Nodes
+  description: null
+  rest:
+    method: HEAD
+    path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+    operationId: Nodes_GetNodeFileProperties
+  input_schema_source: inherits the parameters and requestBody of Nodes_GetNodeFileProperties in the provider
+    contract
+- name: batch.Nodes_RebootNode
+  category: Nodes
+  description: Restarts the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/reboot
+    operationId: Nodes_RebootNode
+  input_schema_source: inherits the parameters and requestBody of Nodes_RebootNode in the provider contract
+- name: batch.Nodes_ReimageNode
+  category: Nodes
+  description: Reinstalls the operating system on the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/reimage
+    operationId: Nodes_ReimageNode
+  input_schema_source: inherits the parameters and requestBody of Nodes_ReimageNode in the provider contract
+- name: batch.Nodes_GetNodeRemoteLoginSettings
+  category: Nodes
+  description: Gets the settings required for remote login to a Compute Node.
+  rest:
+    method: GET
+    path: /pools/{poolId}/nodes/{nodeId}/remoteloginsettings
+    operationId: Nodes_GetNodeRemoteLoginSettings
+  input_schema_source: inherits the parameters and requestBody of Nodes_GetNodeRemoteLoginSettings in
+    the provider contract
+- name: batch.Nodes_StartNode
+  category: Nodes
+  description: Starts the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/start
+    operationId: Nodes_StartNode
+  input_schema_source: inherits the parameters and requestBody of Nodes_StartNode in the provider contract
+- name: batch.Nodes_UploadNodeLogs
+  category: Nodes
+  description: 'Upload Azure Batch service log files from the specified Compute Node to Azure
+
+    Blob Storage.'
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs
+    operationId: Nodes_UploadNodeLogs
+  input_schema_source: inherits the parameters and requestBody of Nodes_UploadNodeLogs in the provider
+    contract
+- name: batch.Nodes_CreateNodeUser
+  category: Nodes
+  description: Adds a user Account to the specified Compute Node.
+  rest:
+    method: POST
+    path: /pools/{poolId}/nodes/{nodeId}/users
+    operationId: Nodes_CreateNodeUser
+  input_schema_source: inherits the parameters and requestBody of Nodes_CreateNodeUser in the provider
+    contract
+- name: batch.Nodes_ReplaceNodeUser
+  category: Nodes
+  description: Updates the password and expiration time of a user Account on the specified Compute Node.
+  rest:
+    method: PUT
+    path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+    operationId: Nodes_ReplaceNodeUser
+  input_schema_source: inherits the parameters and requestBody of Nodes_ReplaceNodeUser in the provider
+    contract
+- name: batch.Nodes_DeleteNodeUser
+  category: Nodes
+  description: Deletes a user Account from the specified Compute Node.
+  rest:
+    method: DELETE
+    path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+    operationId: Nodes_DeleteNodeUser
+  input_schema_source: inherits the parameters and requestBody of Nodes_DeleteNodeUser in the provider
+    contract
+- name: batch.Pools_RemoveNodes
+  category: Pools
+  description: Removes Compute Nodes from the specified Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/removenodes
+    operationId: Pools_RemoveNodes
+  input_schema_source: inherits the parameters and requestBody of Pools_RemoveNodes in the provider contract
+- name: batch.Pools_ResizePool
+  category: Pools
+  description: Changes the number of Compute Nodes that are assigned to a Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/resize
+    operationId: Pools_ResizePool
+  input_schema_source: inherits the parameters and requestBody of Pools_ResizePool in the provider contract
+- name: batch.Pools_StopPoolResize
+  category: Pools
+  description: Stops an ongoing resize operation on the Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/stopresize
+    operationId: Pools_StopPoolResize
+  input_schema_source: inherits the parameters and requestBody of Pools_StopPoolResize in the provider
+    contract
+- name: batch.Pools_ReplacePoolProperties
+  category: Pools
+  description: Updates the properties of the specified Pool.
+  rest:
+    method: POST
+    path: /pools/{poolId}/updateproperties
+    operationId: Pools_ReplacePoolProperties
+  input_schema_source: inherits the parameters and requestBody of Pools_ReplacePoolProperties in the provider
+    contract
+- name: batch.Pools_ListPoolUsageMetrics
+  category: Pools
+  description: 'Lists the usage metrics, aggregated by Pool across individual time intervals,
+
+    for the specified Account.'
+  rest:
+    method: GET
+    path: /poolusagemetrics
+    operationId: Pools_ListPoolUsageMetrics
+  input_schema_source: inherits the parameters and requestBody of Pools_ListPoolUsageMetrics in the provider
+    contract
+- name: batch.Pools_ListSupportedImages
+  category: Pools
+  description: Lists all Virtual Machine Images supported by the Azure Batch service.
+  rest:
+    method: GET
+    path: /supportedimages
+    operationId: Pools_ListSupportedImages
+  input_schema_source: inherits the parameters and requestBody of Pools_ListSupportedImages in the provider
+    contract

@@ -1,0 +1,87 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/rest/api/batchservice/
+versioning:
+  scheme: date-stamped api-version query parameter
+  required: true
+  parameter: api-version
+  current: '2025-06-01'
+  current_published: '2025-06-01'
+  history_source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/data-plane/Batch/stable
+  stable_versions: 22
+  note: >-
+    Versions are additive and long-lived; Microsoft keeps every stable data-plane version
+    in the public azure-rest-api-specs repository. Before 2025-06-01 each version carried a
+    second service-version component (e.g. 2024-07-01.20.0); that component was dropped in
+    2025-06-01. An unrecognised value returns UnsupportedRequestVersion (400).
+  breaking_change_policy: >-
+    Azure services are governed by the Microsoft Online Services Terms and the Azure
+    deprecation policy — Microsoft commits to at least 12 months' notice before removing a
+    generally available feature, published through Azure Updates and the service's
+    documentation.
+deprecation:
+  policy_published: true
+  policy_url: https://learn.microsoft.com/en-us/lifecycle/faq/azure
+  notice_period: 12 months (Azure modern lifecycle policy for generally available services)
+  headers:
+    sunset: false
+    deprecation: false
+    note: >-
+      Azure Batch does NOT emit RFC 8594 Sunset or Deprecation response headers. Retirement
+      is communicated out of band through Azure Updates, the Learn documentation, and
+      portal/e-mail notices to affected subscriptions. An agent cannot learn of a
+      retirement from a response.
+  retirements:
+    - feature: Batch account certificates
+      status: retired
+      date: '2024-02-29'
+      replacement: Azure Key Vault VM extension with a pool user-assigned managed identity
+      url: https://learn.microsoft.com/en-us/azure/batch/batch-certificate-migration-guide
+      note: >-
+        After retirement, certificates cannot be added to a Batch account or linked to
+        pools, and $AZ_BATCH_CERTIFICATES_DIR is no longer populated on Linux pools.
+    - feature: CloudServiceConfiguration pools
+      status: retired
+      date: '2024-02-29'
+      replacement: VirtualMachineConfiguration pools
+      url: https://azure.microsoft.com/updates/azure-batch-cloudserviceconfiguration-pools-will-be-retired-on-29-february-2024/
+  deprecated_operations:
+    count: 0
+    note: >-
+      No operation in the 2025-06-01 contract carries `deprecated: true`. Retirements at
+      Batch are feature-level and version-level rather than operation-level. Certificate
+      operations were removed from the contract entirely rather than marked deprecated.
+    source: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
+status_page:
+  published: true
+  url: https://azure.status.microsoft/en-us/status
+  history_url: https://azure.status.microsoft/en-us/status/history/
+  scope: >-
+    Azure-wide service health, with Batch listed per region. Per-subscription health is in
+    Azure Service Health in the portal rather than on the public page.
+  http_status: 200
+  probed: '2026-09-17'
+  machine_readable: false
+  note: >-
+    No public JSON/RSS status feed is advertised for the public status page; programmatic
+    health comes from the Azure Resource Health / Service Health APIs, which are
+    subscription-scoped and authenticated.
+sla:
+  published: true
+  url: https://azure.microsoft.com/en-us/support/legal/sla/
+  note: >-
+    Azure Batch itself carries no separate SLA and no charge. The availability commitment
+    a Batch workload actually runs under is the SLA of the underlying resources the pools
+    consume — Virtual Machines, Storage, Networking. The Batch pricing page's SLA link
+    resolves to the Azure SLA hub, which routes to those per-service documents.
+support:
+  url: https://azure.microsoft.com/en-us/support/options/
+  quota_increase: https://learn.microsoft.com/en-us/azure/batch/batch-quota-limit#increase-a-quota
+change_communication:
+  - name: Azure Updates (filtered to Batch)
+    url: https://azure.microsoft.com/en-us/updates/?filters=%5B%22Batch%22%5D
+  - name: azure-rest-api-specs repository
+    url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch
+    note: The contract itself is version-controlled in public; each stable folder is a dated release.
+  - name: Azure SDK release notes
+    url: https://azure.github.io/azure-sdk/releases/latest/index.html

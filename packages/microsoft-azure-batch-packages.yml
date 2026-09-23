@@ -1,0 +1,141 @@
+generated: '2026-09-17'
+method: searched
+source: https://learn.microsoft.com/en-us/azure/batch/batch-apis
+summary:
+  total: 10
+  official: 10
+  registries:
+  - npm
+  - pypi
+  - nuget
+  - maven
+  - go
+  - rubygems
+  note: >-
+    Every package below is published by Microsoft from an Azure SDK monorepo
+    (Azure/azure-sdk-for-<lang>). Versions and dates were read from each
+    registry's own metadata endpoint on 2026-09-17. Azure Batch has TWO package
+    families per language: a data-plane client (jobs/pools/tasks/nodes against
+    <account>.<region>.batch.azure.com) and a management-plane client
+    (Batch accounts against management.azure.com). Both are listed, because a
+    consumer choosing the wrong one gets the wrong API entirely.
+packages:
+- name: '@azure/batch'
+  language: javascript
+  registry: npm
+  plane: data
+  official: true
+  url: https://www.npmjs.com/package/@azure/batch
+  repository: https://github.com/Azure/azure-sdk-for-js
+  version: 13.0.0
+  published: '2026-05-08'
+  source: https://registry.npmjs.org/@azure/batch
+- name: '@azure-rest/batch'
+  language: javascript
+  registry: npm
+  plane: data
+  official: true
+  url: https://www.npmjs.com/package/@azure-rest/batch
+  repository: https://github.com/Azure/azure-sdk-for-js
+  version: 1.0.0-beta.4
+  published: '2025-11-05'
+  note: Rest-level client; still pre-release after two years.
+  source: https://registry.npmjs.org/@azure-rest/batch
+- name: azure-batch
+  language: python
+  registry: pypi
+  plane: data
+  official: true
+  url: https://pypi.org/project/azure-batch/
+  repository: https://github.com/Azure/azure-sdk-for-python
+  version: 15.1.0
+  published: '2026-05-01'
+  source: https://pypi.org/pypi/azure-batch/json
+- name: Azure.Compute.Batch
+  language: dotnet
+  registry: nuget
+  plane: data
+  official: true
+  url: https://www.nuget.org/packages/Azure.Compute.Batch
+  repository: https://github.com/Azure/azure-sdk-for-net
+  version: 1.0.0
+  published: '2026-05-01'
+  note: Current-generation .NET data-plane client; supersedes Microsoft.Azure.Batch.
+  source: https://api.nuget.org/v3/registration5-semver1/azure.compute.batch/index.json
+- name: Microsoft.Azure.Batch
+  language: dotnet
+  registry: nuget
+  plane: data
+  official: true
+  url: https://www.nuget.org/packages/Microsoft.Azure.Batch
+  repository: https://github.com/Azure/azure-sdk-for-net
+  version: 16.3.1
+  published: '2024-09-20'
+  note: >-
+    Legacy .NET data-plane client. Last release 2024-09-20, two API versions
+    behind the 2025-06-01 contract in openapi/_original/.
+  source: https://api.nuget.org/v3/registration5-semver1/microsoft.azure.batch/index.json
+- name: com.azure:azure-compute-batch
+  language: java
+  registry: maven
+  plane: data
+  official: true
+  url: https://central.sonatype.com/artifact/com.azure/azure-compute-batch
+  repository: https://github.com/Azure/azure-sdk-for-java
+  version: 1.0.0-beta.4
+  published: '2025-03-25'
+  note: Current-generation Java data-plane client, still beta.
+  source: https://search.maven.org/solrsearch/select?q=a:azure-compute-batch
+- name: com.microsoft.azure:azure-batch
+  language: java
+  registry: maven
+  plane: data
+  official: true
+  url: https://central.sonatype.com/artifact/com.microsoft.azure/azure-batch
+  repository: https://github.com/Azure/azure-batch-sdk-for-java
+  version: 11.2.0
+  published: '2024-09-12'
+  note: Legacy Java data-plane client.
+  source: https://search.maven.org/solrsearch/select?q=a:azure-batch
+- name: github.com/Azure/azure-sdk-for-go/sdk/batch/azbatch
+  language: go
+  registry: go
+  plane: data
+  official: true
+  url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/batch/azbatch
+  repository: https://github.com/Azure/azure-sdk-for-go
+  version: v0.1.0
+  published: '2025-05-06'
+  note: Go data-plane client is still v0.x.
+  source: https://proxy.golang.org/github.com/!azure/azure-sdk-for-go/sdk/batch/azbatch/@latest
+- name: github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/batch/armbatch/v3
+  language: go
+  registry: go
+  plane: management
+  official: true
+  url: https://pkg.go.dev/github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/batch/armbatch/v3
+  repository: https://github.com/Azure/azure-sdk-for-go
+  version: v3.0.1
+  published: '2025-12-17'
+  source: https://proxy.golang.org/github.com/!azure/azure-sdk-for-go/sdk/resourcemanager/batch/armbatch/v3/@latest
+- name: azure_mgmt_batch
+  language: ruby
+  registry: rubygems
+  plane: management
+  official: true
+  url: https://rubygems.org/gems/azure_mgmt_batch
+  repository: https://github.com/Azure/azure-sdk-for-ruby
+  version: 0.18.1
+  published: '2020-06-02'
+  note: >-
+    ABANDONMENT SIGNAL. Last release 2020-06-02 — more than five years before the
+    2025-06-01 contract it would have to wrap. The Azure SDK for Ruby is retired.
+  source: https://rubygems.org/api/v1/gems/azure_mgmt_batch.json
+currency:
+  checked: '2026-09-17'
+  newest_release: '2026-05-08'
+  oldest_release: '2020-06-02'
+  note: >-
+    Data-plane clients for JavaScript, Python and .NET are current (2026 releases).
+    Java's current-generation client has been beta since 2025-03; Go's is v0.1.0;
+    the Ruby management client has been unreleased since 2020.

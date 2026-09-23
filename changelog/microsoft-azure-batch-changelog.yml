@@ -1,0 +1,79 @@
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/data-plane/Batch/stable
+docs: https://azure.microsoft.com/en-us/updates/?filters=%5B%22Batch%22%5D
+note: >-
+  Azure Batch publishes no single dated product changelog page. What it does publish, and
+  what is actually authoritative for an integrator, is the versioned contract itself: every
+  stable data-plane API version lives as a dated folder in the public azure-rest-api-specs
+  repository, and each one is a release. The entries below are those releases, read from the
+  repository on 2026-09-17. Announcement prose for each release lives on Azure Updates, which
+  renders client-side and is not transcribed here rather than being paraphrased.
+scheme: date-stamped api-version (YYYY-MM-DD, historically with a .<service-version> suffix)
+current_version: '2025-06-01'
+plane: data
+entry_count: 22
+entries:
+  - version: '2025-06-01'
+    date: '2025-06-01'
+    current: true
+    highlights:
+      - 51 paths, 72 operations, 236 schema definitions, 101 request/response examples.
+      - Dropped the trailing service-version component from the api-version string.
+      - Single OAuth2 scope https://batch.core.windows.net//.default on every operation.
+    breaking: unknown
+    source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/data-plane/Batch/stable/2025-06-01
+  - version: 2024-07-01.20.0
+    date: '2024-07-01'
+    source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/data-plane/Batch/stable/2024-07-01.20.0
+  - version: 2024-02-01.19.0
+    date: '2024-02-01'
+    breaking: true
+    highlights:
+      - >-
+        Follows the 2024-02-29 retirement of Batch account certificates and
+        CloudServiceConfiguration pools.
+  - version: 2023-11-01.18.0
+    date: '2023-11-01'
+  - version: 2023-05-01.17.0
+    date: '2023-05-01'
+  - version: 2022-10-01.16.0
+    date: '2022-10-01'
+  - version: 2022-01-01.15.0
+    date: '2022-01-01'
+  - version: 2021-06-01.14.0
+    date: '2021-06-01'
+  - version: 2020-09-01.12.0
+    date: '2020-09-01'
+  - version: 2020-03-01.11.0
+    date: '2020-03-01'
+  - version: 2019-08-01.10.0
+    date: '2019-08-01'
+  - version: 2019-06-01.9.0
+    date: '2019-06-01'
+  - version: 2018-12-01.8.0
+    date: '2018-12-01'
+  - version: 2018-08-01.7.0
+    date: '2018-08-01'
+  - version: 2018-03-01.6.1
+    date: '2018-03-01'
+  - version: 2017-09-01.6.0
+    date: '2017-09-01'
+  - version: 2017-06-01.5.1
+    date: '2017-06-01'
+  - version: 2017-05-01.5.0
+    date: '2017-05-01'
+  - version: 2017-01-01.4.0
+    date: '2017-01-01'
+  - version: 2016-07-01.3.1
+    date: '2016-07-01'
+  - version: 2016-02-01.3.0
+    date: '2016-02-01'
+  - version: 2015-12-01.2.2
+    date: '2015-12-01'
+    note: Oldest stable data-plane version still published.
+management_plane:
+  current_version: '2025-06-01'
+  stable_versions: 20
+  source: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/batch/resource-manager/Microsoft.Batch/Batch/stable
+sdk_release_notes: https://azure.github.io/azure-sdk/releases/latest/index.html
