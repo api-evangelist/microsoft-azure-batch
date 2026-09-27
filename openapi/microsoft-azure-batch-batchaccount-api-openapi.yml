@@ -1,0 +1,1295 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Batch Account API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: BatchAccount
+paths:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts:
+    get:
+      operationId: BatchAccount_List
+      tags:
+      - BatchAccount
+      description: Gets information about the Batch accounts associated with the subscription.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccountListResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountList:
+          $ref: ./examples/BatchAccountList.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Batch account list
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts:
+    get:
+      operationId: BatchAccount_ListByResourceGroup
+      tags:
+      - BatchAccount
+      description: Gets information about the Batch accounts associated with the specified resource group.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccountListResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountListByResourceGroup:
+          $ref: ./examples/BatchAccountListByResourceGroup.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Batch account list by resource group
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}:
+    get:
+      operationId: BatchAccount_Get
+      tags:
+      - BatchAccount
+      description: Gets information about the specified Batch account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccount'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountGet:
+          $ref: ./examples/BatchAccountGet.json
+        PrivateBatchAccountGet:
+          $ref: ./examples/PrivateBatchAccountGet.json
+      summary: Batch account get
+      x-summary-source: derived
+    put:
+      operationId: BatchAccount_Create
+      tags:
+      - BatchAccount
+      description: Creates a new Batch account with the specified parameters. Existing accounts cannot be updated with this API and should instead be updated with the Update Batch Account API.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Resource 'BatchAccount' update operation succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccount'
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountCreate_BYOS:
+          $ref: ./examples/BatchAccountCreate_BYOS.json
+        BatchAccountCreate_Default:
+          $ref: ./examples/BatchAccountCreate_Default.json
+        BatchAccountCreate_SystemAssignedIdentity:
+          $ref: ./examples/BatchAccountCreate_SystemAssignedIdentity.json
+        BatchAccountCreate_UserAssignedIdentity:
+          $ref: ./examples/BatchAccountCreate_UserAssignedIdentity.json
+        PrivateBatchAccountCreate:
+          $ref: ./examples/PrivateBatchAccountCreate.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+        final-state-schema: '#/definitions/BatchAccount'
+      x-ms-long-running-operation: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchAccountCreateParameters'
+        description: Additional parameters for account creation.
+        required: true
+      summary: Batch account create
+      x-summary-source: derived
+    patch:
+      operationId: BatchAccount_Update
+      tags:
+      - BatchAccount
+      description: Updates the properties of an existing Batch account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccount'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountUpdate:
+          $ref: ./examples/BatchAccountUpdate.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchAccountUpdateParameters'
+        description: Additional parameters for account update.
+        required: true
+      summary: Batch account update
+      x-summary-source: derived
+    delete:
+      operationId: BatchAccount_Delete
+      tags:
+      - BatchAccount
+      description: Deletes the specified Batch account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Resource deleted successfully.
+        '202':
+          description: Resource deletion accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountDelete:
+          $ref: ./examples/BatchAccountDelete.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+      x-ms-long-running-operation: true
+      summary: Batch account delete
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/listKeys
+  : post:
+      operationId: BatchAccount_GetKeys
+      tags:
+      - BatchAccount
+      summary: Gets the account keys for the specified Batch account
+      description: This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccountKeys'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountGetKeys:
+          $ref: ./examples/BatchAccountGetKeys.json
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/outboundNetworkDependenciesEndpoints
+  : get:
+      operationId: BatchAccount_ListOutboundNetworkDependenciesEndpoints
+      tags:
+      - BatchAccount
+      description: Lists the endpoints that a Batch Compute Node under this Batch Account may call as part of Batch service administration. If you are deploying a Pool inside of a virtual network that you specify, you must make sure your network allows outbound access to these endpoints. Failure to allow access to these endpoints may cause Batch to mark the affected nodes as unusable. For more information about creating a pool inside of a virtual network, see https://learn.microsoft.com/azure/batch/batch-virtual-network.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundEnvironmentEndpointCollection'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ListOutboundNetworkDependencies:
+          $ref: ./examples/BatchAccountListOutboundNetworkDependenciesEndpoints.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Batch account list outbound network dependencies endpoints
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/regenerateKeys
+  : post:
+      operationId: BatchAccount_RegenerateKey
+      tags:
+      - BatchAccount
+      summary: Regenerates the specified account key for the Batch account
+      description: This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccountKeys'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountRegenerateKey:
+          $ref: ./examples/BatchAccountRegenerateKey.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchAccountRegenerateKeyParameters'
+        description: The type of key to regenerate.
+        required: true
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/syncAutoStorageKeys
+  : post:
+      operationId: BatchAccount_SynchronizeAutoStorageKeys
+      tags:
+      - BatchAccount
+      description: Synchronizes access keys for the auto-storage account configured for the specified Batch account, only if storage key authentication is being used.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '204':
+          description: There is no content to send for this request, but the headers may be useful.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        BatchAccountSynchronizeAutoStorageKeys:
+          $ref: ./examples/BatchAccountSynchronizeAutoStorageKeys.json
+      summary: Batch account synchronize auto storage keys
+      x-summary-source: derived
+components:
+  schemas:
+    BatchAccountCreateProperties:
+      type: object
+      description: The properties of a Batch account.
+      properties:
+        autoStorage:
+          $ref: '#/components/schemas/AutoStorageBaseProperties'
+          description: The properties related to the auto-storage account.
+        poolAllocationMode:
+          $ref: '#/components/schemas/PoolAllocationMode'
+          title: The allocation mode to use for creating pools in the Batch account.
+          description: The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService.
+        keyVaultReference:
+          $ref: '#/components/schemas/KeyVaultReference'
+          description: A reference to the Azure key vault associated with the Batch account.
+        publicNetworkAccess:
+          type: string
+          title: The network access type for accessing Azure Batch account.
+          description: The network access type for operating on the resources in the Batch account.
+          default: Enabled
+          enum:
+          - Enabled
+          - Disabled
+          - SecuredByPerimeter
+          x-ms-enum:
+            name: PublicNetworkAccessType
+            modelAsString: false
+            values:
+            - name: Enabled
+              value: Enabled
+              description: Enables connectivity to Azure Batch through public DNS.
+            - name: Disabled
+              value: Disabled
+              description: Disables public connectivity and enables private connectivity to Azure Batch Service through private endpoint resource.
+            - name: SecuredByPerimeter
+              value: SecuredByPerimeter
+              description: Secures connectivity to Azure Batch through NSP configuration.
+        networkProfile:
+          $ref: '#/components/schemas/NetworkProfile'
+          title: Network profile for Batch account, which contains network rule settings for each endpoint.
+          description: The network profile only takes effect when publicNetworkAccess is enabled.
+        encryption:
+          $ref: '#/components/schemas/EncryptionProperties'
+          title: The encryption configuration for the Batch account.
+          description: Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead.
+        allowedAuthenticationModes:
+          type:
+          - array
+          - 'null'
+          description: List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane.
+          items:
+            $ref: '#/components/schemas/AuthenticationMode'
+    BatchAccountUpdateParameters:
+      type: object
+      description: Parameters for updating an Azure Batch account.
+      properties:
+        tags:
+          type: object
+          description: The user-specified tags associated with the account.
+          additionalProperties:
+            type: string
+        properties:
+          $ref: '#/components/schemas/BatchAccountUpdateProperties'
+          description: The properties of the account.
+          x-ms-client-flatten: true
+        identity:
+          $ref: '#/components/schemas/BatchAccountIdentity'
+          description: The identity of the Batch account.
+    BatchAccount:
+      type: object
+      description: Contains information about an Azure Batch account.
+      properties:
+        properties:
+          $ref: '#/components/schemas/BatchAccountProperties'
+          description: The properties associated with the account.
+          x-ms-client-flatten: true
+        identity:
+          $ref: '#/components/schemas/BatchAccountIdentity'
+          description: The identity of the Batch account.
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/TrackedResource
+    PrivateEndpoint:
+      type: object
+      description: The private endpoint of the private endpoint connection.
+      properties:
+        id:
+          type: string
+          title: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
+          description: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
+          readOnly: true
+    PrivateEndpointConnectionProperties:
+      type: object
+      description: Private endpoint connection properties.
+      properties:
+        provisioningState:
+          $ref: '#/components/schemas/PrivateEndpointConnectionProvisioningState'
+          title: The provisioning state of the private endpoint connection.
+          description: The provisioning state of the private endpoint connection.
+          readOnly: true
+        privateEndpoint:
+          $ref: '#/components/schemas/PrivateEndpoint'
+          title: The ARM resource identifier of the private endpoint.
+          description: The private endpoint of the private endpoint connection.
+          readOnly: true
+        groupIds:
+          type: array
+          title: The group id of the private endpoint connection.
+          description: The value has one and only one group id.
+          items:
+            type: string
+          readOnly: true
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkServiceConnectionState'
+          title: The private link service connection state of the private endpoint connection.
+          description: The private link service connection state of the private endpoint connection.
+    OutboundEnvironmentEndpointCollection:
+      type: object
+      description: Values returned by the List operation.
+      properties:
+        value:
+          type: array
+          description: The OutboundEnvironmentEndpoint items on this page
+          items:
+            $ref: '#/components/schemas/OutboundEnvironmentEndpoint'
+          readOnly: true
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    IPRule:
+      type: object
+      description: Rule to filter client IP address.
+      properties:
+        action:
+          $ref: '#/components/schemas/IPRuleAction'
+          description: Action when client IP address is matched.
+        value:
+          type: string
+          title: The IP address or IP address range to filter
+          description: IPv4 address, or IPv4 address range in CIDR format.
+      required:
+      - action
+      - value
+    ProvisioningState:
+      type: string
+      description: The provisioned state of the resource
+      enum:
+      - Invalid
+      - Creating
+      - Deleting
+      - Succeeded
+      - Failed
+      - Cancelled
+      x-ms-enum:
+        name: ProvisioningState
+        modelAsString: false
+        values:
+        - name: Invalid
+          value: Invalid
+          description: The account is in an invalid state.
+        - name: Creating
+          value: Creating
+          description: The account is being created.
+        - name: Deleting
+          value: Deleting
+          description: The account is being deleted.
+        - name: Succeeded
+          value: Succeeded
+          description: The account has been created and is ready for use.
+        - name: Failed
+          value: Failed
+          description: The last operation for the account is failed.
+        - name: Cancelled
+          value: Cancelled
+          description: The last operation for the account is cancelled.
+      readOnly: true
+    ResourceIdentityType:
+      type: string
+      description: The type of identity used for the Batch account.
+      enum:
+      - SystemAssigned
+      - UserAssigned
+      - None
+      x-ms-enum:
+        name: ResourceIdentityType
+        modelAsString: false
+        values:
+        - name: SystemAssigned
+          value: SystemAssigned
+          description: Batch account has a system assigned identity with it.
+        - name: UserAssigned
+          value: UserAssigned
+          description: Batch account has user assigned identities with it.
+        - name: None
+          value: None
+          description: Batch account has no identity associated with it. Setting `None` in update account will remove existing identities.
+    EndpointAccessDefaultAction:
+      type: string
+      description: Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled.
+      enum:
+      - Allow
+      - Deny
+      x-ms-enum:
+        name: EndpointAccessDefaultAction
+        modelAsString: false
+        values:
+        - name: Allow
+          value: Allow
+          description: Allow client access.
+        - name: Deny
+          value: Deny
+          description: Deny client access.
+    PrivateLinkServiceConnectionStatus:
+      type: string
+      description: The status of the Batch private endpoint connection
+      enum:
+      - Approved
+      - Pending
+      - Rejected
+      - Disconnected
+      x-ms-enum:
+        name: PrivateLinkServiceConnectionStatus
+        modelAsString: false
+        values:
+        - name: Approved
+          value: Approved
+          description: The private endpoint connection is approved and can be used to access Batch account
+        - name: Pending
+          value: Pending
+          description: The private endpoint connection is pending and cannot be used to access Batch account
+        - name: Rejected
+          value: Rejected
+          description: The private endpoint connection is rejected and cannot be used to access Batch account
+        - name: Disconnected
+          value: Disconnected
+          description: The private endpoint connection is disconnected and cannot be used to access Batch account
+    BatchAccountListResult:
+      type: object
+      description: Paged collection of BatchAccount items
+      properties:
+        value:
+          type: array
+          description: The BatchAccount items on this page
+          items:
+            $ref: '#/components/schemas/BatchAccount'
+          x-ms-identifiers:
+          - /properties/accountEndpoint
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    VirtualMachineFamilyCoreQuota:
+      type: object
+      description: A VM Family and its associated core quota for the Batch account.
+      properties:
+        name:
+          type: string
+          description: The Virtual Machine family name.
+          readOnly: true
+        coreQuota:
+          type: integer
+          format: int32
+          description: The core quota for the VM family for the Batch account.
+          readOnly: true
+    BatchAccountUpdateProperties:
+      type: object
+      description: The properties of a Batch account.
+      properties:
+        autoStorage:
+          $ref: '#/components/schemas/AutoStorageBaseProperties'
+          description: The properties related to the auto-storage account.
+        encryption:
+          $ref: '#/components/schemas/EncryptionProperties'
+          title: The encryption configuration for the Batch account.
+          description: Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead.
+        allowedAuthenticationModes:
+          type:
+          - array
+          - 'null'
+          description: List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane.
+          items:
+            $ref: '#/components/schemas/AuthenticationMode'
+        publicNetworkAccess:
+          type: string
+          title: The network access type for accessing Azure Batch account.
+          description: The network access type for operating on the resources in the Batch account.
+          default: Enabled
+          enum:
+          - Enabled
+          - Disabled
+          - SecuredByPerimeter
+          x-ms-enum:
+            name: PublicNetworkAccessType
+            modelAsString: false
+            values:
+            - name: Enabled
+              value: Enabled
+              description: Enables connectivity to Azure Batch through public DNS.
+            - name: Disabled
+              value: Disabled
+              description: Disables public connectivity and enables private connectivity to Azure Batch Service through private endpoint resource.
+            - name: SecuredByPerimeter
+              value: SecuredByPerimeter
+              description: Secures connectivity to Azure Batch through NSP configuration.
+        networkProfile:
+          $ref: '#/components/schemas/NetworkProfile'
+          title: Network profile for Batch account, which contains network rule settings for each endpoint.
+          description: The network profile only takes effect when publicNetworkAccess is enabled.
+    UserAssignedIdentities:
+      type: object
+      description: The list of associated user identities.
+      properties:
+        principalId:
+          type: string
+          description: The principal id of user assigned identity.
+          readOnly: true
+        clientId:
+          type: string
+          description: The client id of user assigned identity.
+          readOnly: true
+    OutboundEnvironmentEndpoint:
+      type: object
+      description: A collection of related endpoints from the same service for which the Batch service requires outbound access.
+      properties:
+        category:
+          type: string
+          description: The type of service that the Batch service connects to.
+          readOnly: true
+        endpoints:
+          type: array
+          description: The endpoints for this service to which the Batch service makes outbound calls.
+          items:
+            $ref: '#/components/schemas/EndpointDependency'
+          readOnly: true
+          x-ms-identifiers:
+          - domainName
+    AutoStorageBaseProperties:
+      type: object
+      description: The properties related to the auto-storage account.
+      properties:
+        storageAccountId:
+          type: string
+          format: arm-id
+          description: The resource ID of the storage account to be used for auto-storage account.
+          x-ms-arm-id-details:
+            allowedResources:
+            - type: Microsoft.Storage/storageAccounts
+        authenticationMode:
+          type: string
+          description: The authentication mode which the Batch service will use to manage the auto-storage account.
+          default: StorageKeys
+          enum:
+          - StorageKeys
+          - BatchAccountManagedIdentity
+          x-ms-enum:
+            name: AutoStorageAuthenticationMode
+            modelAsString: false
+            values:
+            - name: StorageKeys
+              value: StorageKeys
+              description: The Batch service will authenticate requests to auto-storage using storage account keys.
+            - name: BatchAccountManagedIdentity
+              value: BatchAccountManagedIdentity
+              description: The Batch service will authenticate requests to auto-storage using the managed identity assigned to the Batch account.
+        nodeIdentityReference:
+          $ref: '#/components/schemas/ComputeNodeIdentityReference'
+          title: The reference to the user assigned identity which compute nodes will use to access auto-storage.
+          description: The identity referenced here must be assigned to pools which have compute nodes that need access to auto-storage.
+      required:
+      - storageAccountId
+    PrivateLinkServiceConnectionState:
+      type: object
+      description: The private link service connection state of the private endpoint connection
+      properties:
+        status:
+          $ref: '#/components/schemas/PrivateLinkServiceConnectionStatus'
+          title: The status of the Batch private endpoint connection
+          description: The status of the Batch private endpoint connection
+        description:
+          type: string
+          title: Description of the private Connection state
+          description: Description of the private Connection state
+        actionsRequired:
+          type: string
+          title: Action required on the private connection state
+          description: Action required on the private connection state
+          readOnly: true
+      required:
+      - status
+    BatchAccountKeys:
+      type: object
+      description: A set of Azure Batch account keys.
+      properties:
+        accountName:
+          type: string
+          description: The Batch account name.
+          readOnly: true
+        primary:
+          type: string
+          description: The primary key associated with the account.
+          readOnly: true
+        secondary:
+          type: string
+          description: The secondary key associated with the account.
+          readOnly: true
+    ComputeNodeIdentityReference:
+      type: object
+      description: The reference to a user assigned identity associated with the Batch pool which a compute node will use.
+      properties:
+        resourceId:
+          type: string
+          description: The ARM resource id of the user assigned identity.
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    EndpointAccessProfile:
+      type: object
+      description: Network access profile for Batch endpoint.
+      properties:
+        defaultAction:
+          $ref: '#/components/schemas/EndpointAccessDefaultAction'
+          title: The default action when there is no IPRule matched.
+          description: Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled.
+        ipRules:
+          type: array
+          description: Array of IP ranges to filter client IP address.
+          items:
+            $ref: '#/components/schemas/IPRule'
+          x-ms-identifiers:
+          - action
+      required:
+      - defaultAction
+    AutoStorageProperties:
+      type: object
+      description: Contains information about the auto-storage account associated with a Batch account.
+      properties:
+        lastKeySync:
+          type: string
+          format: date-time
+          description: The UTC time at which storage keys were last synchronized with the Batch account.
+      required:
+      - lastKeySync
+      allOf:
+      - $ref: '#/components/schemas/AutoStorageBaseProperties'
+    PoolAllocationMode:
+      type: string
+      description: The allocation mode for creating pools in the Batch account.
+      enum:
+      - BatchService
+      - UserSubscription
+      x-ms-enum:
+        name: PoolAllocationMode
+        modelAsString: false
+        values:
+        - name: BatchService
+          value: BatchService
+          description: Pools will be allocated in subscriptions owned by the Batch service.
+        - name: UserSubscription
+          value: UserSubscription
+          description: Pools will be allocated in a subscription owned by the user.
+    BatchAccountProperties:
+      type: object
+      description: Account specific properties.
+      properties:
+        accountEndpoint:
+          type: string
+          description: The account endpoint used to interact with the Batch service.
+          readOnly: true
+        nodeManagementEndpoint:
+          type: string
+          description: The endpoint used by compute node to connect to the Batch node management service.
+          readOnly: true
+        provisioningState:
+          $ref: '#/components/schemas/ProvisioningState'
+          description: The provisioned state of the resource
+          readOnly: true
+        poolAllocationMode:
+          $ref: '#/components/schemas/PoolAllocationMode'
+          title: The allocation mode to use for creating pools in the Batch account.
+          description: The allocation mode for creating pools in the Batch account.
+          readOnly: true
+        keyVaultReference:
+          $ref: '#/components/schemas/KeyVaultReference'
+          title: A reference to the Azure key vault associated with the Batch account.
+          description: Identifies the Azure key vault associated with a Batch account.
+          readOnly: true
+        publicNetworkAccess:
+          type:
+          - string
+          - 'null'
+          title: The network interface type for accessing Azure Batch service and Batch account operations.
+          description: The network access type for operating on the resources in the Batch account.
+          default: Enabled
+          enum:
+          - Enabled
+          - Disabled
+          - SecuredByPerimeter
+          x-ms-enum:
+            name: PublicNetworkAccessType
+            modelAsString: false
+            values:
+            - name: Enabled
+              value: Enabled
+              description: Enables connectivity to Azure Batch through public DNS.
+            - name: Disabled
+              value: Disabled
+              description: Disables public connectivity and enables private connectivity to Azure Batch Service through private endpoint resource.
+            - name: SecuredByPerimeter
+              value: SecuredByPerimeter
+              description: Secures connectivity to Azure Batch through NSP configuration.
+        networkProfile:
+          $ref: '#/components/schemas/NetworkProfile'
+          title: Network profile for Batch account, which contains network rule settings for each endpoint.
+          description: The network profile only takes effect when publicNetworkAccess is enabled.
+        privateEndpointConnections:
+          type:
+          - array
+          - 'null'
+          description: List of private endpoint connections associated with the Batch account
+          items:
+            $ref: '#/components/schemas/PrivateEndpointConnection'
+          readOnly: true
+        autoStorage:
+          $ref: '#/components/schemas/AutoStorageProperties'
+          title: The properties and status of any auto-storage account associated with the Batch account.
+          description: Contains information about the auto-storage account associated with a Batch account.
+          readOnly: true
+        encryption:
+          $ref: '#/components/schemas/EncryptionProperties'
+          title: The encryption configuration for the Batch account.
+          description: Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead.
+          readOnly: true
+        dedicatedCoreQuota:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          title: The dedicated core quota for the Batch account.
+          description: For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned.
+          readOnly: true
+        lowPriorityCoreQuota:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          title: The Spot/low-priority core quota for the Batch account.
+          description: For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned.
+          readOnly: true
+        dedicatedCoreQuotaPerVMFamily:
+          type:
+          - array
+          - 'null'
+          description: A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned.
+          items:
+            $ref: '#/components/schemas/VirtualMachineFamilyCoreQuota'
+          readOnly: true
+          x-ms-identifiers:
+          - name
+        dedicatedCoreQuotaPerVMFamilyEnforced:
+          type: boolean
+          title: A value indicating whether core quotas per Virtual Machine family are enforced for this account
+          description: If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family.
+          readOnly: true
+        poolQuota:
+          type: integer
+          format: int32
+          title: The pool quota for the Batch account.
+          description: The pool quota for the Batch account.
+          readOnly: true
+        activeJobAndJobScheduleQuota:
+          type: integer
+          format: int32
+          title: The active job and job schedule quota for the Batch account.
+          description: The active job and job schedule quota for the Batch account.
+          readOnly: true
+        allowedAuthenticationModes:
+          type:
+          - array
+          - 'null'
+          description: List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane.
+          items:
+            $ref: '#/components/schemas/AuthenticationMode'
+          readOnly: true
+    AccountKeyType:
+      type: string
+      description: The type of account key to regenerate.
+      enum:
+      - Primary
+      - Secondary
+      x-ms-enum:
+        name: AccountKeyType
+        modelAsString: false
+        values:
+        - name: Primary
+          value: Primary
+          description: The primary account key.
+        - name: Secondary
+          value: Secondary
+          description: The secondary account key.
+    EndpointDependency:
+      type: object
+      description: A domain name and connection details used to access a dependency.
+      properties:
+        domainName:
+          type: string
+          description: The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard.
+          readOnly: true
+        description:
+          type: string
+          description: Human-readable supplemental information about the dependency and when it is applicable.
+          readOnly: true
+        endpointDetails:
+          type: array
+          description: The list of connection details for this endpoint.
+          items:
+            $ref: '#/components/schemas/EndpointDetail'
+          readOnly: true
+          x-ms-identifiers:
+          - port
+    IPRuleAction:
+      type: string
+      description: The action when client IP address is matched.
+      enum:
+      - Allow
+      x-ms-enum:
+        name: IPRuleAction
+        modelAsString: false
+        values:
+        - name: Allow
+          value: Allow
+          description: Allow access for the matched client IP address.
+    PrivateEndpointConnectionProvisioningState:
+      type: string
+      description: The provisioning state of the private endpoint connection.
+      enum:
+      - Creating
+      - Updating
+      - Deleting
+      - Succeeded
+      - Failed
+      - Cancelled
+      x-ms-enum:
+        name: PrivateEndpointConnectionProvisioningState
+        modelAsString: false
+        values:
+        - name: Creating
+          value: Creating
+          description: The connection is creating.
+        - name: Updating
+          value: Updating
+          description: The user has requested that the connection status be updated, but the update operation has not yet completed. You may not reference the connection when connecting the Batch account.
+        - name: Deleting
+          value: Deleting
+          description: The connection is deleting.
+        - name: Succeeded
+          value: Succeeded
+          description: The connection status is final and is ready for use if Status is Approved.
+        - name: Failed
+          value: Failed
+          description: The user requested that the connection be updated and it failed. You may retry the update operation.
+        - name: Cancelled
+          value: Cancelled
+          description: The user has cancelled the connection creation.
+      readOnly: true
+    AuthenticationMode:
+      type: string
+      description: The authentication mode for the Batch account.
+      enum:
+      - SharedKey
+      - AAD
+      - TaskAuthenticationToken
+      x-ms-enum:
+        name: AuthenticationMode
+        modelAsString: false
+        values:
+        - name: SharedKey
+          value: SharedKey
+          description: The authentication mode using shared keys.
+        - name: AAD
+          value: AAD
+          description: The authentication mode using Microsoft Entra ID.
+        - name: TaskAuthenticationToken
+          value: TaskAuthenticationToken
+          description: The authentication mode using task authentication tokens.
+    EncryptionProperties:
+      type: object
+      description: Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead.
+      properties:
+        keySource:
+          $ref: '#/components/schemas/KeySource'
+          description: Type of the key source.
+        keyVaultProperties:
+          $ref: '#/components/schemas/KeyVaultProperties'
+          description: Additional details when using Microsoft.KeyVault
+    NetworkProfile:
+      type: object
+      description: Network profile for Batch account, which contains network rule settings for each endpoint.
+      properties:
+        accountAccess:
+          $ref: '#/components/schemas/EndpointAccessProfile'
+          description: Network access profile for batchAccount endpoint (Batch account data plane API).
+        nodeManagementAccess:
+          $ref: '#/components/schemas/EndpointAccessProfile'
+          description: Network access profile for nodeManagement endpoint (Batch service managing compute nodes for Batch pools).
+    BatchAccountRegenerateKeyParameters:
+      type: object
+      description: Parameters supplied to the RegenerateKey operation.
+      properties:
+        keyName:
+          $ref: '#/components/schemas/AccountKeyType'
+          description: The type of account key to regenerate.
+      required:
+      - keyName
+    EndpointDetail:
+      type: object
+      description: Details about the connection between the Batch service and the endpoint.
+      properties:
+        port:
+          type: integer
+          format: int32
+          description: The port an endpoint is connected to.
+          readOnly: true
+    KeyVaultProperties:
+      type: object
+      description: KeyVault configuration when using an encryption KeySource of Microsoft.KeyVault.
+      properties:
+        keyIdentifier:
+          type: string
+          description: 'Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
+
+
+            The Batch Account has a System Assigned identity
+
+            The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
+
+            The KeyVault has soft-delete and purge protection enabled'
+    PrivateEndpointConnection:
+      type: object
+      description: Contains information about a private link resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateEndpointConnectionProperties'
+          description: The properties associated with the private endpoint connection.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: The ETag of the resource, used for concurrency statements.
+          readOnly: true
+        tags:
+          type: object
+          description: The tags of the resource.
+          additionalProperties:
+            type: string
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    BatchAccountCreateParameters:
+      type: object
+      description: Parameters supplied to the Create operation.
+      properties:
+        location:
+          type: string
+          description: The region in which to create the account.
+        tags:
+          type: object
+          description: The user-specified tags associated with the account.
+          additionalProperties:
+            type: string
+        properties:
+          $ref: '#/components/schemas/BatchAccountCreateProperties'
+          description: The properties of the Batch account.
+          x-ms-client-flatten: true
+        identity:
+          $ref: '#/components/schemas/BatchAccountIdentity'
+          description: The identity of the Batch account.
+      required:
+      - location
+    BatchAccountIdentity:
+      type: object
+      description: The identity of the Batch account, if configured. This is used when the user specifies 'Microsoft.KeyVault' as their Batch account encryption configuration or when `ManagedIdentity` is selected as the auto-storage authentication mode.
+      properties:
+        principalId:
+          type: string
+          description: The principal id of the Batch account. This property will only be provided for a system assigned identity.
+          readOnly: true
+        tenantId:
+          type: string
+          description: The tenant id associated with the Batch account. This property will only be provided for a system assigned identity.
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/ResourceIdentityType'
+          description: The type of identity used for the Batch account.
+        userAssignedIdentities:
+          type: object
+          description: The list of user identities associated with the Batch account.
+          additionalProperties:
+            $ref: '#/components/schemas/UserAssignedIdentities'
+      required:
+      - type
+    KeyVaultReference:
+      type: object
+      description: Identifies the Azure key vault associated with a Batch account.
+      properties:
+        id:
+          type: string
+          format: arm-id
+          description: The resource ID of the Azure key vault associated with the Batch account.
+          x-ms-arm-id-details:
+            allowedResources:
+            - type: Microsoft.KeyVault/vaults
+        url:
+          type: string
+          description: The URL of the Azure key vault associated with the Batch account.
+      required:
+      - id
+      - url
+    KeySource:
+      type: string
+      description: Type of the key source.
+      enum:
+      - Microsoft.Batch
+      - Microsoft.KeyVault
+      x-ms-enum:
+        name: KeySource
+        modelAsString: false
+        values:
+        - name: Microsoft.Batch
+          value: Microsoft.Batch
+          description: Batch creates and manages the encryption keys used to protect the account data.
+        - name: Microsoft.KeyVault
+          value: Microsoft.KeyVault
+          description: The encryption keys used to protect the account data are stored in an external key vault. If this is set then the Batch Account identity must be set to `SystemAssigned` and a valid Key Identifier must also be supplied under the keyVaultProperties.
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

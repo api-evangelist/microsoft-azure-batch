@@ -1,0 +1,299 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Location API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Location
+paths:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability:
+    post:
+      operationId: Location_CheckNameAvailability
+      tags:
+      - Location
+      description: Checks whether the Batch account name is available in the specified region.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - name: locationName
+        in: path
+        description: The desired region for the name check.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckNameAvailabilityResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        LocationCheckNameAvailability_AlreadyExists:
+          $ref: ./examples/LocationCheckNameAvailability_AlreadyExists.json
+        LocationCheckNameAvailability_Available:
+          $ref: ./examples/LocationCheckNameAvailability_Available.json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckNameAvailabilityParameters'
+        description: Properties needed to check the availability of a name.
+        required: true
+      summary: Location check name availability
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas:
+    get:
+      operationId: Location_GetQuotas
+      tags:
+      - Location
+      description: Gets the Batch service quotas for the specified subscription at the given location.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - name: locationName
+        in: path
+        description: The region for which to retrieve Batch service quotas.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchLocationQuota'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        LocationGetQuotas:
+          $ref: ./examples/LocationGetQuotas.json
+      summary: Location get quotas
+      x-summary-source: derived
+  /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus:
+    get:
+      operationId: Location_ListSupportedVirtualMachineSkus
+      tags:
+      - Location
+      description: Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - name: locationName
+        in: path
+        description: The region for which to retrieve Batch service supported SKUs.
+        required: true
+        schema:
+          type: string
+      - name: maxresults
+        in: query
+        description: The maximum number of items to return in the response.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: $filter
+        in: query
+        description: OData filter expression. Valid properties for filtering are "familyName".
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedSkusResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        LocationListVirtualMachineSkus:
+          $ref: ./examples/LocationListVirtualMachineSkus.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Location list supported virtual machine skus
+      x-summary-source: derived
+components:
+  schemas:
+    SupportedSku:
+      type: object
+      description: Describes a Batch supported SKU.
+      properties:
+        name:
+          type: string
+          description: The name of the SKU.
+          readOnly: true
+        familyName:
+          type: string
+          description: The family name of the SKU.
+          readOnly: true
+        capabilities:
+          type: array
+          description: A collection of capabilities which this SKU supports.
+          items:
+            $ref: '#/components/schemas/SkuCapability'
+          readOnly: true
+          x-ms-identifiers:
+          - name
+        batchSupportEndOfLife:
+          type: string
+          format: date-time
+          description: The time when Azure Batch service will retire this SKU.
+          readOnly: true
+    ResourceType:
+      type: string
+      description: The result of the request to list operations.
+      enum:
+      - Microsoft.Batch/batchAccounts
+      x-ms-enum:
+        name: ResourceType
+        modelAsString: false
+        values:
+        - name: MicrosoftBatchBatchAccounts
+          value: Microsoft.Batch/batchAccounts
+          description: The resource type for Microsoft.Batch/batchAccounts
+    BatchLocationQuota:
+      type: object
+      description: Quotas associated with a Batch region for a particular subscription.
+      properties:
+        accountQuota:
+          type: integer
+          format: int32
+          description: The number of Batch accounts that may be created under the subscription in the specified region.
+          readOnly: true
+    NameAvailabilityReason:
+      type: string
+      description: Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false.
+      enum:
+      - Invalid
+      - AlreadyExists
+      x-ms-enum:
+        name: NameAvailabilityReason
+        modelAsString: false
+        values:
+        - name: Invalid
+          value: Invalid
+          description: The requested name is invalid.
+        - name: AlreadyExists
+          value: AlreadyExists
+          description: The requested name is already in use.
+    CheckNameAvailabilityResult:
+      type: object
+      description: The CheckNameAvailability operation response.
+      properties:
+        nameAvailable:
+          type: boolean
+          description: Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used.
+          readOnly: true
+        reason:
+          $ref: '#/components/schemas/NameAvailabilityReason'
+          description: Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false.
+          readOnly: true
+        message:
+          type: string
+          description: Gets an error message explaining the Reason value in more detail.
+          readOnly: true
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    SkuCapability:
+      type: object
+      description: A SKU capability, such as the number of cores.
+      properties:
+        name:
+          type: string
+          description: The name of the feature.
+          readOnly: true
+        value:
+          type: string
+          description: The value of the feature.
+          readOnly: true
+    SupportedSkusResult:
+      type: object
+      description: The Batch List supported SKUs operation response.
+      properties:
+        value:
+          type: array
+          description: The SupportedSku items on this page
+          items:
+            $ref: '#/components/schemas/SupportedSku'
+          x-ms-identifiers:
+          - name
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    CheckNameAvailabilityParameters:
+      type: object
+      description: Parameters for a check name availability request.
+      properties:
+        name:
+          type: string
+          description: The name to check for availability
+        type:
+          $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+      required:
+      - name
+      - type
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

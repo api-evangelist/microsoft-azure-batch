@@ -1,0 +1,205 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Private Link Resource API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: PrivateLinkResource
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateLinkResources
+  : get:
+      operationId: PrivateLinkResource_ListByBatchAccount
+      tags:
+      - PrivateLinkResource
+      description: Lists all of the private link resources in the specified account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: maxresults
+        in: query
+        description: The maximum number of items to return in the response.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPrivateLinkResourcesResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ListPrivateLinkResource:
+          $ref: ./examples/PrivateLinkResourcesList.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Private link resource list by batch account
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateLinkResources/{privateLinkResourceName}
+  : get:
+      operationId: PrivateLinkResource_Get
+      tags:
+      - PrivateLinkResource
+      description: Gets information about the specified private link resource.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: privateLinkResourceName
+        in: path
+        description: The private link resource name. This must be unique within the account.
+        required: true
+        schema:
+          type: string
+          maxLength: 101
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateLinkResource'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        GetPrivateLinkResource:
+          $ref: ./examples/PrivateLinkResourceGet.json
+      summary: Private link resource get
+      x-summary-source: derived
+components:
+  schemas:
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    ListPrivateLinkResourcesResult:
+      type: object
+      description: Values returned by the List operation.
+      properties:
+        value:
+          type: array
+          description: The PrivateLinkResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateLinkResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    PrivateLinkResource:
+      type: object
+      description: Contains information about a private link resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: The properties associated with the private link resource.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: The ETag of the resource, used for concurrency statements.
+          readOnly: true
+        tags:
+          type: object
+          description: The tags of the resource.
+          additionalProperties:
+            type: string
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    PrivateLinkResourceProperties:
+      type: object
+      description: Private link resource properties.
+      properties:
+        groupId:
+          type: string
+          title: The group id of the private link resource.
+          description: The group id is used to establish the private link connection.
+          readOnly: true
+        requiredMembers:
+          type: array
+          title: The list of required members that are used to establish the private link connection.
+          description: The list of required members that are used to establish the private link connection.
+          items:
+            type: string
+          readOnly: true
+        requiredZoneNames:
+          type: array
+          title: The list of required zone names for the private DNS resource name.
+          description: The list of required zone names for the private DNS resource name
+          items:
+            type: string
+          readOnly: true
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

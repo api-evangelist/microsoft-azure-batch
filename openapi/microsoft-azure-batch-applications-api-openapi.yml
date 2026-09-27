@@ -1,0 +1,306 @@
+openapi: 3.2.0
+info:
+  title: Azure Batch Applications API
+  version: '2025-06-01'
+  description: Azure Batch provides Cloud-scale job scheduling and compute management.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+security:
+- OAuth2Auth:
+  - https://batch.core.windows.net//.default
+tags:
+- name: Applications
+paths:
+  /applications:
+    get:
+      operationId: Applications_ListApplications
+      tags:
+      - Applications
+      summary: Lists all of the applications available in the specified Account
+      description: 'This operation returns only Applications and versions that are available for
+
+        use on Compute Nodes; that is, that can be used in an Package reference. For
+
+        administrator information about applications and versions that are not yet
+
+        available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+
+        API.'
+      parameters:
+      - $ref: '#/components/parameters/Azure.Core.Foundations.ApiVersionParameter'
+      - name: timeOut
+        in: query
+        description: The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.".
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: client-request-id
+        in: header
+        description: 'The caller-generated request identity, in the form of a GUID with no decoration
+
+          such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.'
+        required: false
+        x-ms-client-name: clientRequestId
+        schema:
+          type: string
+      - name: return-client-request-id
+        in: header
+        description: Whether the server should return the client-request-id in the response.
+        required: false
+        x-ms-client-name: returnClientRequestId
+        schema:
+          type: boolean
+          default: false
+      - name: ocp-date
+        in: header
+        description: 'The time the request was issued. Client libraries typically set this to the
+
+          current system clock time; set it explicitly if you are calling the REST API
+
+          directly.'
+        required: false
+        x-ms-client-name: ocpdate
+        schema:
+          type: string
+          format: date-time-rfc7231
+      - name: maxresults
+        in: query
+        description: 'The maximum number of items to return in the response. A maximum of 1000
+
+          applications can be returned.'
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1000
+          maximum: 1000
+          minimum: 1
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              description: The ETag HTTP response header. This is an opaque string. You can use it to detect whether the resource has changed between requests. In particular, you can pass the ETag to one of the If-Modified-Since, If-Unmodified-Since, If-Match or If-None-Match headers.
+              schema:
+                type: string
+            Last-Modified:
+              description: The time at which the resource was last modified.
+              schema:
+                type: string
+                format: date-time-rfc7231
+            client-request-id:
+              description: The client-request-id provided by the client during the request. This will be returned only if the return-client-request-id parameter was set to true.
+              schema:
+                type: string
+            request-id:
+              description: A unique identifier for the request that was made to the Batch service. If a request is consistently failing and you have verified that the request is properly formulated, you may use this value to report the error to Microsoft. In your report, include the value of this request ID, the approximate time that the request was made, the Batch Account against which the request was made, and the region that Account resides in.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchApplicationListResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchError'
+      x-ms-examples:
+        List applications:
+          $ref: ./examples/Applications_ListApplications.json
+      x-ms-pageable:
+        nextLinkName: odata.nextLink
+  /applications/{applicationId}:
+    get:
+      operationId: Applications_GetApplication
+      tags:
+      - Applications
+      summary: Gets information about the specified Application
+      description: 'This operation returns only Applications and versions that are available for
+
+        use on Compute Nodes; that is, that can be used in an Package reference. For
+
+        administrator information about Applications and versions that are not yet
+
+        available to Compute Nodes, use the Azure portal or the Azure Resource Manager
+
+        API.'
+      parameters:
+      - $ref: '#/components/parameters/Azure.Core.Foundations.ApiVersionParameter'
+      - name: timeOut
+        in: query
+        description: The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.".
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: client-request-id
+        in: header
+        description: 'The caller-generated request identity, in the form of a GUID with no decoration
+
+          such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.'
+        required: false
+        x-ms-client-name: clientRequestId
+        schema:
+          type: string
+      - name: return-client-request-id
+        in: header
+        description: Whether the server should return the client-request-id in the response.
+        required: false
+        x-ms-client-name: returnClientRequestId
+        schema:
+          type: boolean
+          default: false
+      - name: ocp-date
+        in: header
+        description: 'The time the request was issued. Client libraries typically set this to the
+
+          current system clock time; set it explicitly if you are calling the REST API
+
+          directly.'
+        required: false
+        x-ms-client-name: ocpdate
+        schema:
+          type: string
+          format: date-time-rfc7231
+      - name: applicationId
+        in: path
+        description: The ID of the Application
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              description: The ETag HTTP response header. This is an opaque string. You can use it to detect whether the resource has changed between requests. In particular, you can pass the ETag to one of the If-Modified-Since, If-Unmodified-Since, If-Match or If-None-Match headers.
+              schema:
+                type: string
+            Last-Modified:
+              description: The time at which the resource was last modified.
+              schema:
+                type: string
+                format: date-time-rfc7231
+            client-request-id:
+              description: The client-request-id provided by the client during the request. This will be returned only if the return-client-request-id parameter was set to true.
+              schema:
+                type: string
+            request-id:
+              description: A unique identifier for the request that was made to the Batch service. If a request is consistently failing and you have verified that the request is properly formulated, you may use this value to report the error to Microsoft. In your report, include the value of this request ID, the approximate time that the request was made, the Batch Account against which the request was made, and the region that Account resides in.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchApplication'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchError'
+      x-ms-examples:
+        Get applications:
+          $ref: ./examples/Applications_GetApplication.json
+components:
+  schemas:
+    BatchErrorDetail:
+      type: object
+      description: An item of additional information included in an Azure Batch error response.
+      properties:
+        key:
+          type: string
+          description: An identifier specifying the meaning of the Value property.
+        value:
+          type: string
+          description: The additional information included with the error response.
+    BatchApplicationListResult:
+      type: object
+      description: The result of listing the applications available in an Account.
+      properties:
+        value:
+          type: array
+          description: The list of applications available in the Account.
+          items:
+            $ref: '#/components/schemas/BatchApplication'
+        odata.nextLink:
+          type: string
+          format: uri
+          description: The URL to get the next set of results.
+    BatchApplication:
+      type: object
+      description: Contains information about an application in an Azure Batch Account.
+      properties:
+        id:
+          type: string
+          description: A string that uniquely identifies the application within the Account.
+        displayName:
+          type: string
+          description: The display name for the application.
+        versions:
+          type: array
+          description: The list of available versions of the application.
+          items:
+            type: string
+      required:
+      - id
+      - displayName
+      - versions
+    BatchError:
+      type: object
+      description: An error response received from the Azure Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          $ref: '#/components/schemas/BatchErrorMessage'
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        values:
+          type: array
+          description: A collection of key-value pairs containing additional details about the error.
+          items:
+            $ref: '#/components/schemas/BatchErrorDetail'
+    BatchErrorMessage:
+      type: object
+      description: An error message received in an Azure Batch error response.
+      properties:
+        lang:
+          type: string
+          description: The language code of the error message.
+        value:
+          type: string
+          description: The text of the message.
+  parameters:
+    Azure.Core.Foundations.ApiVersionParameter:
+      name: api-version
+      in: query
+      description: The API version to use for this operation.
+      required: true
+      x-ms-parameter-location: method
+      x-ms-client-name: apiVersion
+      schema:
+        type: string
+        minLength: 1
+  securitySchemes:
+    OAuth2Auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            https://batch.core.windows.net//.default: ''
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+x-ms-parameterized-host:
+  hostTemplate: '{endpoint}'
+  useSchemePrefix: false
+  parameters:
+  - name: endpoint
+    in: path
+    description: 'Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com).'
+    required: true
+    type: string
+    format: uri
+    x-ms-skip-url-encoding: true

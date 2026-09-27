@@ -2,15 +2,19 @@ name: Microsoft Azure Batch
 aid: microsoft-azure-batch
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - azure/azure-rest-api-specs
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 specificationVersion: '0.23'
 accessModel:
@@ -29,76 +33,10 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml
 apis:
-- aid: microsoft-azure-batch:microsoft-azure-batch-batch-service-api
-  name: Azure Batch Service API
-  description: 'The complete Azure Batch data-plane API, exactly as Microsoft publishes it: 51 paths,
-    72 operations, 236 schema definitions and 101 first-party request/response examples, at api-version
-    2025-06-01. Covers applications, pools, compute nodes, jobs, job schedules and tasks. The callable
-    host is per Batch account and per region (https://{account}.{region}.batch.azure.com); batch.core.windows.net
-    is the OAuth resource identifier, not an endpoint. Harvested verbatim from github.com/Azure/azure-rest-api-specs
-    on 2026-09-17.'
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
-  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
-  baseURL: https://{account}.{region}.batch.azure.com
-  tags:
-  - Batch
-  - Compute
-  - Job Scheduling
-  - High Performance Computing
-  - Pools
-  - Task
-  - Cloud
-  tags_raw:
-  - Batch
-  - Compute
-  - Job Scheduling
-  - High Performance Computing
-  - Pools
-  - Tasks
-  - Cloud
-  properties:
-  - type: OpenAPI
-    url: openapi/_original/microsoft-azure-batch-batch-service-openapi.json
-  - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/batch/data-plane/Batch/stable/2025-06-01/BatchService.json
-  - type: Overlay
-    url: overlays/microsoft-azure-batch-batch-service-overlay.yaml
-  - type: Examples
-    url: examples/_index.yml
-  - type: Documentation
-    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
-  - type: APIReference
-    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
-- aid: microsoft-azure-batch:microsoft-azure-batch-management-api
-  name: Azure Batch Management API
-  description: 'The Azure Batch control plane (Microsoft.Batch resource provider) as Microsoft publishes
-    it: 29 paths, 42 operations, 152 schema definitions at api-version 2025-06-01, served from management.azure.com.
-    Creates and manages Batch accounts, account keys, application packages, pool ARM resources, private
-    endpoint connections, network security perimeter configuration and regional quotas. Harvested verbatim
-    from github.com/Azure/azure-rest-api-specs on 2026-09-17.'
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
-  humanURL: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
-  baseURL: https://management.azure.com
-  tags:
-  - Batch
-  - Management
-  - Resource Manager
-  - Provisioning
-  - Cloud
-  properties:
-  - type: OpenAPI
-    url: openapi/_original/microsoft-azure-batch-management-openapi.json
-  - type: OpenAPI
-    name: OpenAPI (provider-hosted)
-    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/openapi.json
-  - type: Overlay
-    url: overlays/microsoft-azure-batch-management-overlay.yaml
-  - type: Documentation
-    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
 - aid: microsoft-azure-batch:microsoft-azure-batch-jobs-api
   name: microsoft-azure-batch Jobs API
-  description: The Jobs API from microsoft-azure-batch — 1 operation(s) for jobs. Partial, API Evangelist-authored
+  description: >-
+    The Jobs API from microsoft-azure-batch — 1 operation(s) for jobs. Partial, API Evangelist-authored
     view; the complete provider contract is the Azure Batch Service API entry below.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
@@ -114,7 +52,8 @@ apis:
     url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 - aid: microsoft-azure-batch:microsoft-azure-batch-pools-api
   name: microsoft-azure-batch Pools API
-  description: The Pools API from microsoft-azure-batch — 2 operation(s) for pools. Partial, API Evangelist-authored
+  description: >-
+    The Pools API from microsoft-azure-batch — 2 operation(s) for pools. Partial, API Evangelist-authored
     view; the complete provider contract is the Azure Batch Service API entry below.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
@@ -128,7 +67,8 @@ apis:
     url: https://learn.microsoft.com/en-us/rest/api/batchservice/
 - aid: microsoft-azure-batch:microsoft-azure-batch-tasks-api
   name: microsoft-azure-batch Tasks API
-  description: The Tasks API from microsoft-azure-batch — 1 operation(s) for tasks. Partial, API Evangelist-authored
+  description: >-
+    The Tasks API from microsoft-azure-batch — 1 operation(s) for tasks. Partial, API Evangelist-authored
     view; the complete provider contract is the Azure Batch Service API entry below.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-azure-batch.png
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
@@ -142,7 +82,251 @@ apis:
     url: openapi/microsoft-azure-batch-tasks-api-openapi.yml
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+- aid: microsoft-azure-batch:microsoft-azure-batch-application-api
+  name: Microsoft Azure Batch Application API
+  description: The Application API from Microsoft Azure Batch — 2 operation(s) for application.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Application
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-application-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-applicationpackage-api
+  name: Microsoft Azure Batch Application Package API
+  description: >-
+    The ApplicationPackage API from Microsoft Azure Batch — 3 operation(s) for applicationpackage.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - ApplicationPackage
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-applicationpackage-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-applications-api
+  name: Microsoft Azure Batch Applications API
+  description: The Applications API from Microsoft Azure Batch — 2 operation(s) for applications.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-applications-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-batchaccount-api
+  name: Microsoft Azure Batch Batch Account API
+  description: The BatchAccount API from Microsoft Azure Batch — 7 operation(s) for batchaccount.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - BatchAccount
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-batchaccount-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-detectorresponses-api
+  name: Microsoft Azure Batch Detector Responses API
+  description: >-
+    The DetectorResponses API from Microsoft Azure Batch — 2 operation(s) for detectorresponses.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - DetectorResponses
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-detectorresponses-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-job-schedules-api
+  name: Microsoft Azure Batch Job Schedules API
+  description: The Job Schedules API from Microsoft Azure Batch — 5 operation(s) for job schedules.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Job Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-job-schedules-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-location-api
+  name: Microsoft Azure Batch Location API
+  description: The Location API from Microsoft Azure Batch — 3 operation(s) for location.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Location
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-location-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-networksecurityperimeter-api
+  name: Microsoft Azure Batch Network Security Perimeter API
+  description: >-
+    The NetworkSecurityPerimeter API from Microsoft Azure Batch — 3 operation(s) for networksecurityperimeter.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - NetworkSecurityPerimeter
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-networksecurityperimeter-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-nodes-api
+  name: Microsoft Azure Batch Nodes API
+  description: The Nodes API from Microsoft Azure Batch — 16 operation(s) for nodes.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Nodes
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-nodes-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-operations-api
+  name: Microsoft Azure Batch Operations API
+  description: The Operations API from Microsoft Azure Batch — 1 operation(s) for operations.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-operations-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-pool-api
+  name: Microsoft Azure Batch Pool API
+  description: The Pool API from Microsoft Azure Batch — 4 operation(s) for pool.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Pool
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-pool-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-privatelinkresource-api
+  name: Microsoft Azure Batch Private Link Resource API
+  description: >-
+    The PrivateLinkResource API from Microsoft Azure Batch — 2 operation(s) for privatelinkresource.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - PrivateLinkResource
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-privatelinkresource-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
+- aid: microsoft-azure-batch:microsoft-azure-batch-private-endpoint-connection-api
+  name: Microsoft Azure Batch Private Endpoint Connection API
+  description: >-
+    The Private Endpoint Connection API from Microsoft Azure Batch — 2 operation(s) for private endpoint
+    connection.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  baseURL: https://{account}.{region}.batch.azure.com
+  tags:
+  - Private Endpoint Connection
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-batch-private-endpoint-connection-api-openapi.yml
+  - type: Examples
+    url: examples/_index.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: APIReference
+    url: https://learn.microsoft.com/en-us/rest/api/batchservice/
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
 common:
+- type: Overlay
+  url: overlays/microsoft-azure-batch-batch-service-overlay.yaml
+- type: Overlay
+  url: overlays/microsoft-azure-batch-management-overlay.yaml
 - type: TrustCenter
   url: security/microsoft-azure-batch-trust-center.yml
 - type: VulnerabilityDisclosure

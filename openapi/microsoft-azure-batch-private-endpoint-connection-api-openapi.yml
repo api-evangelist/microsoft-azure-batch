@@ -1,0 +1,432 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Private Endpoint Connection API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Private Endpoint Connection
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections
+  : get:
+      operationId: PrivateEndpointConnection_ListByBatchAccount
+      tags:
+      - Private Endpoint Connection
+      description: Lists all of the private endpoint connections in the specified account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: maxresults
+        in: query
+        description: The maximum number of items to return in the response.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPrivateEndpointConnectionsResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ListPrivateEndpointConnections:
+          $ref: ./examples/PrivateEndpointConnectionsList.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Private endpoint connection list by batch account
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+  : get:
+      operationId: PrivateEndpointConnection_Get
+      tags:
+      - Private Endpoint Connection
+      description: Gets information about the specified private endpoint connection.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: privateEndpointConnectionName
+        in: path
+        description: The private endpoint connection name. This must be unique within the account.
+        required: true
+        schema:
+          type: string
+          maxLength: 101
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateEndpointConnection'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        GetPrivateEndpointConnection:
+          $ref: ./examples/PrivateEndpointConnectionGet.json
+      summary: Private endpoint connection get
+      x-summary-source: derived
+    patch:
+      operationId: PrivateEndpointConnection_Update
+      tags:
+      - Private Endpoint Connection
+      description: Updates the properties of an existing private endpoint connection.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: privateEndpointConnectionName
+        in: path
+        description: The private endpoint connection name. This must be unique within the account.
+        required: true
+        schema:
+          type: string
+          maxLength: 101
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$
+      - name: If-Match
+        in: header
+        description: The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to "*" to apply the operation unconditionally.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateEndpointConnection'
+        '202':
+          description: Resource update request accepted.
+          headers:
+            Azure-AsyncOperation:
+              description: A link to the status monitor
+              schema:
+                type: string
+                format: uri
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        UpdatePrivateEndpointConnection:
+          $ref: ./examples/PrivateEndpointConnectionUpdate.json
+      x-ms-long-running-operation-options:
+        final-state-via: azure-async-operation
+        final-state-schema: '#/definitions/PrivateEndpointConnection'
+      x-ms-long-running-operation: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivateEndpointConnection'
+        description: PrivateEndpointConnection properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged.
+        required: true
+      summary: Private endpoint connection update
+      x-summary-source: derived
+    delete:
+      operationId: PrivateEndpointConnection_Delete
+      tags:
+      - Private Endpoint Connection
+      description: Deletes the specified private endpoint connection.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: privateEndpointConnectionName
+        in: path
+        description: The private endpoint connection name. This must be unique within the account.
+        required: true
+        schema:
+          type: string
+          maxLength: 101
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$
+      responses:
+        '202':
+          description: Resource deletion accepted.
+          headers:
+            Azure-AsyncOperation:
+              description: A link to the status monitor
+              schema:
+                type: string
+                format: uri
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        '204':
+          description: Resource does not exist.
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        PrivateEndpointConnectionDelete:
+          $ref: ./examples/PrivateEndpointConnectionDelete.json
+      x-ms-long-running-operation-options:
+        final-state-via: azure-async-operation
+      x-ms-long-running-operation: true
+      summary: Private endpoint connection delete
+      x-summary-source: derived
+components:
+  schemas:
+    PrivateLinkServiceConnectionStatus:
+      type: string
+      description: The status of the Batch private endpoint connection
+      enum:
+      - Approved
+      - Pending
+      - Rejected
+      - Disconnected
+      x-ms-enum:
+        name: PrivateLinkServiceConnectionStatus
+        modelAsString: false
+        values:
+        - name: Approved
+          value: Approved
+          description: The private endpoint connection is approved and can be used to access Batch account
+        - name: Pending
+          value: Pending
+          description: The private endpoint connection is pending and cannot be used to access Batch account
+        - name: Rejected
+          value: Rejected
+          description: The private endpoint connection is rejected and cannot be used to access Batch account
+        - name: Disconnected
+          value: Disconnected
+          description: The private endpoint connection is disconnected and cannot be used to access Batch account
+    ListPrivateEndpointConnectionsResult:
+      type: object
+      description: Values returned by the List operation.
+      properties:
+        value:
+          type: array
+          description: The PrivateEndpointConnection items on this page
+          items:
+            $ref: '#/components/schemas/PrivateEndpointConnection'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    PrivateLinkServiceConnectionState:
+      type: object
+      description: The private link service connection state of the private endpoint connection
+      properties:
+        status:
+          $ref: '#/components/schemas/PrivateLinkServiceConnectionStatus'
+          title: The status of the Batch private endpoint connection
+          description: The status of the Batch private endpoint connection
+        description:
+          type: string
+          title: Description of the private Connection state
+          description: Description of the private Connection state
+        actionsRequired:
+          type: string
+          title: Action required on the private connection state
+          description: Action required on the private connection state
+          readOnly: true
+      required:
+      - status
+    PrivateEndpoint:
+      type: object
+      description: The private endpoint of the private endpoint connection.
+      properties:
+        id:
+          type: string
+          title: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
+          description: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
+          readOnly: true
+    PrivateEndpointConnectionProvisioningState:
+      type: string
+      description: The provisioning state of the private endpoint connection.
+      enum:
+      - Creating
+      - Updating
+      - Deleting
+      - Succeeded
+      - Failed
+      - Cancelled
+      x-ms-enum:
+        name: PrivateEndpointConnectionProvisioningState
+        modelAsString: false
+        values:
+        - name: Creating
+          value: Creating
+          description: The connection is creating.
+        - name: Updating
+          value: Updating
+          description: The user has requested that the connection status be updated, but the update operation has not yet completed. You may not reference the connection when connecting the Batch account.
+        - name: Deleting
+          value: Deleting
+          description: The connection is deleting.
+        - name: Succeeded
+          value: Succeeded
+          description: The connection status is final and is ready for use if Status is Approved.
+        - name: Failed
+          value: Failed
+          description: The user requested that the connection be updated and it failed. You may retry the update operation.
+        - name: Cancelled
+          value: Cancelled
+          description: The user has cancelled the connection creation.
+      readOnly: true
+    PrivateEndpointConnection:
+      type: object
+      description: Contains information about a private link resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateEndpointConnectionProperties'
+          description: The properties associated with the private endpoint connection.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: The ETag of the resource, used for concurrency statements.
+          readOnly: true
+        tags:
+          type: object
+          description: The tags of the resource.
+          additionalProperties:
+            type: string
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    PrivateEndpointConnectionProperties:
+      type: object
+      description: Private endpoint connection properties.
+      properties:
+        provisioningState:
+          $ref: '#/components/schemas/PrivateEndpointConnectionProvisioningState'
+          title: The provisioning state of the private endpoint connection.
+          description: The provisioning state of the private endpoint connection.
+          readOnly: true
+        privateEndpoint:
+          $ref: '#/components/schemas/PrivateEndpoint'
+          title: The ARM resource identifier of the private endpoint.
+          description: The private endpoint of the private endpoint connection.
+          readOnly: true
+        groupIds:
+          type: array
+          title: The group id of the private endpoint connection.
+          description: The value has one and only one group id.
+          items:
+            type: string
+          readOnly: true
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkServiceConnectionState'
+          title: The private link service connection state of the private endpoint connection.
+          description: The private link service connection state of the private endpoint connection.
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

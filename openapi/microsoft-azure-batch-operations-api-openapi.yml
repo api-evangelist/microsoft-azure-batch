@@ -1,0 +1,147 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Operations API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: Operations
+paths:
+  /providers/Microsoft.Batch/operations:
+    get:
+      operationId: Operations_List
+      tags:
+      - Operations
+      description: Lists available operations for the Microsoft.Batch provider
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationListResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        OperationsList:
+          $ref: ./examples/OperationsList.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Operations list
+      x-summary-source: derived
+components:
+  schemas:
+    OperationDisplay:
+      type: object
+      description: The object that describes the operation.
+      properties:
+        provider:
+          type: string
+          title: Friendly name of the resource provider.
+          description: Friendly name of the resource provider.
+        operation:
+          type: string
+          title: The operation type.
+          description: 'For example: read, write, delete, or listKeys/action'
+        resource:
+          type: string
+          title: The resource type on which the operation is performed.
+          description: The resource type on which the operation is performed.
+        description:
+          type: string
+          title: The friendly name of the operation
+          description: The friendly name of the operation
+    Operation:
+      type: object
+      title: A REST API operation
+      description: A REST API operation
+      properties:
+        name:
+          type: string
+          title: The operation name.
+          description: This is of the format {provider}/{resource}/{operation}
+        isDataAction:
+          type: boolean
+          description: Indicates whether the operation is a data action
+        display:
+          $ref: '#/components/schemas/OperationDisplay'
+          title: The object that describes the operation.
+          description: The object that describes the operation.
+        origin:
+          type: string
+          title: The intended executor of the operation.
+          description: The intended executor of the operation.
+        properties:
+          title: Properties of the operation.
+          description: Properties of the operation.
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    OperationListResult:
+      type: object
+      title: Result of the request to list REST API operations. It contains a list of operations and a URL nextLink to get the next set of results.
+      description: Paged collection of Operation items
+      properties:
+        value:
+          type: array
+          title: The list of operations supported by the resource provider.
+          description: The Operation items on this page
+          items:
+            $ref: '#/components/schemas/Operation'
+          x-ms-identifiers:
+          - name
+        nextLink:
+          type: string
+          format: uri
+          title: The URL to get the next set of operation list results if there are any.
+          description: The link to the next page of items
+      required:
+      - value
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

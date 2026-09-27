@@ -1,0 +1,209 @@
+openapi: 3.2.0
+info:
+  title: BatchManagementClient Network Security Perimeter API
+  version: '2025-06-01'
+  description: The Batch Management Client.
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
+security:
+- azure_auth:
+  - user_impersonation
+tags:
+- name: NetworkSecurityPerimeter
+paths:
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations
+  : get:
+      operationId: NetworkSecurityPerimeter_ListConfigurations
+      tags:
+      - NetworkSecurityPerimeter
+      description: Lists all of the NSP configurations in the specified account.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkSecurityPerimeterConfigurationListResult'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        ListNspConfigurations:
+          $ref: ./examples/NspConfigurationsList.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+      summary: Network security perimeter list configurations
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}
+  : get:
+      operationId: NetworkSecurityPerimeter_GetConfiguration
+      tags:
+      - NetworkSecurityPerimeter
+      description: Gets information about the specified NSP configuration.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: networkSecurityPerimeterConfigurationName
+        in: path
+        description: The name for a network security perimeter configuration
+        required: true
+        schema:
+          type: string
+          maxLength: 512
+          minLength: 1
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../../common-types/resource-management/v5/networksecurityperimeter.json#/definitions/NetworkSecurityPerimeterConfiguration
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudError'
+      x-ms-examples:
+        GetNspConfiguration:
+          $ref: ./examples/NspConfigurationGet.json
+      summary: Network security perimeter get configuration
+      x-summary-source: derived
+  ? /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile
+  : post:
+      operationId: NetworkSecurityPerimeter_ReconcileConfiguration
+      tags:
+      - NetworkSecurityPerimeter
+      description: Reconciles the specified NSP configuration.
+      parameters:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/parameters/ResourceGroupNameParameter
+      - name: accountName
+        in: path
+        description: 'A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/.'
+        required: true
+        schema:
+          type: string
+          maxLength: 24
+          minLength: 3
+          pattern: ^[a-zA-Z0-9]+$
+      - name: networkSecurityPerimeterConfigurationName
+        in: path
+        description: The name for a network security perimeter configuration
+        required: true
+        schema:
+          type: string
+          maxLength: 512
+          minLength: 1
+      responses:
+        '202':
+          description: Resource operation accepted.
+          headers:
+            Location:
+              description: The Location header contains the URL where the status of the long running operation can be checked.
+              schema:
+                type: string
+            Retry-After:
+              description: The Retry-After header can indicate how long the client should wait before polling the operation status.
+              schema:
+                type: integer
+                format: int32
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse
+      x-ms-examples:
+        ReconcileNspConfiguration:
+          $ref: ./examples/NspConfigurationReconcile.json
+      x-ms-long-running-operation-options:
+        final-state-via: location
+      x-ms-long-running-operation: true
+      summary: Network security perimeter reconcile configuration
+      x-summary-source: derived
+components:
+  schemas:
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    NetworkSecurityPerimeterConfigurationListResult:
+      type: object
+      description: The response of a NetworkSecurityPerimeterConfiguration list operation.
+      properties:
+        value:
+          type: array
+          description: The NetworkSecurityPerimeterConfiguration items on this page
+          items:
+            $ref: ../../../../../../common-types/resource-management/v5/networksecurityperimeter.json#/definitions/NetworkSecurityPerimeterConfiguration
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+  securitySchemes:
+    azure_auth:
+      type: oauth2
+      flows:
+        implicit:
+          scopes:
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.
