@@ -22,7 +22,9 @@
     "microsoft-azure-batch-privateendpointconnection-api-openapi.yml",
     "microsoft-azure-batch-privatelinkresource-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -30,12 +32,26 @@
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "microsoft-azure-batch-batch-service-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
     "microsoft-azure-batch-management-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+13 apis, 16 total)"
+    "superseded outputs removed: microsoft-azure-batch-private-endpoint-connection-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 16 total)"
   ],
   "skipped": [
     "_ae-authored/microsoft-azure-batch-openapi.yml: archived document superseded by a larger archived document",
+    "microsoft-azure-batch-application-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-applicationpackage-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-batchaccount-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-detectorresponses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-job-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-batch-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-location-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-networksecurityperimeter-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-nodes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-pool-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-batch-pools-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-private-endpoint-connection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-batch-privatelinkresource-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-batch-tasks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

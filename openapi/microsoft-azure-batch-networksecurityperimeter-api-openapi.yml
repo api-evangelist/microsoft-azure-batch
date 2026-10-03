@@ -153,6 +153,29 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    NetworkSecurityPerimeterConfigurationListResult:
+      type: object
+      description: The response of a NetworkSecurityPerimeterConfiguration list operation.
+      properties:
+        value:
+          type: array
+          description: The NetworkSecurityPerimeterConfiguration items on this page
+          items:
+            $ref: ../../../../../../common-types/resource-management/v5/networksecurityperimeter.json#/definitions/NetworkSecurityPerimeterConfiguration
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
     CloudErrorBody:
       type: object
       description: An error response from the Batch service.
@@ -175,29 +198,6 @@ components:
           - message
           - target
       x-ms-external: true
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
-      x-ms-external: true
-    NetworkSecurityPerimeterConfigurationListResult:
-      type: object
-      description: The response of a NetworkSecurityPerimeterConfiguration list operation.
-      properties:
-        value:
-          type: array
-          description: The NetworkSecurityPerimeterConfiguration items on this page
-          items:
-            $ref: ../../../../../../common-types/resource-management/v5/networksecurityperimeter.json#/definitions/NetworkSecurityPerimeterConfiguration
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
   securitySchemes:
     azure_auth:
       type: oauth2

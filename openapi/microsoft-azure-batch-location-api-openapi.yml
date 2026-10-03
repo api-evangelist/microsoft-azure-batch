@@ -138,68 +138,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SupportedSku:
-      type: object
-      description: Describes a Batch supported SKU.
-      properties:
-        name:
-          type: string
-          description: The name of the SKU.
-          readOnly: true
-        familyName:
-          type: string
-          description: The family name of the SKU.
-          readOnly: true
-        capabilities:
-          type: array
-          description: A collection of capabilities which this SKU supports.
-          items:
-            $ref: '#/components/schemas/SkuCapability'
-          readOnly: true
-          x-ms-identifiers:
-          - name
-        batchSupportEndOfLife:
-          type: string
-          format: date-time
-          description: The time when Azure Batch service will retire this SKU.
-          readOnly: true
-    ResourceType:
-      type: string
-      description: The result of the request to list operations.
-      enum:
-      - Microsoft.Batch/batchAccounts
-      x-ms-enum:
-        name: ResourceType
-        modelAsString: false
-        values:
-        - name: MicrosoftBatchBatchAccounts
-          value: Microsoft.Batch/batchAccounts
-          description: The resource type for Microsoft.Batch/batchAccounts
-    BatchLocationQuota:
-      type: object
-      description: Quotas associated with a Batch region for a particular subscription.
-      properties:
-        accountQuota:
-          type: integer
-          format: int32
-          description: The number of Batch accounts that may be created under the subscription in the specified region.
-          readOnly: true
-    NameAvailabilityReason:
-      type: string
-      description: Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false.
-      enum:
-      - Invalid
-      - AlreadyExists
-      x-ms-enum:
-        name: NameAvailabilityReason
-        modelAsString: false
-        values:
-        - name: Invalid
-          value: Invalid
-          description: The requested name is invalid.
-        - name: AlreadyExists
-          value: AlreadyExists
-          description: The requested name is already in use.
     CheckNameAvailabilityResult:
       type: object
       description: The CheckNameAvailability operation response.
@@ -216,40 +154,28 @@ components:
           type: string
           description: Gets an error message explaining the Reason value in more detail.
           readOnly: true
-    CloudErrorBody:
+    BatchLocationQuota:
       type: object
-      description: An error response from the Batch service.
+      description: Quotas associated with a Batch region for a particular subscription.
       properties:
-        code:
-          type: string
-          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-        message:
-          type: string
-          description: A message describing the error, intended to be suitable for display in a user interface.
-        target:
-          type: string
-          description: The target of the particular error. For example, the name of the property in error.
-        details:
-          type: array
-          description: A list of additional details about the error.
-          items:
-            $ref: '#/components/schemas/CloudErrorBody'
-          x-ms-identifiers:
-          - message
-          - target
-      x-ms-external: true
-    SkuCapability:
+        accountQuota:
+          type: integer
+          format: int32
+          description: The number of Batch accounts that may be created under the subscription in the specified region.
+          readOnly: true
+    CheckNameAvailabilityParameters:
       type: object
-      description: A SKU capability, such as the number of cores.
+      description: Parameters for a check name availability request.
       properties:
         name:
           type: string
-          description: The name of the feature.
-          readOnly: true
-        value:
-          type: string
-          description: The value of the feature.
-          readOnly: true
+          description: The name to check for availability
+        type:
+          $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+      required:
+      - name
+      - type
     SupportedSkusResult:
       type: object
       description: The Batch List supported SKUs operation response.
@@ -275,19 +201,93 @@ components:
           $ref: '#/components/schemas/CloudErrorBody'
           description: The body of the error response.
       x-ms-external: true
-    CheckNameAvailabilityParameters:
+    SkuCapability:
       type: object
-      description: Parameters for a check name availability request.
+      description: A SKU capability, such as the number of cores.
       properties:
         name:
           type: string
-          description: The name to check for availability
-        type:
-          $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-      required:
-      - name
-      - type
+          description: The name of the feature.
+          readOnly: true
+        value:
+          type: string
+          description: The value of the feature.
+          readOnly: true
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    ResourceType:
+      type: string
+      description: The result of the request to list operations.
+      enum:
+      - Microsoft.Batch/batchAccounts
+      x-ms-enum:
+        name: ResourceType
+        modelAsString: false
+        values:
+        - name: MicrosoftBatchBatchAccounts
+          value: Microsoft.Batch/batchAccounts
+          description: The resource type for Microsoft.Batch/batchAccounts
+    NameAvailabilityReason:
+      type: string
+      description: Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false.
+      enum:
+      - Invalid
+      - AlreadyExists
+      x-ms-enum:
+        name: NameAvailabilityReason
+        modelAsString: false
+        values:
+        - name: Invalid
+          value: Invalid
+          description: The requested name is invalid.
+        - name: AlreadyExists
+          value: AlreadyExists
+          description: The requested name is already in use.
+    SupportedSku:
+      type: object
+      description: Describes a Batch supported SKU.
+      properties:
+        name:
+          type: string
+          description: The name of the SKU.
+          readOnly: true
+        familyName:
+          type: string
+          description: The family name of the SKU.
+          readOnly: true
+        capabilities:
+          type: array
+          description: A collection of capabilities which this SKU supports.
+          items:
+            $ref: '#/components/schemas/SkuCapability'
+          readOnly: true
+          x-ms-identifiers:
+          - name
+        batchSupportEndOfLife:
+          type: string
+          format: date-time
+          description: The time when Azure Batch service will retire this SKU.
+          readOnly: true
   securitySchemes:
     azure_auth:
       type: oauth2

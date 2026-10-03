@@ -299,37 +299,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PackageState:
-      type: string
-      description: The current state of the application package.
-      enum:
-      - Pending
-      - Active
-      x-ms-enum:
-        name: PackageState
-        modelAsString: false
-        values:
-        - name: Pending
-          value: Pending
-          description: The application package has been created but has not yet been activated.
-        - name: Active
-          value: Active
-          description: The application package is ready for use.
-    ListApplicationPackagesResult:
-      type: object
-      description: The result of performing list application packages.
-      properties:
-        value:
-          type: array
-          description: The ApplicationPackage items on this page
-          items:
-            $ref: '#/components/schemas/ApplicationPackage'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
     ApplicationPackageProperties:
       type: object
       description: Properties of an application package
@@ -356,6 +325,29 @@ components:
           format: date-time
           description: The time at which the package was last activated, if the package is active.
           readOnly: true
+    ListApplicationPackagesResult:
+      type: object
+      description: The result of performing list application packages.
+      properties:
+        value:
+          type: array
+          description: The ApplicationPackage items on this page
+          items:
+            $ref: '#/components/schemas/ApplicationPackage'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
     CloudErrorBody:
       type: object
       description: An error response from the Batch service.
@@ -387,14 +379,6 @@ components:
           description: The format of the application package binary file.
       required:
       - format
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
-      x-ms-external: true
     ApplicationPackage:
       type: object
       description: An application package which represents a particular version of an application.
@@ -414,6 +398,22 @@ components:
             type: string
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    PackageState:
+      type: string
+      description: The current state of the application package.
+      enum:
+      - Pending
+      - Active
+      x-ms-enum:
+        name: PackageState
+        modelAsString: false
+        values:
+        - name: Pending
+          value: Pending
+          description: The application package has been created but has not yet been activated.
+        - name: Active
+          value: Active
+          description: The application package is ready for use.
   securitySchemes:
     azure_auth:
       type: oauth2

@@ -253,19 +253,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ApplicationProperties:
-      type: object
-      description: The properties associated with the Application.
-      properties:
-        displayName:
-          type: string
-          description: The display name for the application.
-        allowUpdates:
-          type: boolean
-          description: A value indicating whether packages within the application may be overwritten using the same version string.
-        defaultVersion:
-          type: string
-          description: The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package.
     CloudError:
       type: object
       description: An error response from the Batch service.
@@ -311,6 +298,19 @@ components:
           - message
           - target
       x-ms-external: true
+    ApplicationProperties:
+      type: object
+      description: The properties associated with the Application.
+      properties:
+        displayName:
+          type: string
+          description: The display name for the application.
+        allowUpdates:
+          type: boolean
+          description: A value indicating whether packages within the application may be overwritten using the same version string.
+        defaultVersion:
+          type: string
+          description: The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package.
     Application:
       type: object
       description: Contains information about an application in a Batch account.

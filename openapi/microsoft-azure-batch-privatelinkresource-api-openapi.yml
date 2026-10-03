@@ -107,29 +107,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
-      x-ms-external: true
-    ListPrivateLinkResourcesResult:
-      type: object
-      description: Values returned by the List operation.
-      properties:
-        value:
-          type: array
-          description: The PrivateLinkResource items on this page
-          items:
-            $ref: '#/components/schemas/PrivateLinkResource'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
     PrivateLinkResource:
       type: object
       description: Contains information about a private link resource.
@@ -149,6 +126,51 @@ components:
             type: string
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
+    ListPrivateLinkResourcesResult:
+      type: object
+      description: Values returned by the List operation.
+      properties:
+        value:
+          type: array
+          description: The PrivateLinkResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateLinkResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     PrivateLinkResourceProperties:
       type: object
       description: Private link resource properties.
@@ -172,28 +194,6 @@ components:
           items:
             type: string
           readOnly: true
-    CloudErrorBody:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        code:
-          type: string
-          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-        message:
-          type: string
-          description: A message describing the error, intended to be suitable for display in a user interface.
-        target:
-          type: string
-          description: The target of the particular error. For example, the name of the property in error.
-        details:
-          type: array
-          description: A list of additional details about the error.
-          items:
-            $ref: '#/components/schemas/CloudErrorBody'
-          x-ms-identifiers:
-          - message
-          - target
-      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2
