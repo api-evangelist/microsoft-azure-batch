@@ -125,6 +125,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
   baseURL: https://{account}.{region}.batch.azure.com
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -235,6 +237,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
   baseURL: https://{account}.{region}.batch.azure.com
   tags:
+  - Node
+  tags_raw:
   - Nodes
   properties:
   - type: OpenAPI
@@ -252,7 +256,8 @@ apis:
   description: The Operations API from Microsoft Azure Batch — 1 operation(s) for operations.
   humanURL: https://learn.microsoft.com/en-us/rest/api/batchservice/
   baseURL: https://{account}.{region}.batch.azure.com
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -323,6 +328,9 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/batchmanagement/
 common:
+- type: CapabilityMap
+  url: capabilities/microsoft-azure-batch-capability-edges.yml
+  name: Microsoft Azure Batch Business Capability Map
 - type: Overlay
   url: overlays/microsoft-azure-batch-batch-service-overlay.yaml
 - type: Overlay
