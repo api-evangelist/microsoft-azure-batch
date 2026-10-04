@@ -207,6 +207,31 @@ paths:
           $ref: ./examples/Applications_GetApplication.json
 components:
   schemas:
+    BatchError:
+      type: object
+      description: An error response received from the Azure Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          $ref: '#/components/schemas/BatchErrorMessage'
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        values:
+          type: array
+          description: A collection of key-value pairs containing additional details about the error.
+          items:
+            $ref: '#/components/schemas/BatchErrorDetail'
+    BatchErrorMessage:
+      type: object
+      description: An error message received in an Azure Batch error response.
+      properties:
+        lang:
+          type: string
+          description: The language code of the error message.
+        value:
+          type: string
+          description: The text of the message.
     BatchApplication:
       type: object
       description: Contains information about an application in an Azure Batch Account.
@@ -226,41 +251,6 @@ components:
       - id
       - displayName
       - versions
-    BatchErrorMessage:
-      type: object
-      description: An error message received in an Azure Batch error response.
-      properties:
-        lang:
-          type: string
-          description: The language code of the error message.
-        value:
-          type: string
-          description: The text of the message.
-    BatchError:
-      type: object
-      description: An error response received from the Azure Batch service.
-      properties:
-        code:
-          type: string
-          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-        message:
-          $ref: '#/components/schemas/BatchErrorMessage'
-          description: A message describing the error, intended to be suitable for display in a user interface.
-        values:
-          type: array
-          description: A collection of key-value pairs containing additional details about the error.
-          items:
-            $ref: '#/components/schemas/BatchErrorDetail'
-    BatchErrorDetail:
-      type: object
-      description: An item of additional information included in an Azure Batch error response.
-      properties:
-        key:
-          type: string
-          description: An identifier specifying the meaning of the Value property.
-        value:
-          type: string
-          description: The additional information included with the error response.
     BatchApplicationListResult:
       type: object
       description: The result of listing the applications available in an Account.
@@ -274,6 +264,16 @@ components:
           type: string
           format: uri
           description: The URL to get the next set of results.
+    BatchErrorDetail:
+      type: object
+      description: An item of additional information included in an Azure Batch error response.
+      properties:
+        key:
+          type: string
+          description: An identifier specifying the meaning of the Value property.
+        value:
+          type: string
+          description: The additional information included with the error response.
   parameters:
     Azure.Core.Foundations.ApiVersionParameter:
       name: api-version

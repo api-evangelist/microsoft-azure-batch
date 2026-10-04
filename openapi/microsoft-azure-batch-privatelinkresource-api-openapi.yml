@@ -107,33 +107,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PrivateLinkResource:
-      type: object
-      description: Contains information about a private link resource.
-      properties:
-        properties:
-          $ref: '#/components/schemas/PrivateLinkResourceProperties'
-          description: The properties associated with the private link resource.
-          x-ms-client-flatten: true
-        etag:
-          type: string
-          description: The ETag of the resource, used for concurrency statements.
-          readOnly: true
-        tags:
-          type: object
-          description: The tags of the resource.
-          additionalProperties:
-            type: string
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
-      x-ms-external: true
     CloudErrorBody:
       type: object
       description: An error response from the Batch service.
@@ -156,21 +129,33 @@ components:
           - message
           - target
       x-ms-external: true
-    ListPrivateLinkResourcesResult:
+    CloudError:
       type: object
-      description: Values returned by the List operation.
+      description: An error response from the Batch service.
       properties:
-        value:
-          type: array
-          description: The PrivateLinkResource items on this page
-          items:
-            $ref: '#/components/schemas/PrivateLinkResource'
-        nextLink:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
+    PrivateLinkResource:
+      type: object
+      description: Contains information about a private link resource.
+      properties:
+        properties:
+          $ref: '#/components/schemas/PrivateLinkResourceProperties'
+          description: The properties associated with the private link resource.
+          x-ms-client-flatten: true
+        etag:
           type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
+          description: The ETag of the resource, used for concurrency statements.
+          readOnly: true
+        tags:
+          type: object
+          description: The tags of the resource.
+          additionalProperties:
+            type: string
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
     PrivateLinkResourceProperties:
       type: object
       description: Private link resource properties.
@@ -194,6 +179,21 @@ components:
           items:
             type: string
           readOnly: true
+    ListPrivateLinkResourcesResult:
+      type: object
+      description: Values returned by the List operation.
+      properties:
+        value:
+          type: array
+          description: The PrivateLinkResource items on this page
+          items:
+            $ref: '#/components/schemas/PrivateLinkResource'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
   securitySchemes:
     azure_auth:
       type: oauth2
