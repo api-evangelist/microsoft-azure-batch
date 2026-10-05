@@ -1,0 +1,97 @@
+slug: microsoft-azure-batch
+provider: Microsoft Azure Batch
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: Nodes
+  spec_file: microsoft-azure-batch-nodes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /pools/{poolId}/nodes/{nodeId}/reimage  "Reinstalls the operating system on the specified
+    Compute Node"
+  reason: Direct lifecycle and maintenance operations on compute nodes (reboot, reimage, deallocate, scheduling
+    enable/disable, node files and VM extensions) — classic compute infrastructure management.
+- tag: BatchAccount
+  spec_file: microsoft-azure-batch-batchaccount-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: PUT .../providers/Microsoft.Batch/batchAccounts/{accountName}  BatchAccount_Create; POST .../listKeys  "Gets
+    the account keys for the specified Batch account"
+  reason: Provisioning and administration of the cloud resource (account, keys, network dependency endpoints,
+    storage key sync) that hosts the compute fleet — cloud infrastructure management.
+- tag: Pool
+  spec_file: microsoft-azure-batch-pool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: Pool_Create / Pool_Update / Pool_DisableAutoScale; schemas ManagedDisk, AutoScaleSettings,
+    NetworkSecurityGroupRule — provisioning and scaling pools of virtual machines
+  reason: Control-plane management of VM pools (create, resize, autoscale) is cloud compute infrastructure
+    provisioning, i.e. IT Infrastructure Management. No business-domain capability applies to a compute-cluster
+    API.
+- tag: Pools
+  spec_file: microsoft-azure-batch-pools-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: '''Changes the number of Compute Nodes that are assigned to a Pool'', ''Enables automatic
+    scaling for a Pool'', ''Removes Compute Nodes from the specified Pool'''
+  reason: Operations provision, scale and remove compute nodes — cloud compute infrastructure management,
+    not a line-of-business capability.
+- tag: Job Schedules
+  spec_file: microsoft-azure-batch-job-schedules-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: POST /jobschedules  JobSchedules_CreateJobSchedule  "Creates a Job Schedule to the specified
+    Account"
+  reason: Creation, enabling, disabling and termination of recurring compute job schedules on a managed
+    batch platform — operational workload scheduling/automation, i.e. IT Operations Management. Not a
+    business-domain scheduling capability.
+- tag: Jobs
+  spec_file: microsoft-azure-batch-jobs-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: POST /jobs  Jobs_CreateJob; POST /jobs/{jobId}/terminate  "Terminates the specified Job, marking
+    it as completed"
+  reason: Lifecycle control of compute batch jobs and their task counts on Azure Batch — operational execution
+    and automation of IT workloads rather than any business process.
+- tag: Private Endpoint Connection
+  spec_file: microsoft-azure-batch-private-endpoint-connection-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: PrivateEndpointConnection_Update; schemas PrivateLinkServiceConnectionState, PrivateEndpoint
+  reason: Manages private networking endpoints for the Batch account — network/cloud infrastructure configuration.
+    Could be read as security, but the surface is network plumbing for infrastructure, so BC-600.50 at
+    moderate confidence.
+- tag: Tasks
+  spec_file: microsoft-azure-batch-tasks-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: '''Adds a collection of Tasks to the specified Job'', ''Terminates the specified Task'', ''Reactivates
+    a Task, allowing it to run again even if its retry count has been…'''
+  reason: Batch job/task scheduling and execution control on compute nodes is day-to-day IT operations
+    and workload automation. Not a business process capability despite the generic noun 'Tasks'.
