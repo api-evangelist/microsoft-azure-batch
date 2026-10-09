@@ -1,22 +1,30 @@
-generated: '2026-07-15'
+generated: '2026-10-03'
 method: generated
-source: openapi/microsoft-azure-batch-openapi.yml
+source: openapi/microsoft-azure-batch-application-api-openapi.yml, openapi/microsoft-azure-batch-applicationpackage-api-openapi.yml,
+  openapi/microsoft-azure-batch-applications-api-openapi.yml, openapi/microsoft-azure-batch-batchaccount-api-openapi.yml,
+  openapi/microsoft-azure-batch-detectorresponses-api-openapi.yml, openapi/microsoft-azure-batch-job-schedules-api-openapi.yml,
+  openapi/microsoft-azure-batch-jobs-api-openapi.yml, openapi/microsoft-azure-batch-location-api-openapi.yml,
+  openapi/microsoft-azure-batch-networksecurityperimeter-api-openapi.yml, openapi/microsoft-azure-batch-nodes-api-openapi.yml,
+  openapi/microsoft-azure-batch-operations-api-openapi.yml, openapi/microsoft-azure-batch-pool-api-openapi.yml,
+  openapi/microsoft-azure-batch-pools-api-openapi.yml, openapi/microsoft-azure-batch-private-endpoint-connection-api-openapi.yml,
+  openapi/microsoft-azure-batch-privatelinkresource-api-openapi.yml, openapi/microsoft-azure-batch-tasks-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 8
+  operations: 114
   by_action_class:
-    connected: 4
-    acting: 4
+    connected: 51
+    acting: 63
   by_consequence:
-    read: 4
-    write: 4
-  human_in_the_loop_required: 0
+    read: 51
+    write: 52
+    safety-critical: 11
+  human_in_the_loop_required: 11
 operations:
-- path: /pools
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications
   method: get
-  operationId: listPools
+  operationId: Application_List
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -26,9 +34,21 @@ operations:
     audit: none
     scope:
     - user_impersonation
-- path: /pools
-  method: post
-  operationId: addPool
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}
+  method: get
+  operationId: Application_Get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}
+  method: put
+  operationId: Application_Create
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -44,9 +64,45 @@ operations:
     audit: required
     scope:
     - user_impersonation
-- path: /pools/{poolId}
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}
+  method: patch
+  operationId: Application_Update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}
+  method: delete
+  operationId: Application_Delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions
   method: get
-  operationId: getPool
+  operationId: ApplicationPackage_List
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -56,9 +112,1203 @@ operations:
     audit: none
     scope:
     - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}
+  method: get
+  operationId: ApplicationPackage_Get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}
+  method: put
+  operationId: ApplicationPackage_Create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}
+  method: delete
+  operationId: ApplicationPackage_Delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}/activate
+  method: post
+  operationId: ApplicationPackage_Activate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /applications
+  method: get
+  operationId: Applications_ListApplications
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /applications/{applicationId}
+  method: get
+  operationId: Applications_GetApplication
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/batchAccounts
+  method: get
+  operationId: BatchAccount_List
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts
+  method: get
+  operationId: BatchAccount_ListByResourceGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
+  method: get
+  operationId: BatchAccount_Get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
+  method: put
+  operationId: BatchAccount_Create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
+  method: patch
+  operationId: BatchAccount_Update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}
+  method: delete
+  operationId: BatchAccount_Delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/listKeys
+  method: post
+  operationId: BatchAccount_GetKeys
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/outboundNetworkDependenciesEndpoints
+  method: get
+  operationId: BatchAccount_ListOutboundNetworkDependenciesEndpoints
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/regenerateKeys
+  method: post
+  operationId: BatchAccount_RegenerateKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/syncAutoStorageKeys
+  method: post
+  operationId: BatchAccount_SynchronizeAutoStorageKeys
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors
+  method: get
+  operationId: BatchAccount_ListDetectors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}
+  method: get
+  operationId: BatchAccount_GetDetector
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /jobschedules
+  method: get
+  operationId: JobSchedules_ListJobSchedules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules
+  method: post
+  operationId: JobSchedules_CreateJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}
+  method: get
+  operationId: JobSchedules_GetJobSchedule
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}
+  method: put
+  operationId: JobSchedules_ReplaceJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}
+  method: patch
+  operationId: JobSchedules_UpdateJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}
+  method: delete
+  operationId: JobSchedules_DeleteJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}
+  method: head
+  operationId: JobSchedules_JobScheduleExists
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}/disable
+  method: post
+  operationId: JobSchedules_DisableJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}/enable
+  method: post
+  operationId: JobSchedules_EnableJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}/terminate
+  method: post
+  operationId: JobSchedules_TerminateJobSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs
+  method: get
+  operationId: Jobs_ListJobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs
+  method: post
+  operationId: Jobs_CreateJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}
+  method: get
+  operationId: Jobs_GetJob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}
+  method: put
+  operationId: Jobs_ReplaceJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}
+  method: patch
+  operationId: Jobs_UpdateJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}
+  method: delete
+  operationId: Jobs_DeleteJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/disable
+  method: post
+  operationId: Jobs_DisableJob
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/enable
+  method: post
+  operationId: Jobs_EnableJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/jobpreparationandreleasetaskstatus
+  method: get
+  operationId: Jobs_ListJobPreparationAndReleaseTaskStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/taskcounts
+  method: get
+  operationId: Jobs_GetJobTaskCounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/terminate
+  method: post
+  operationId: Jobs_TerminateJob
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobschedules/{jobScheduleId}/jobs
+  method: get
+  operationId: Jobs_ListJobsFromSchedule
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/checkNameAvailability
+  method: post
+  operationId: Location_CheckNameAvailability
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/quotas
+  method: get
+  operationId: Location_GetQuotas
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/providers/Microsoft.Batch/locations/{locationName}/virtualMachineSkus
+  method: get
+  operationId: Location_ListSupportedVirtualMachineSkus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations
+  method: get
+  operationId: NetworkSecurityPerimeter_ListConfigurations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}
+  method: get
+  operationId: NetworkSecurityPerimeter_GetConfiguration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}/reconcile
+  method: post
+  operationId: NetworkSecurityPerimeter_ReconcileConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /pools/{poolId}/nodes
+  method: get
+  operationId: Nodes_ListNodes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}
+  method: get
+  operationId: Nodes_GetNode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/deallocate
+  method: post
+  operationId: Nodes_DeallocateNode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/disablescheduling
+  method: post
+  operationId: Nodes_DisableNodeScheduling
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/enablescheduling
+  method: post
+  operationId: Nodes_EnableNodeScheduling
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/extensions
+  method: get
+  operationId: Nodes_ListNodeExtensions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/extensions/{extensionName}
+  method: get
+  operationId: Nodes_GetNodeExtension
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/files
+  method: get
+  operationId: Nodes_ListNodeFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  method: get
+  operationId: Nodes_GetNodeFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  method: delete
+  operationId: Nodes_DeleteNodeFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/files/{filePath}
+  method: head
+  operationId: Nodes_GetNodeFileProperties
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/reboot
+  method: post
+  operationId: Nodes_RebootNode
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/reimage
+  method: post
+  operationId: Nodes_ReimageNode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/remoteloginsettings
+  method: get
+  operationId: Nodes_GetNodeRemoteLoginSettings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/start
+  method: post
+  operationId: Nodes_StartNode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/uploadbatchservicelogs
+  method: post
+  operationId: Nodes_UploadNodeLogs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/users
+  method: post
+  operationId: Nodes_CreateNodeUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+  method: put
+  operationId: Nodes_ReplaceNodeUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/nodes/{nodeId}/users/{userName}
+  method: delete
+  operationId: Nodes_DeleteNodeUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /providers/Microsoft.Batch/operations
+  method: get
+  operationId: Operations_List
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
+  method: get
+  operationId: Pool_ListByBatchAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
+  method: get
+  operationId: Pool_Get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
+  method: put
+  operationId: Pool_Create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
+  method: patch
+  operationId: Pool_Update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}
+  method: delete
+  operationId: Pool_Delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}/disableAutoScale
+  method: post
+  operationId: Pool_DisableAutoScale
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}/stopResize
+  method: post
+  operationId: Pool_StopResize
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - user_impersonation
+- path: /nodecounts
+  method: get
+  operationId: Pools_ListPoolNodeCounts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools
+  method: get
+  operationId: Pools_ListPools
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools
+  method: post
+  operationId: Pools_CreatePool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}
+  method: get
+  operationId: Pools_GetPool
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}
+  method: patch
+  operationId: Pools_UpdatePool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
 - path: /pools/{poolId}
   method: delete
-  operationId: deletePool
+  operationId: Pools_DeletePool
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -73,10 +1323,172 @@ operations:
       - high-value
     audit: required
     scope:
-    - user_impersonation
-- path: /jobs
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}
+  method: head
+  operationId: Pools_PoolExists
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/disableautoscale
+  method: post
+  operationId: Pools_DisablePoolAutoScale
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/enableautoscale
+  method: post
+  operationId: Pools_EnablePoolAutoScale
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/evaluateautoscale
+  method: post
+  operationId: Pools_EvaluatePoolAutoScale
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/removenodes
+  method: post
+  operationId: Pools_RemoveNodes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/resize
+  method: post
+  operationId: Pools_ResizePool
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/stopresize
+  method: post
+  operationId: Pools_StopPoolResize
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /pools/{poolId}/updateproperties
+  method: post
+  operationId: Pools_ReplacePoolProperties
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /poolusagemetrics
   method: get
-  operationId: listJobs
+  operationId: Pools_ListPoolUsageMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /supportedimages
+  method: get
+  operationId: Pools_ListSupportedImages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections
+  method: get
+  operationId: PrivateEndpointConnection_ListByBatchAccount
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -86,27 +1498,9 @@ operations:
     audit: none
     scope:
     - user_impersonation
-- path: /jobs
-  method: post
-  operationId: addJob
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - user_impersonation
-- path: /jobs/{jobId}/tasks
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
   method: get
-  operationId: listTasks
+  operationId: PrivateEndpointConnection_Get
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -116,9 +1510,9 @@ operations:
     audit: none
     scope:
     - user_impersonation
-- path: /jobs/{jobId}/tasks
-  method: post
-  operationId: addTask
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+  method: patch
+  operationId: PrivateEndpointConnection_Update
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -134,3 +1528,243 @@ operations:
     audit: required
     scope:
     - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
+  method: delete
+  operationId: PrivateEndpointConnection_Delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateLinkResources
+  method: get
+  operationId: PrivateLinkResource_ListByBatchAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateLinkResources/{privateLinkResourceName}
+  method: get
+  operationId: PrivateLinkResource_Get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - user_impersonation
+- path: /jobs/{jobId}/addtaskcollection
+  method: post
+  operationId: Tasks_CreateTaskCollection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks
+  method: get
+  operationId: Tasks_ListTasks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks
+  method: post
+  operationId: Tasks_CreateTask
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}
+  method: get
+  operationId: Tasks_GetTask
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}
+  method: put
+  operationId: Tasks_ReplaceTask
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}
+  method: delete
+  operationId: Tasks_DeleteTask
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/files
+  method: get
+  operationId: Tasks_ListTaskFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  method: get
+  operationId: Tasks_GetTaskFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  method: delete
+  operationId: Tasks_DeleteTaskFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/files/{filePath}
+  method: head
+  operationId: Tasks_GetTaskFileProperties
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/reactivate
+  method: post
+  operationId: Tasks_ReactivateTask
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/subtasksinfo
+  method: get
+  operationId: Tasks_ListSubTasks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - https://batch.core.windows.net//.default
+- path: /jobs/{jobId}/tasks/{taskId}/terminate
+  method: post
+  operationId: Tasks_TerminateTask
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - https://batch.core.windows.net//.default
