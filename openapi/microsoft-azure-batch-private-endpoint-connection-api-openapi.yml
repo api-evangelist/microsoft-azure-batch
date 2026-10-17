@@ -256,31 +256,6 @@ components:
           title: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
           description: The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}.
           readOnly: true
-    PrivateEndpointConnectionProperties:
-      type: object
-      description: Private endpoint connection properties.
-      properties:
-        provisioningState:
-          $ref: '#/components/schemas/PrivateEndpointConnectionProvisioningState'
-          title: The provisioning state of the private endpoint connection.
-          description: The provisioning state of the private endpoint connection.
-          readOnly: true
-        privateEndpoint:
-          $ref: '#/components/schemas/PrivateEndpoint'
-          title: The ARM resource identifier of the private endpoint.
-          description: The private endpoint of the private endpoint connection.
-          readOnly: true
-        groupIds:
-          type: array
-          title: The group id of the private endpoint connection.
-          description: The value has one and only one group id.
-          items:
-            type: string
-          readOnly: true
-        privateLinkServiceConnectionState:
-          $ref: '#/components/schemas/PrivateLinkServiceConnectionState'
-          title: The private link service connection state of the private endpoint connection.
-          description: The private link service connection state of the private endpoint connection.
     ListPrivateEndpointConnectionsResult:
       type: object
       description: Values returned by the List operation.
@@ -317,38 +292,6 @@ components:
           x-ms-identifiers:
           - message
           - target
-      x-ms-external: true
-    PrivateLinkServiceConnectionStatus:
-      type: string
-      description: The status of the Batch private endpoint connection
-      enum:
-      - Approved
-      - Pending
-      - Rejected
-      - Disconnected
-      x-ms-enum:
-        name: PrivateLinkServiceConnectionStatus
-        modelAsString: false
-        values:
-        - name: Approved
-          value: Approved
-          description: The private endpoint connection is approved and can be used to access Batch account
-        - name: Pending
-          value: Pending
-          description: The private endpoint connection is pending and cannot be used to access Batch account
-        - name: Rejected
-          value: Rejected
-          description: The private endpoint connection is rejected and cannot be used to access Batch account
-        - name: Disconnected
-          value: Disconnected
-          description: The private endpoint connection is disconnected and cannot be used to access Batch account
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
       x-ms-external: true
     PrivateLinkServiceConnectionState:
       type: object
@@ -388,6 +331,30 @@ components:
             type: string
       allOf:
       - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    PrivateLinkServiceConnectionStatus:
+      type: string
+      description: The status of the Batch private endpoint connection
+      enum:
+      - Approved
+      - Pending
+      - Rejected
+      - Disconnected
+      x-ms-enum:
+        name: PrivateLinkServiceConnectionStatus
+        modelAsString: false
+        values:
+        - name: Approved
+          value: Approved
+          description: The private endpoint connection is approved and can be used to access Batch account
+        - name: Pending
+          value: Pending
+          description: The private endpoint connection is pending and cannot be used to access Batch account
+        - name: Rejected
+          value: Rejected
+          description: The private endpoint connection is rejected and cannot be used to access Batch account
+        - name: Disconnected
+          value: Disconnected
+          description: The private endpoint connection is disconnected and cannot be used to access Batch account
     PrivateEndpointConnectionProvisioningState:
       type: string
       description: The provisioning state of the private endpoint connection.
@@ -421,6 +388,39 @@ components:
           value: Cancelled
           description: The user has cancelled the connection creation.
       readOnly: true
+    PrivateEndpointConnectionProperties:
+      type: object
+      description: Private endpoint connection properties.
+      properties:
+        provisioningState:
+          $ref: '#/components/schemas/PrivateEndpointConnectionProvisioningState'
+          title: The provisioning state of the private endpoint connection.
+          description: The provisioning state of the private endpoint connection.
+          readOnly: true
+        privateEndpoint:
+          $ref: '#/components/schemas/PrivateEndpoint'
+          title: The ARM resource identifier of the private endpoint.
+          description: The private endpoint of the private endpoint connection.
+          readOnly: true
+        groupIds:
+          type: array
+          title: The group id of the private endpoint connection.
+          description: The value has one and only one group id.
+          items:
+            type: string
+          readOnly: true
+        privateLinkServiceConnectionState:
+          $ref: '#/components/schemas/PrivateLinkServiceConnectionState'
+          title: The private link service connection state of the private endpoint connection.
+          description: The private link service connection state of the private endpoint connection.
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

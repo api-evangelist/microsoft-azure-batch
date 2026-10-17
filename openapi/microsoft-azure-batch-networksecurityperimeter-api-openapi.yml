@@ -153,6 +153,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CloudErrorBody:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        code:
+          type: string
+          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
+        message:
+          type: string
+          description: A message describing the error, intended to be suitable for display in a user interface.
+        target:
+          type: string
+          description: The target of the particular error. For example, the name of the property in error.
+        details:
+          type: array
+          description: A list of additional details about the error.
+          items:
+            $ref: '#/components/schemas/CloudErrorBody'
+          x-ms-identifiers:
+          - message
+          - target
+      x-ms-external: true
     NetworkSecurityPerimeterConfigurationListResult:
       type: object
       description: The response of a NetworkSecurityPerimeterConfiguration list operation.
@@ -175,28 +197,6 @@ components:
         error:
           $ref: '#/components/schemas/CloudErrorBody'
           description: The body of the error response.
-      x-ms-external: true
-    CloudErrorBody:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        code:
-          type: string
-          description: An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-        message:
-          type: string
-          description: A message describing the error, intended to be suitable for display in a user interface.
-        target:
-          type: string
-          description: The target of the particular error. For example, the name of the property in error.
-        details:
-          type: array
-          description: A list of additional details about the error.
-          items:
-            $ref: '#/components/schemas/CloudErrorBody'
-          x-ms-identifiers:
-          - message
-          - target
       x-ms-external: true
   securitySchemes:
     azure_auth:

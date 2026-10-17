@@ -43,29 +43,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Operation:
-      type: object
-      title: A REST API operation
-      description: A REST API operation
-      properties:
-        name:
-          type: string
-          title: The operation name.
-          description: This is of the format {provider}/{resource}/{operation}
-        isDataAction:
-          type: boolean
-          description: Indicates whether the operation is a data action
-        display:
-          $ref: '#/components/schemas/OperationDisplay'
-          title: The object that describes the operation.
-          description: The object that describes the operation.
-        origin:
-          type: string
-          title: The intended executor of the operation.
-          description: The intended executor of the operation.
-        properties:
-          title: Properties of the operation.
-          description: Properties of the operation.
     CloudErrorBody:
       type: object
       description: An error response from the Batch service.
@@ -87,14 +64,6 @@ components:
           x-ms-identifiers:
           - message
           - target
-      x-ms-external: true
-    CloudError:
-      type: object
-      description: An error response from the Batch service.
-      properties:
-        error:
-          $ref: '#/components/schemas/CloudErrorBody'
-          description: The body of the error response.
       x-ms-external: true
     OperationDisplay:
       type: object
@@ -136,6 +105,37 @@ components:
           description: The link to the next page of items
       required:
       - value
+    Operation:
+      type: object
+      title: A REST API operation
+      description: A REST API operation
+      properties:
+        name:
+          type: string
+          title: The operation name.
+          description: This is of the format {provider}/{resource}/{operation}
+        isDataAction:
+          type: boolean
+          description: Indicates whether the operation is a data action
+        display:
+          $ref: '#/components/schemas/OperationDisplay'
+          title: The object that describes the operation.
+          description: The object that describes the operation.
+        origin:
+          type: string
+          title: The intended executor of the operation.
+          description: The intended executor of the operation.
+        properties:
+          title: Properties of the operation.
+          description: Properties of the operation.
+    CloudError:
+      type: object
+      description: An error response from the Batch service.
+      properties:
+        error:
+          $ref: '#/components/schemas/CloudErrorBody'
+          description: The body of the error response.
+      x-ms-external: true
   securitySchemes:
     azure_auth:
       type: oauth2

@@ -112,25 +112,6 @@ components:
           description: The link to the next page of items
       required:
       - value
-    DetectorResponse:
-      type: object
-      description: Contains the information for a detector.
-      properties:
-        properties:
-          $ref: '#/components/schemas/DetectorResponseProperties'
-          description: The properties associated with the detector.
-          x-ms-client-flatten: true
-        etag:
-          type: string
-          description: The ETag of the resource, used for concurrency statements.
-          readOnly: true
-        tags:
-          type: object
-          description: The tags of the resource.
-          additionalProperties:
-            type: string
-      allOf:
-      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
     CloudErrorBody:
       type: object
       description: An error response from the Batch service.
@@ -153,6 +134,32 @@ components:
           - message
           - target
       x-ms-external: true
+    DetectorResponse:
+      type: object
+      description: Contains the information for a detector.
+      properties:
+        properties:
+          $ref: '#/components/schemas/DetectorResponseProperties'
+          description: The properties associated with the detector.
+          x-ms-client-flatten: true
+        etag:
+          type: string
+          description: The ETag of the resource, used for concurrency statements.
+          readOnly: true
+        tags:
+          type: object
+          description: The tags of the resource.
+          additionalProperties:
+            type: string
+      allOf:
+      - $ref: ../../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+    DetectorResponseProperties:
+      type: object
+      description: Detector response properties.
+      properties:
+        value:
+          type: string
+          description: A base64 encoded string that represents the content of a detector.
     CloudError:
       type: object
       description: An error response from the Batch service.
@@ -161,13 +168,6 @@ components:
           $ref: '#/components/schemas/CloudErrorBody'
           description: The body of the error response.
       x-ms-external: true
-    DetectorResponseProperties:
-      type: object
-      description: Detector response properties.
-      properties:
-        value:
-          type: string
-          description: A base64 encoded string that represents the content of a detector.
   securitySchemes:
     azure_auth:
       type: oauth2
