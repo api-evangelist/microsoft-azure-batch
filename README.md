@@ -1,4 +1,4 @@
-# microsoft-azure-batch (microsoft-azure-batch)
+# Microsoft Azure Batch
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,48 +64,166 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Learn how to use the Azure Batch API to schedule and run large scale computational workloads.
+Azure Batch is Microsoft’s managed job-scheduling and cluster-management service for large-scale parallel and high-performance computing workloads. You describe pools of virtual machines, jobs and tasks through a REST API; Batch allocates the compute, schedules the work across it, retries failures, and scales the pool up and down against a formula you supply. Microsoft publishes two machine-readable contracts for it in the open azure-rest-api-specs repository: a 72-operation data plane per Batch account, and a 42-operation Azure Resource Manager control plane for the accounts themselves. There is no charge for Batch; you pay for the virtual machines, storage and networking the pools consume, with Spot VMs as the discount lever. Authentication is Microsoft Entra ID OAuth 2.0 (or a legacy shared key), and effective permission comes from Azure RBAC rather than from OAuth scopes.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/microsoft-azure-batch/refs/heads/main/apis.yml)
+**Areas:** Batch · Compute · Job Scheduling · High Performance Computing · Cloud · Microsoft · Microsoft Azure · Parallel Processing · Scheduling · Infrastructure
 
-## Timestamps
+## Microsoft Azure Batch on APIs.io
 
-- **Created:** 2026-03-13
-- **Modified:** 2026-05-19
+Everything profiled for Microsoft Azure Batch is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/microsoft-azure-batch/](https://apis.io/providers/microsoft-azure-batch/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (16)
 
-### Azure Batch REST API
+- [microsoft-azure-batch Jobs API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-jobs-api/) — The Jobs API from microsoft-azure-batch — 1 operation(s) for jobs. Partial, API Evangelist-authored view; the complete provider contract is the Azure Batch…
+- [microsoft-azure-batch Pools API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-pools-api/) — The Pools API from microsoft-azure-batch — 2 operation(s) for pools. Partial, API Evangelist-authored view; the complete provider contract is the Azure…
+- [microsoft-azure-batch Tasks API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-tasks-api/) — The Tasks API from microsoft-azure-batch — 1 operation(s) for tasks. Partial, API Evangelist-authored view; the complete provider contract is the Azure…
+- [Microsoft Azure Batch Application API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-application-api/) — The Application API from Microsoft Azure Batch — 2 operation(s) for application.
+- [Microsoft Azure Batch Application Package API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-applicationpackage-api/) — The ApplicationPackage API from Microsoft Azure Batch — 3 operation(s) for applicationpackage.
+- [Microsoft Azure Batch Applications API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-applications-api/) — The Applications API from Microsoft Azure Batch — 2 operation(s) for applications.
+- [Microsoft Azure Batch Batch Account API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-batchaccount-api/) — The BatchAccount API from Microsoft Azure Batch — 7 operation(s) for batchaccount.
+- [Microsoft Azure Batch Detector Responses API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-detectorresponses-api/) — The DetectorResponses API from Microsoft Azure Batch — 2 operation(s) for detectorresponses.
+- [Microsoft Azure Batch Job Schedules API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-job-schedules-api/) — The Job Schedules API from Microsoft Azure Batch — 5 operation(s) for job schedules.
+- [Microsoft Azure Batch Location API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-location-api/) — The Location API from Microsoft Azure Batch — 3 operation(s) for location.
+- [Microsoft Azure Batch Network Security Perimeter API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-networksecurityperimeter-api/) — The NetworkSecurityPerimeter API from Microsoft Azure Batch — 3 operation(s) for networksecurityperimeter.
+- [Microsoft Azure Batch Nodes API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-nodes-api/) — The Nodes API from Microsoft Azure Batch — 16 operation(s) for nodes.
+- [Microsoft Azure Batch Operations API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-operations-api/) — The Operations API from Microsoft Azure Batch — 1 operation(s) for operations.
+- [Microsoft Azure Batch Pool API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-pool-api/) — The Pool API from Microsoft Azure Batch — 4 operation(s) for pool.
+- [Microsoft Azure Batch Private Link Resource API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-privatelinkresource-api/) — The PrivateLinkResource API from Microsoft Azure Batch — 2 operation(s) for privatelinkresource.
+- [Microsoft Azure Batch Private Endpoint Connection API](https://apis.io/apis/microsoft-azure-batch/microsoft-azure-batch-private-endpoint-connection-api/) — The Private Endpoint Connection API from Microsoft Azure Batch — 2 operation(s) for private endpoint connection.
 
-Azure Batch REST API provides management of large-scale parallel and high-performance computing workloads. It supports creating pools of compute nodes, submitting jobs and tasks, auto-scaling based on workload, and managing task dependencies for batch processing scenarios.
+### Published properties
 
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/batchservice/](https://learn.microsoft.com/en-us/rest/api/batchservice/)
-- **Base URL:** `https://batch.core.windows.net/`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags
+#### MCP servers (1)
 
-- Batch Computing
-- HPC
-- Job Scheduling
-- Parallel Processing
+Model Context Protocol servers that expose the API to agents.
 
-#### Properties
+- [Azure Batch (candidate MCP tool surface)](https://apis.io/servers/microsoft-azure-batch/azure-batch-candidate-mcp-tool-surface/)
 
-- [OpenAPI](openapi/microsoft-azure-batch-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/microsoft-azure-batch.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-azure-batch.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/batchservice/)
+#### Agentic access (1)
 
-## Common Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [GitHub Organization](https://github.com/Azure)
-- [Portal](https://portal.azure.com/)
+- [Microsoft Azure Batch Agentic Access](https://apis.io/agentic-access/microsoft-azure-batch/microsoft-azure-batch-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Azure Batch Service REST API](https://apis.io/collections/microsoft-azure-batch/open-microsoft-azure-batch/)
+- [Azure Batch Service REST Jobs API](https://apis.io/collections/microsoft-azure-batch/open-microsoft-azure-batch-jobs-api/)
+- [Azure Batch Service REST Jobs Pools API](https://apis.io/collections/microsoft-azure-batch/open-microsoft-azure-batch-pools-api/)
+- [Azure Batch Service REST Jobs Tasks API](https://apis.io/collections/microsoft-azure-batch/open-microsoft-azure-batch-tasks-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Microsoft Azure Batch Batch Service Overlay](https://apis.io/overlays/microsoft-azure-batch/microsoft-azure-batch-batch-service-overlay/)
+- [Microsoft Azure Batch Management Overlay](https://apis.io/overlays/microsoft-azure-batch/microsoft-azure-batch-management-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Microsoft Azure Batch Authentication](https://apis.io/security/microsoft-azure-batch/microsoft-azure-batch-authentication/)
+- [Microsoft Azure Batch Domain Security](https://apis.io/security/microsoft-azure-batch/microsoft-azure-batch-domain-security/)
+- [Microsoft Azure Batch Trust Center](https://apis.io/security/microsoft-azure-batch/microsoft-azure-batch-trust-center/)
+- [Microsoft Azure Batch Vulnerability Disclosure](https://apis.io/security/microsoft-azure-batch/microsoft-azure-batch-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Microsoft Azure Batch Scopes](https://apis.io/scopes/microsoft-azure-batch/microsoft-azure-batch-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Microsoft Azure Batch Plans Pricing](https://apis.io/plans/microsoft-azure-batch/microsoft-azure-batch-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Microsoft Azure Batch Rate Limits](https://apis.io/rate-limits/microsoft-azure-batch/microsoft-azure-batch-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Microsoft Azure Batch Finops](https://apis.io/finops/microsoft-azure-batch/microsoft-azure-batch-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.microsoft.com/)
+- [Documentation](https://learn.microsoft.com/en-us/azure/batch/)
+- [Getting started](https://learn.microsoft.com/en-us/azure/batch/quick-create-portal)
+- [API reference](https://learn.microsoft.com/en-us/rest/api/batchservice/)
 - [Pricing](https://azure.microsoft.com/en-us/pricing/)
-- [Terms of Service](https://www.microsoft.com/en-us/legal/terms-of-use)
-- [Privacy Policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [Sign up](https://azure.microsoft.com/en-us/free/)
 - [Support](https://support.microsoft.com/)
+- [Blog](https://azure.microsoft.com/en-us/blog/feed/)
+- [Terms of service](https://www.microsoft.com/en-us/legal/terms-of-use)
+- [Privacy policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [GitHub](https://github.com/Azure)
+- [Status](https://azure.status.microsoft/en-us/status)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 62.2** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 47.7 |
+| Contract governance | 18.2 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 60.5 |
+
+**Agent readiness 34.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/microsoft-azure-batch/](https://apis.io/providers/microsoft-azure-batch/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Microsoft Azure Batch: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/microsoft-azure-batch/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
