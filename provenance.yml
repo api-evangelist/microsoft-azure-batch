@@ -68,7 +68,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -123,6 +123,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/microsoft-azure-batch-lifecycle.yml:
@@ -199,11 +208,17 @@ artifacts:
   packages/microsoft-azure-batch-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/microsoft-azure-batch-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/microsoft-azure-batch-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
   rate-limits/microsoft-azure-batch-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/microsoft-azure-batch-rules.yml:
+    method: generated
     evidence: declared in the artifact
   scopes/microsoft-azure-batch-scopes.yml:
     method: searched
