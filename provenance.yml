@@ -53,6 +53,9 @@ artifacts:
   errors/microsoft-azure-batch-error-codes.yml:
     method: searched
     evidence: declared in the artifact
+  errors/microsoft-azure-batch-problem-types.yml:
+    method: derived
+    evidence: declared in the artifact
   examples/_index.yml:
     method: searched
     evidence: declared in the artifact
@@ -62,9 +65,183 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/microsoft-azure-batch-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
   integrations/microsoft-azure-batch-integration-edges.yml:
     method: searched
     evidence: declared in the artifact
+  json-ld/microsoft-azure-batch-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-activate-application-package-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-application-package-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-application-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-account-create-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-account-keys-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-account-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-account-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-account-update-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-application-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-application-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-create-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-preparation-and-release-task-status-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-schedule-create-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-schedule-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-schedule-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-schedule-update-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-job-update-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-location-quota-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-node-file-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-node-remote-login-settings-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-node-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-node-user-create-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-node-user-update-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-create-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-enable-auto-scale-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-replace-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-resize-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-pool-update-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-counts-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-create-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-group-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-list-subtasks-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-batch-task-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-check-name-availability-parameters-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-check-name-availability-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-detector-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-detector-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-list-application-packages-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-list-applications-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-list-pools-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-list-private-endpoint-connections-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-list-private-link-resources-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-network-security-perimeter-configuration-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-operation-list-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-outbound-environment-endpoint-collection-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-pool-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-private-endpoint-connection-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-private-link-resource-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-supported-skus-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-upload-batch-service-logs-options-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/microsoft-azure-batch-upload-batch-service-logs-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
@@ -137,9 +314,12 @@ artifacts:
   lifecycle/microsoft-azure-batch-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
+  llms/microsoft-azure-batch-llms-provenance.yml:
+    method: generated
+    evidence: 'derive-llms-provenance.py: generated'
   llms/microsoft-azure-batch-llms.txt:
     method: generated
-    evidence: carries an API Evangelist house phrase
+    evidence: 'derive-llms-provenance.py: generated'
   mcp/microsoft-azure-batch-mcp.yml:
     method: derived
     evidence: declared in the artifact
@@ -240,6 +420,12 @@ artifacts:
     evidence: declared in the artifact
   skills/microsoft-azure-batch-scale-and-schedule.md:
     method: generated
+    evidence: declared in the artifact
+  vendors/microsoft-azure-batch-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/microsoft-azure-batch-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/microsoft-azure-batch-openid-configuration.json:
     method: unknown
